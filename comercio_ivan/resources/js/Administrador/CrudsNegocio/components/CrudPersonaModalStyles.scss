@@ -1,0 +1,15 @@
+.direcciones {
+    .ant-form-item {
+        .ant-row {
+            flex-direction: column;
+            align-items: flex-start;
+            .ant-col {
+                width: 100%;
+                text-align: left;
+            }
+        }
+    }
+    .map-container {
+        height: 400px;
+    }
+}

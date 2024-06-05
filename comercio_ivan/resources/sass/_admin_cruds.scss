@@ -1,0 +1,31 @@
+// Body
+
+$body-bg: #f8fafc;
+@import "~bootstrap/scss/bootstrap";
+#admin_cruds {
+    aside {
+        box-shadow: 5px 0 5px -5px rgb(0 0 0 / 30%);
+        z-index: 2;
+        /*background-color: #f1f1f1;*/
+    }
+    .top-bar {
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        .button-container {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        h1 {
+            margin-bottom: 35px;
+        }
+    }
+    .cruds_main {
+        background-color: #fff;
+        padding: 30px;
+        height: calc(100% - 72px);
+    }
+}
+.ant-form-item-label > label {
+    white-space: normal;
+}

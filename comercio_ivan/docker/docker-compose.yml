@@ -1,0 +1,26 @@
+# Build and launch a local version of the whole L8LK application
+version: "3.8"
+
+services:
+
+  database:
+    env_file:
+      - ./../.env
+    container_name: comercio-postgres
+    hostname: postgresdb
+    image: "postgis/postgis:15-3.4"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=comercio
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

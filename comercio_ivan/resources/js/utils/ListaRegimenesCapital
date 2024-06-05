@@ -1,0 +1,84 @@
+export const regimenes_capital = [
+    {
+        id: "N/A",
+        name: "Sin Tipo De Sociedad",
+    },
+    { id: "ABP", name: "Asociación de Beneficencia Privada" },
+    { id: "AC", name: "Asociación Civil" },
+    { id: "AR", name: "Asociación Religiosa" },
+    {
+        id: "ARIC DE RL DE CV",
+        name: "Asociación Rural de Interés Colectivo de Responsabilidad Limitada de Capital Variable",
+    },
+    { id: "IAP", name: "Institución de Asistencia Privada" },
+    { id: "S DE RL", name: "Sociedad de Responsabilidad Limitada" },
+    {
+        id: "S DE RL DE CV",
+        name: "Sociedad de Responsabilidad Limitada de Capital Variable",
+    },
+    {
+        id: "S DE RL MI",
+        name: "Sociedad de Responsabilidad Microindustrial",
+    },
+    { id: "S EN NC", name: "Sociedad en name Colectivo" },
+    { id: "SA", name: "Sociedad Anónima" },
+    { id: "SA DE CV", name: "Sociedad Anónima de Capital Variable" },
+    {
+        id: "SA DE CV SOFOM ENR",
+        name: "Sociedad Anónima de Capital Variable SOFOM Entidad No Regulada",
+    },
+    {
+        id: "SA DE CV SOFOM ER",
+        name: "Sociedad Anónima de Capital Variable SOFOM Entidad Regulada",
+    },
+    {
+        id: "SA DE RL DE CV",
+        name: "Sociedad Anónima de Responsabilidad Limitada de Capital Variable",
+    },
+    {
+        id: "SA INSTITUCIóN DE BANCA MÚLTIPLE",
+        name: "Sociedad Anónima Institución de Banca Múltiple",
+    },
+    {
+        id: "SAB DE CV",
+        name: "Sociedad Anónima Bursátil de Capital Variable",
+    },
+    {
+        id: "SAPI DE CV",
+        name: "Sociedad Anónima Promotora de la Inversión de Capital Variable",
+    },
+    {
+        id: "SAPI DE CV SOFOM ENR",
+        name: "Sociedad Anónima Promotora de la Inversión de Capital Variable SOFOM Entidad No regulada",
+    },
+    { id: "SAS", name: "Sociedad por Acciones Simplificada" },
+    {
+        id: "SAS DE CV",
+        name: "Sociedad por Acciones Simplificada de Capital Variable",
+    },
+    { id: "SC", name: "Sociedad Civil" },
+    {
+        id: "SC DE AP DE RL",
+        name: "Sociedad Cooperativa de Ahorro y Préstamo de Responsabilidad Limitada",
+    },
+    {
+        id: "SC DE AP DE RL DE CV",
+        name: "Sociedad Cooperativa de Ahorro y Préstamo de Responsabilidad Limitada de Capital Variable",
+    },
+    {
+        id: "SC DE RL",
+        name: "Sociedad Cooperativa de Responsabilidad Limitada",
+    },
+    {
+        id: "SC DE RL DE CV",
+        name: "Sociedad Cooperativa de Responsabilidad Limitada de Capital Variable",
+    },
+    {
+        id: "SPR DE RL",
+        name: "Sociedad de Producción Rural de Responsabilidad Limitada",
+    },
+    {
+        id: "SPR DE RL DE CV",
+        name: "Sociedad de Producción Rural de Responsabilidad Limitada de Capital Variable",
+    },
+];

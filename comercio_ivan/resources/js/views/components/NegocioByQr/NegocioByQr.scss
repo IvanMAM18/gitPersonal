@@ -1,0 +1,326 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+// Variables
+@import "../../../../sass/variables";
+@import "../../../../sass/custom_mixins";
+
+$banner_primary: #630F31;
+$banner_text:#D7BFA2;
+$banner_secundary: #062015;
+
+html,
+body {
+    height: 99%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.negocio_by_qr_copy {
+    margin: 0;
+}
+
+.negocio_by_qr {
+    padding: 60px 0px;
+
+    max-width: 960px;
+    margin: 0;
+    //margin: 30px auto;
+    //box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    //background-color: #fff;
+
+    >h1,
+    >h5 {
+        text-align: center;
+        color: #ffF;
+        text-shadow: 2px 2px 4px black;
+    }
+
+    .ant-spin-spinning {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        border-radius: 50px;
+        background-color: rgba(#fff, 75%);
+    }
+
+    .banner_container {
+        .logo {
+            width: 100%;
+            padding: 20px;
+            padding-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .navbar-brand {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                color: #fff;
+                font-size: 18px;
+                text-shadow: 1px 1px 2px rgba(#000, 85%);
+
+                >span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    display: none;
+                }
+            }
+
+
+            img {
+                width: 12vw;
+                max-width: 200px;
+            }
+        }
+
+    }
+
+    .qr_container {
+
+        .qr_ribbon {
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            flex-direction: column;
+
+            @include screen-sm-min() {
+                flex-direction: row;
+                position: relative;
+            }
+
+            >span {
+
+                padding: 15px;
+
+                @include screen-sm-min {
+                    z-index: 3;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                }
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .ribbon_left_content {
+                background-color: $banner_primary;
+                color: $banner_text;
+                font-size: responsive-px(12, 20, 320, 768);
+                white-space: nowrap;
+
+                @include screen-sm-min() {
+                    font-size: responsive-px(12, 26, 768, 1920);
+                    width: 38%;
+                }
+
+            }
+
+            .qr_image {
+                border: 3px solid #000003;
+                background-color: #fff;
+                padding: 0;
+
+                @include screen-sm-min() {
+                    width: 24%;
+                }
+
+                img {
+                    width: 100%;
+                    max-height: 250px;
+
+                    @include screen-sm-min() {
+                        max-height: none;
+                    }
+                }
+            }
+
+            .ribbon_right_content {
+                background-color: $banner_primary;
+                display: flex;
+                align-items: center;
+                justify-self: center;
+                flex-direction: column;
+                color: $banner_text;
+                font-size: responsive-px(10, 18, 320, 768);
+                line-height: 1;
+
+                @include screen-sm-min() {
+                    font-size: responsive-px(12, 26, 768, 1920);
+                    width: 38%;
+                }
+
+            }
+        }
+
+        .qr_footer {
+            margin: 0 auto;
+            margin-top: responsive-px(15, 35, 320, 768);
+            max-width: 90%;
+            border-radius: 50px;
+            //border: 10px dashed #838BCC;
+            padding: 20px;
+            background-color: $banner_primary;
+
+            @include screen-sm-min() {
+                margin-top: responsive-px(15, 30, 768, 1920);
+            }
+
+            div {
+                text-align: center;
+                color: $banner_text;
+
+                &.main_title {
+                    font-weight: 700;
+                    font-size: responsive-px(12, 20, 320, 768);
+                    margin-bottom: 4%;
+
+                    @include screen-sm-min() {
+                        font-size: responsive-px(14, 30, 768, 1920);
+                    }
+                }
+
+                &.address {
+                    font-size: 500;
+                    letter-spacing: 0.1em;
+                    font-size: responsive-px(12, 18, 320, 768);
+                    margin-bottom: 3%;
+
+                    @include screen-sm-min() {
+                        font-size: responsive-px(12, 20, 768, 1920);
+                    }
+                }
+            }
+        }
+    }
+
+    .qr_container-alcohol {
+        .qr_ribbon {
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            flex-direction: column;
+
+            @include screen-sm-min() {
+                flex-direction: row;
+                position: relative;
+            }
+
+            >span {
+
+                padding: 15px;
+
+                @include screen-sm-min {
+                    z-index: 3;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                }
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .ribbon_left_content {
+                background-color: $banner_secundary;
+                color: $banner_text;
+                font-size: responsive-px(12, 20, 320, 768);
+                white-space: nowrap;
+
+                @include screen-sm-min() {
+                    font-size: responsive-px(12, 26, 768, 1920);
+                    width: 38%;
+                }
+
+            }
+
+            .qr_image {
+                border: 3px solid #000003;
+                background-color: #fff;
+                padding: 0;
+
+                @include screen-sm-min() {
+                    width: 24%;
+                }
+
+                img {
+                    width: 100%;
+                    max-height: 250px;
+
+                    @include screen-sm-min() {
+                        max-height: none;
+                    }
+                }
+            }
+
+            .ribbon_right_content {
+                background-color: $banner_secundary;
+                display: flex;
+                align-items: center;
+                justify-self: center;
+                flex-direction: column;
+                color: $banner_text;
+                font-size: responsive-px(10, 18, 320, 768);
+                line-height: 1;
+
+                @include screen-sm-min() {
+                    font-size: responsive-px(12, 26, 768, 1920);
+                    width: 38%;
+                }
+
+            }
+        }
+
+        .qr_footer {
+            margin: 0 auto;
+            margin-top: responsive-px(15, 35, 320, 768);
+            max-width: 90%;
+            border-radius: 50px;
+            //border: 10px dashed #838BCC;
+            padding: 20px;
+            background-color: $banner_secundary;
+
+            @include screen-sm-min() {
+                margin-top: responsive-px(15, 30, 768, 1920);
+            }
+
+            div {
+                text-align: center;
+                color: $banner_text;
+
+                &.main_title {
+                    font-weight: 700;
+                    font-size: responsive-px(12, 20, 320, 768);
+                    margin-bottom: 4%;
+
+                    @include screen-sm-min() {
+                        font-size: responsive-px(14, 30, 768, 1920);
+                    }
+                }
+
+                &.address {
+                    font-size: 500;
+                    letter-spacing: 0.1em;
+                    font-size: responsive-px(12, 18, 320, 768);
+                    margin-bottom: 3%;
+
+                    @include screen-sm-min() {
+                        font-size: responsive-px(12, 20, 768, 1920);
+                    }
+                }
+            }
+        }
+    }
+}

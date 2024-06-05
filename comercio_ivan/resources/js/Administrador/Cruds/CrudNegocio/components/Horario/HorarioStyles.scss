@@ -1,0 +1,32 @@
+ h5 {
+
+     &.horario-header {
+         margin-top: 30px;
+         margin-bottom: 15px;
+     }
+
+     &.horario-header,
+     &.anuncio-publicitario-header {
+         display: flex;
+         justify-content: flex-start;
+         align-items: center;
+
+         .horario-error-feedback {
+             color: #d32f2f;
+             margin-left: 15px;
+             font-size: 12px;
+             font-weight: 400;
+             display: flex;
+         }
+     }
+
+     &.horario-header {
+         margin-bottom: 30px;
+     }
+
+     &.anuncio-publicitario-header {
+         >span {
+             margin-right: 30px;
+         }
+     }
+ }

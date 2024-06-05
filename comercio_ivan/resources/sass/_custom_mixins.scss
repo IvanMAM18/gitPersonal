@@ -1,0 +1,119 @@
+@function responsive-px($min-px, $max-px, $min-vw: 320, $max-vw: 1920) {
+    @return calc(
+        #{$min-px}px + (#{$max-px} - #{$min-px}) *
+            ((100vw - #{$min-vw}px) / (#{$max-vw} - #{$min-vw}))
+    );
+}
+@mixin slide-border {
+    position: relative;
+    text-decoration: none;
+    &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #fff;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+    }
+    &:hover {
+        &:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    }
+}
+// Extra small screen / phone
+//** Deprecated `$screen-xs` as of v3.0.1
+$screen-xs: 480px !default;
+//** Deprecated `$screen-xs-min` as of v3.2.0
+$screen-xs-min: $screen-xs !default;
+//** Deprecated `$screen-phone` as of v3.0.1
+$screen-phone: $screen-xs-min !default;
+
+// Small screen / tablet
+//** Deprecated `$screen-sm` as of v3.0.1
+$screen-sm: 768px !default;
+$screen-sm-min: $screen-sm !default;
+//** Deprecated `$screen-tablet` as of v3.0.1
+$screen-tablet: $screen-sm-min !default;
+
+// Medium screen / desktop
+//** Deprecated `$screen-md` as of v3.0.1
+$screen-md: 992px !default;
+$screen-md-min: $screen-md !default;
+//** Deprecated `$screen-desktop` as of v3.0.1
+$screen-desktop: $screen-md-min !default;
+
+// Large screen / wide desktop
+//** Deprecated `$screen-lg` as of v3.0.1
+$screen-lg: 1200px !default;
+$screen-lg-min: $screen-lg !default;
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen-lg-desktop: $screen-lg-min !default;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max: ($screen-sm-min - 1) !default;
+$screen-sm-max: ($screen-md-min - 1) !default;
+$screen-md-max: ($screen-lg-min - 1) !default;
+
+//////////// Screen Mixins /////////////
+@mixin screen-xs() {
+    @media (max-width: ($screen-xs-min - 1)) {
+        @content;
+    }
+}
+// screen xs 480 and up
+@mixin screen-xs-min() {
+    @media (min-width: $screen-xs) {
+        @content;
+    }
+}
+
+// screen only sm
+@mixin screen-sm() {
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+        @content;
+    }
+}
+
+// screen sm min
+@mixin screen-sm-min() {
+    @media (min-width: $screen-sm-min) {
+        @content;
+    }
+}
+
+// screen only md
+@mixin screen-md() {
+    @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+        @content;
+    }
+}
+
+// screen md min
+@mixin screen-md-min() {
+    @media (min-width: $screen-md-min) {
+        @content;
+    }
+}
+
+// screen lg min
+@mixin screen-lg() {
+    @media (min-width: $screen-lg-min) {
+        @content;
+    }
+}
+@mixin screen-xlg() {
+    @media (min-width: 1500px) {
+        @content;
+    }
+}
+@mixin screen-xxlg() {
+    @media (min-width: 1750px) {
+        @content;
+    }
+}

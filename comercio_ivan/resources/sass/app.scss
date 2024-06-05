@@ -1,0 +1,652 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+// Variables
+@import "variables";
+@import "./resolutivo_details";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+
+
+
+.dynamic-delete-button {
+    position: relative;
+    top: 4px;
+    margin: 0 8px;
+    color: #999;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+    color: #777;
+}
+.dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.ant-layout.ant-layout-has-sider {
+    min-height: 100vh;
+}
+
+.documentPhoto {
+    width: 20%;
+    height: 20%;
+    border: 1px solid whitesmoke;
+    background-position: center;
+    border-radius: 4px;
+}
+
+.rechazar-aceptar-documento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.observaciones-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.observaciones-section {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+}
+
+.observaciones-section button {
+    margin-left: 10px;
+}
+
+.observaciones-centered {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.observaciones-centered label {
+    text-align: center;
+}
+
+.observaciones-centered .ant-input-textarea {
+    width: 100%;
+}
+
+.observaciones-centered button {
+    margin-top: 10px;
+}
+
+.ant-card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ant-tabs-nav-wrap {
+    overflow: auto !important;
+}
+
+/* .detalles-negocios-documents-list {
+    height: 500px;
+  } */
+
+.documentos-container-overflow {
+    overflow: auto;
+    height: 500px;
+}
+.title-list-header {
+    font-weight: bold;
+}
+
+.negocio-info-row {
+    margin-bottom: 10px;
+}
+
+.negocio-info-row .ant-card-head {
+    background-color: #f1f1f1;
+}
+
+.negocio-info-row .card-details {
+    overflow: auto;
+    height: 250px;
+}
+
+.logo-ayuntamiento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.logo-ayuntamiento img {
+    width: 150px;
+}
+
+.navbar-brand {
+    margin: 0 !important;
+}
+
+.sare--card {
+    margin: 10px !important;
+    width: 250px !important;
+}
+
+.negocios-table {
+    padding: 20px;
+}
+
+
+
+.documentos-subidos-section {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    overflow: auto !important;
+    // height: 500px !important;
+}
+
+.documentos-subidos-section > * {
+    padding: 10px;
+}
+
+.documentos-a-revisar-container {
+    /* width: 100%;
+    height: 650px !important; */
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.aprobar-button {
+    height: 60px !important;
+}
+
+.aprobar-button-container button {
+    margin: 10px;
+}
+
+.entidad-revisora-card,
+.entidad-revisora-title {
+    font-size: 30px;
+    font-style: italic;
+}
+
+.entidad-revisora-title {
+    font-weight: bold;
+}
+
+.collapse {
+    display: block !important;
+}
+
+.documentos-container {
+    padding: 15px;
+    margin: 00px;
+}
+
+.success-notification {
+    background-color: #a7d590 !important;
+}
+
+.ant-notification-notice-icon-success {
+    color: green !important;
+}
+
+.success-notification .ant-notification-notice-message {
+    color: #40871d;
+}
+
+.success-notification .ant-notification-notice-description {
+    color: #40871d;
+}
+
+.success-notification .ant-notification-notice-close-icon {
+    color: #40871d;
+}
+
+.error-notification {
+    background-color: #a92019 !important;
+}
+
+.error-notification .ant-notification-notice-message {
+    color: white;
+}
+
+.error-notification .ant-notification-notice-description {
+    color: white;
+}
+
+.error-notification .ant-notification-notice-close-icon {
+    color: white;
+}
+
+@media screen and (min-width: 1595px) {
+}
+
+@media screen and (min-width: 993px) and (max-width: 1595px) {
+    /* .aprobar-button-container {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 80%;
+    } */
+
+    .aprobar-button {
+        height: 60px !important;
+        width: 100%;
+    }
+
+    .documentos-subidos-section {
+        display: grid;
+        grid-template-columns: auto auto;
+        overflow: auto !important;
+        // height: 500px !important;
+    }
+
+    .documentos-subidos-section > * {
+        padding: 10px;
+    }
+
+    .documentos-a-revisar-container {
+        /* width: 100%;
+      height: 650px !important; */
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .admin-card-container {
+        height: 100% !important;
+    }
+    .aprobar-button {
+        height: 60px !important;
+        width: 100%;
+    }
+
+    .documentos-subidos-section {
+        display: grid;
+        grid-template-columns: auto auto;
+        overflow: auto !important;
+        // height: 500px !important;
+    }
+
+    .documentos-subidos-section > * {
+        padding: 10px;
+    }
+
+    .documentos-a-revisar-container {
+        /* width: 100%;
+      height: 650px !important; */
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .logo-ayuntamiento img {
+        width: 50px;
+    }
+
+    .text-logo-ayuntamiento {
+        display: none !important;
+    }
+
+    /* .navbar-toggler {
+      display: none;
+    } */
+    .aprobar-button {
+        height: 60px !important;
+        width: 100%;
+    }
+
+    .documentos-subidos-section {
+        display: grid;
+        grid-template-columns: auto auto;
+        overflow: auto !important;
+        height: 500px !important;
+    }
+
+    .documentos-subidos-section > * {
+        padding: 10px;
+    }
+
+    .documentos-a-revisar-container {
+        /* width: 100%;
+      height: 650px !important; */
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .logo-ayuntamiento img {
+        width: 30px;
+    }
+
+    .text-logo-ayuntamiento {
+        display: none !important;
+    }
+
+    .aprobar-button {
+        height: 60px !important;
+        width: 100%;
+    }
+
+    .documentos-subidos-section {
+        display: grid;
+        grid-template-columns: auto;
+        overflow: auto !important;
+        // height: 500px !important;
+    }
+
+    .documentos-subidos-section > * {
+        padding: 10px;
+    }
+
+    .documentos-a-revisar-container {
+        /* width: 100%;
+      height: 650px !important; */
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
+.dynamic-delete-button {
+    position: relative;
+    top: 4px;
+    margin: 0 8px;
+    color: #999;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+    color: #777;
+}
+.dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+div[aria-label*="Select hours"].MuiClock-wrapper:after {
+    content: "Horas";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+}
+div[aria-label*="Select minutes"].MuiClock-wrapper:after {
+    content: "Minutos";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+}
+
+.new-content-pending {
+    width: 20px;
+    height: 20px;
+    background-color: #52c41a;
+    border-radius: 10px;
+}
+
+.ant-form-item-label > label {
+    white-space: normal;
+}
+.resolutivos {
+    .dragger-container.ant-form-item {
+        position: "relative";
+        .ant-col {
+            position: static;
+            .ant-form-item-control-input {
+                position: static;
+            }
+        }
+        .ant-form-item-control {
+            flex: unset;
+        }
+    }
+    .ant-form-item {
+        @media (max-width: 992px) {
+            flex-direction: column !important;
+            margin-bottom: 50px;
+        }
+        > div {
+            @media (max-width: 992px) {
+                width: 100% !important;
+                max-width: none;
+            }
+            > * {
+                @media (max-width: 992px) {
+                    width: 100% !important;
+                    max-width: none;
+                }
+            }
+        }
+    }
+}
+.resolutivos-tabs {
+    div.ant-tabs-tab {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .ant-tabs-tab + .ant-tabs-tab {
+        margin-left: 0;
+    }
+}
+#app {
+    .reset-app {
+        height: 100% !important;
+    }
+    // .reset-main{
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    // }
+    .container {
+        height: 100%;
+    }
+    .center-row-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.reset-form-custom-styles {
+    .img-thumbnail {
+        border: none;
+        background-color: white;
+        width: 200px;
+        height: auto;
+    }
+    .submit-button {
+        width: 100%;
+        border-radius: 0;
+        border: none;
+        background-color: $primary-color;
+    }
+    input {
+        border-radius: 0;
+        background-color: white;
+    }
+
+    input:focus {
+        border-color: #a66765;
+        box-shadow: 0 0 0 2px rgb(153 69 69 / 20%);
+        border-right-width: 1px;
+        outline: 0;
+    }
+}
+
+
+.card-container{
+    max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+  text-align: center;
+}
+
+.admin-card-container {
+    height: 250px;
+    p, h3, span.sangria  {
+      text-align: left;
+      margin-bottom: 5px;
+    }
+    span.sangria {
+      color: #999;
+      text-indent: 20px;
+      display: block; /* Agrega esta línea para que el text-indent funcione correctamente */
+    }
+  }
+
+.home-card-container{
+      span.sangria {
+        color: #999;
+        display: block;
+      }
+}
+
+.admin-card-container > h3{
+    margin-bottom: 10px;
+}
+
+.map-filters-entidad-revisora {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 15px;
+}
+
+.select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+  }
+  .row-map-filter {
+    width: 100%;
+  }
+
+  .select-map-filter {
+    width: 100%;
+  }
+  
+  .select-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 5px;
+  }
+
+
+.word-break{
+    display: inline-block;
+    width: 100%; /* Set the desired width for the tag */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+@media (min-width: 993px) {
+    // .map-filters-entidad-revisora{
+    //     height: 80px;
+    // }
+    .select-map-filter {
+        width: 100%;
+    }
+}
+
+.color-code-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-button-map {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: blue;
+    height: 50px;
+    color: white;
+}
+
+.detalles-entidad-card-container {
+    margin-bottom: 5px !important;
+}
+
+.button-end-flex {
+    margin-top: 10px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    width: 100%;
+    height: 50px !important;
+}
+
+.button-end-flex button {
+    height: 100%;
+}
+
+.blue-button {
+    background-color: #567DCC !important;
+    color: white !important;
+    width: 100%;
+}
+
+.submit-button {
+    width: 20%;
+}
+// @media (min-width: 600px) {
+//     .card-container { grid-template-columns: repeat(2, 1fr); }
+//   }
+
+//   .site-statistic-demo-card {
+//     padding: 30px;
+//     background: #ececec;
+//   }
+
+.sare--container{
+    .mis_negocios_header{
+            position: relative;
+            border-bottom: 1px solid #ccc;
+            .button-container {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            h5 {
+                margin-bottom: 35px;
+            }
+    }
+}
+
+.ant-form-item-label, .ant-tag {
+  white-space: normal !important;
+}
+
+.ant-tag {
+  margin-bottom: 3px;
+}
+
+.refrendar_negocios_check_group{ 
+    display: flex!important;
+    flex-direction: column;
+}

@@ -1,0 +1,77 @@
+
+
+//@import "~antd/dist/antd.less";
+
+@primary-color: #994545;
+
+.sare {
+  &--container {
+    padding: 15px;
+    background-color: white;
+    min-height: 100vh;
+  }
+
+  &--grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
+
+  &--card {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+  &--descriptions-row {
+    display: grid;
+    h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    p { font-size: 13px; }
+  }
+  &--list-item {
+    display: grid;
+    padding: 10px;
+    border-bottom: 1px solid whitesmoke;
+    margin-bottom: 15px;
+    grid-template-columns: 120px 120px 1fr 150px;
+    justify-items: center;
+    align-items: baseline;
+    @media (max-width: 710px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  &--card-cover {
+    height: 180px;
+    width: 200px;
+  }
+  &--requisitos-layout {
+    text-align: center;
+    .ant-card {
+      display: inline-block;
+      vertical-align: bottom;
+      margin-bottom: 10px;
+      margin-right: 10px;
+    }
+  }
+}
+.fr2-columns {
+  grid-template-columns: 1fr 1fr;
+}
+.fr3-columns {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.ant-table-content {
+  overflow: auto !important;
+}
+
+.comercio-admin-progreso-row {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.comercio-admin-progreso-row .ant-tag {
+  width: 100%;
+}

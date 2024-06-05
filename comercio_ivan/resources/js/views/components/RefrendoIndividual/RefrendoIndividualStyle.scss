@@ -1,0 +1,10 @@
+.refrendo_header{
+    position:relative;
+    margin-bottom: 45px;
+    >div{
+        position: absolute;
+        right:0;
+        top:50%;
+        transform: translateY(-50%);
+    }
+}
