@@ -25,7 +25,7 @@ export default function GirosCrud() {
         <>
             {serviciosPublicos && (
                 <CrudView
-                    pageTitle="Catálogo de Giros comerciales"
+                    pageTitle="Catálogo dee Giros comerciales"
                     modelo="giros"
                     columns={girosColumns}
                     formFields={[...girosFormFields, serviciosPublicosFormItem]}

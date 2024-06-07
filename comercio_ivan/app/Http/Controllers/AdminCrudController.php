@@ -223,6 +223,7 @@ class AdminCrudController extends Controller
             'descripcion' => $request->descripcion,
             'servicio_publico_id' => $request->servicio_publico_id,
             'tipo' => $request->tipo,
+            'tipo_sector' => $request->tipo_sector,
 
         ]);
 

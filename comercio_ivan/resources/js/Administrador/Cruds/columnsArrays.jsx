@@ -48,6 +48,11 @@ export const girosColumns = [
         key: "nombre",
     },
     {
+        title: "Descripcion",
+        dataIndex: "descripcion",
+        key: "descripcion",
+    },
+    {
         title: "Giro Recolección de Basura",
         dataIndex: "servicios_publicos",
         key: "servicios_publicos",
@@ -71,6 +76,30 @@ export const girosColumns = [
     },
     {
         title: "Sector",
+        dataIndex: "tipo_sector",
+        key: "tipo_sector",
+        render: (text, record) => (
+            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+        ),
+    },
+    {
+        title: "Cobro de Programa interno",
+        dataIndex: "tipo_sector",
+        key: "tipo_sector",
+        render: (text, record) => (
+            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+        ),
+    },
+    {
+        title: "Certificado de medio ambiente",
+        dataIndex: "tipo_sector",
+        key: "tipo_sector",
+        render: (text, record) => (
+            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+        ),
+    },
+    {
+        title: "Licencia de alcohol",
         dataIndex: "tipo_sector",
         key: "tipo_sector",
         render: (text, record) => (

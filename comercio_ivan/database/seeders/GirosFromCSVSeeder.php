@@ -40,6 +40,7 @@ class GirosFromCSVSeeder extends Seeder
                 'servicio_publico_id' => $servicio_publico === null ? -1 : $servicio_publico->id,
                 'tipo' => $this::getGiroTipo($giros[$i][4]),
                 'catalogo_giro_comercial_id' => 1,
+                'tipo_sector' => $giros[1][5]
             ]);
         }
 
@@ -56,5 +57,10 @@ class GirosFromCSVSeeder extends Seeder
             default:
                 return 'bajo_impacto';
         }
+    }
+
+    public static function getGirosTrueFalse($true_false)
+    {
+        return $true_false ? 'Si' : 'No';
     }
 }
