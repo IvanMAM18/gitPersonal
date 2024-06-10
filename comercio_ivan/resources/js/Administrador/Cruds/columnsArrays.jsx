@@ -47,11 +47,11 @@ export const girosColumns = [
         dataIndex: "nombre",
         key: "nombre",
     },
-    {
-        title: "Descripcion",
-        dataIndex: "descripcion",
-        key: "descripcion",
-    },
+    // {
+    //     title: "Descripcion",
+    //     dataIndex: "descripcion",
+    //     key: "descripcion",
+    // },
     {
         title: "Giro Recolección de Basura",
         dataIndex: "servicios_publicos",
