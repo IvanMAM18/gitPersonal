@@ -79,31 +79,31 @@ export const girosColumns = [
         dataIndex: "tipo_sector",
         key: "tipo_sector",
         render: (text, record) => (
-            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+            <Tag>{record.tipo_sector}</Tag>
         ),
     },
     {
         title: "Cobro de Programa interno",
-        dataIndex: "tipo_sector",
-        key: "tipo_sector",
+        dataIndex: "cobro_programa_interno",
+        key: "cobro_programa_interno",
         render: (text, record) => (
-            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+            <Tag>{record.cobro_programa_interno}</Tag>
         ),
     },
     {
         title: "Certificado de medio ambiente",
-        dataIndex: "tipo_sector",
-        key: "tipo_sector",
+        dataIndex: "certificado_medio_ambiente",
+        key: "certificado_medio_ambiente",
         render: (text, record) => (
-            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+            <Tag>{record.certificado_medio_ambiente}</Tag>
         ),
     },
     {
         title: "Licencia de alcohol",
-        dataIndex: "tipo_sector",
-        key: "tipo_sector",
+        dataIndex: "licencia_alcohol",
+        key: "licencia_alcohol",
         render: (text, record) => (
-            <Tag>{record?.tipo_sector?.replace(/\_/g, " ").toUpperCase()}</Tag>
+            <Tag>{record.licencia_alcohol}</Tag>
         ),
     },
 ];

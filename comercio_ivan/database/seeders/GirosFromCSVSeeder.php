@@ -33,6 +33,7 @@ class GirosFromCSVSeeder extends Seeder
             $servicio_publico_string = str_replace(["\r", "\n"], '', $servicio_publico_string);
             $servicio_publico_string = str_replace(['  '], ' ', $servicio_publico_string);
             $servicio_publico = CatalogoGirosComercialesRecoleccionBasura::where('nombre', $servicio_publico_string)->first();
+            
             GiroComercial::create([
                 'clave_scian' => $giros[$i][0],
                 'nombre' => $giros[$i][1],
@@ -40,7 +41,10 @@ class GirosFromCSVSeeder extends Seeder
                 'servicio_publico_id' => $servicio_publico === null ? -1 : $servicio_publico->id,
                 'tipo' => $this::getGiroTipo($giros[$i][4]),
                 'catalogo_giro_comercial_id' => 1,
-                'tipo_sector' => $giros[1][5]
+                'tipo_sector' => $giros[$i][5],
+                'cobro_programa_interno' => $giros[$i][6],
+                'certificado_medio_ambiente' => $giros[$i][7],
+                'licencia_alcohol' => $giros[$i][7]
             ]);
         }
 
