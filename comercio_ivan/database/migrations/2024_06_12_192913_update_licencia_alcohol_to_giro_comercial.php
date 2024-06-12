@@ -4,15 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLicenciaAlcoholToGiroComercial extends Migration
+class UpdateLicenciaAlcoholToGiroComercial extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
+        Schema::table('giro_comercial', function (Blueprint $table) {
+            $table->dropColumn('licencia_alcohol_giro_comercial');
+        });
         Schema::table('giro_comercial', function (Blueprint $table) {
             $table->enum('licencia_alcohol_giro_comercial', ['TRUE','FALSE'])->default('FALSE');
         });
@@ -20,13 +21,9 @@ class AddLicenciaAlcoholToGiroComercial extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('giro_comercial', function (Blueprint $table) {
-            $table->dropColumn('licencia_alcohol_giro_comercial');
-        });
+        //
     }
-}
+};

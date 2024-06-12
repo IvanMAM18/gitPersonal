@@ -21,6 +21,9 @@ class GiroComercial extends Model
         'tipo',
         'servicio_publico_id',
         'tipo_sector',
+        'cobro_programa_interno',
+        'certificado_medio_ambiente',
+        'licencia_alcohol_giro_comercial',
     ];
 
     public function servicios_publicos()

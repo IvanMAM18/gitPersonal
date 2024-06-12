@@ -224,7 +224,9 @@ class AdminCrudController extends Controller
             'servicio_publico_id' => $request->servicio_publico_id,
             'tipo' => $request->tipo,
             'tipo_sector' => $request->tipo_sector,
-
+            'cobro_programa_interno' => $request->cobro_programa_interno,
+            'certificado_medio_ambiente' => $request->certificado_medio_ambiente,
+            'licencia_alcohol_giro_comercial' => $request->licencia_alcohol_giro_comercial,
         ]);
 
         return $giro;

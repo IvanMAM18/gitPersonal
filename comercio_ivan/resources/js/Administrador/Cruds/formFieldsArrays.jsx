@@ -200,9 +200,9 @@ export const girosFormFields = [
     },
     {
         name: "cobro_programa_interno",
-        label: "CobroProgramaInterno",
+        label: "Cobro Programa Interno",
         value: "",
-        type: "boolean",
+        type: "select",
         disabled: false,
         options: [
             { id: "TRUE", name: "TRUE" },
@@ -210,17 +210,16 @@ export const girosFormFields = [
         ],
         rules: [
             {
-                required: false,
-                message: "",
+                required: true,
+                message: "Este campo es requerido!",
             },
         ],
     },
-    ,
     {
         name: "certificado_medio_ambiente",
-        label: "CertificadoMedioAmbiente",
+        label: "Certificado Medio Ambiente",
         value: "",
-        type: "boolean",
+        type: "select",
         disabled: false,
         options: [
             { id: "TRUE", name: "TRUE" },
@@ -228,17 +227,16 @@ export const girosFormFields = [
         ],
         rules: [
             {
-                required: false,
-                message: "",
+                required: true,
+                message: "Este campo es requerido!",
             },
         ],
     },
-    ,
     {
-        name: "licencia_alcohol",
-        label: "LicenciaAlcohol",
+        name: "licencia_alcohol_giro_comercial",
+        label: "Licencia de Alcohol",
         value: "",
-        type: "boolean",
+        type: "select",
         disabled: false,
         options: [
             { id: "TRUE", name: "TRUE" },
@@ -246,8 +244,8 @@ export const girosFormFields = [
         ],
         rules: [
             {
-                required: false,
-                message: "",
+                required: true,
+                message: "Este campo es requerido!",
             },
         ],
     },

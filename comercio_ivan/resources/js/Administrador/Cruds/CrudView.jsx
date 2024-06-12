@@ -165,6 +165,7 @@ export default function CrudView({
 
     const fillForm = (item) => {
         const itemKeys = Object.keys(item);
+        console.log(formFields);
         formFields.map((formItem) => {
             if (itemKeys.includes(formItem.name))
                 formItem.value = item[formItem.name];

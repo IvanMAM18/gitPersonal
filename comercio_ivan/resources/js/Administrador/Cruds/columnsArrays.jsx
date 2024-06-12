@@ -100,10 +100,10 @@ export const girosColumns = [
     },
     {
         title: "Licencia de alcohol",
-        dataIndex: "licencia_alcohol",
-        key: "licencia_alcohol",
+        dataIndex: "licencia_alcohol_giro_comercial",
+        key: "licencia_alcohol_giro_comercial",
         render: (text, record) => (
-            <Tag>{record.licencia_alcohol}</Tag>
+            <Tag>{record.licencia_alcohol_giro_comercial}</Tag>
         ),
     },
 ];

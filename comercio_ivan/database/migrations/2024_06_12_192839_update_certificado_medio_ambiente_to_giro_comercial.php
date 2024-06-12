@@ -4,15 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCertificadoMedioAmbienteToGiroComercial extends Migration
+class UpdateCertificadoMedioAmbienteToGiroComercial extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
+        Schema::table('giro_comercial', function (Blueprint $table) {
+            $table->dropColumn('certificado_medio_ambiente');
+        });
         Schema::table('giro_comercial', function (Blueprint $table) {
             $table->enum('certificado_medio_ambiente', ['TRUE','FALSE'])->default('FALSE');
         });
@@ -20,13 +21,9 @@ class AddCertificadoMedioAmbienteToGiroComercial extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('giro_comercial', function (Blueprint $table) {
-            $table->dropColumn('certificado_medio_ambiente');
-        });
+        //
     }
-}
+};

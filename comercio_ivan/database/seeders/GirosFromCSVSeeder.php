@@ -27,13 +27,15 @@ class GirosFromCSVSeeder extends Seeder
 
             fclose($open);
         }
-
         for ($i = 1; $i < count($giros); $i++) {
             $servicio_publico_string = $giros[$i][3];
             $servicio_publico_string = str_replace(["\r", "\n"], '', $servicio_publico_string);
             $servicio_publico_string = str_replace(['  '], ' ', $servicio_publico_string);
             $servicio_publico = CatalogoGirosComercialesRecoleccionBasura::where('nombre', $servicio_publico_string)->first();
-            
+            if($i <= 1001){
+                $si=  $giros[$i][8];
+
+            }
             GiroComercial::create([
                 'clave_scian' => $giros[$i][0],
                 'nombre' => $giros[$i][1],
@@ -44,7 +46,7 @@ class GirosFromCSVSeeder extends Seeder
                 'tipo_sector' => $giros[$i][5],
                 'cobro_programa_interno' => $giros[$i][6],
                 'certificado_medio_ambiente' => $giros[$i][7],
-                'licencia_alcohol' => $giros[$i][7]
+                'licencia_alcohol_giro_comercial' => $si,
             ]);
         }
 
@@ -65,6 +67,11 @@ class GirosFromCSVSeeder extends Seeder
 
     public static function getGirosTrueFalse($true_false)
     {
-        return $true_false ? 'Si' : 'No';
+        switch ($true_false) {
+            case 'TRUE':
+                return 'TRUE';
+            case 'FALSE':
+                return 'FALSE';
+        }
     }
 }
