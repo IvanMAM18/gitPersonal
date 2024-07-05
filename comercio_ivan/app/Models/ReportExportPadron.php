@@ -38,6 +38,7 @@ class ReportExportPadron implements FromView, ShouldAutoSize, WithColumnWidths, 
             'updated_at',
             'direccion_id',
             'persona_id',
+            'telefono',
             'persona_moral_id'
         )
             ->whereHas('tramitesPadres', function (Builder $query) {

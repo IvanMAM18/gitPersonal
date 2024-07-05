@@ -10,7 +10,7 @@ class Website
     {
         $user = Auth::user();
 
-        $direccion_notificacion = $user->direccionDeNotificacion ? ($user->direccionDeNotificacion->calle_principal.' '.$user->direccionDeNotificacion->numero_externo) : null;
+        $direccion_notificacion = $user->direccionDeNotificacion ? ($user->direccionDeNotificacion->calle_principal . ' ' . $user->direccionDeNotificacion->numero_externo) : null;
 
         return [
             'id' => $user->id,
@@ -23,8 +23,9 @@ class Website
             'direccion_notificacion' => $direccion_notificacion,
             'role_id' => $user->rol?->id ?? null,
             'role' => $user->rol?->nombre ?? 'Persona',
-            'entidad_revision' => $user->entidad_revision?->id ?? null,
-            'entidad_revision_nombre' => $user->entidad_revision?->nombre ?? '',
+            'entidad_revision' => $user->entidad_revision ? $user->entidad_revision->id : null,
+            'entidad_revision_nombre' => $user->entidad_revision ? $user->entidad_revision->nombre : '',
+            'permissions' => $user->permissions(),
         ];
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class AgregarCampoQuienActualizaNegocio extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -26,7 +27,7 @@ class AgregarCampoQuienActualizaNegocio extends Migration
     public function down()
     {
         Schema::table('negocios', function (Blueprint $table) {
-            $table->unsignedBigInteger('trabajador_modifica_id')->nullable();
+            $table->dropColumn('trabajador_modifica_id');
         });
     }
 }

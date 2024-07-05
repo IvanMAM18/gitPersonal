@@ -40,6 +40,6 @@ class ValidateRFC implements Rule
      */
     public function message()
     {
-        return 'El RFC que ingreso no es valido, no puede continuar con su registro';
+        return 'El valor del campo RFC no es valido.';
     }
 }

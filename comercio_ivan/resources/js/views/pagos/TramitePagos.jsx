@@ -117,11 +117,17 @@ function GenerarCobros({negocio: _negocio, year}) {
 
     const verAvisoButton = <Button
         type="primary"
+        style={ avisoEntero?.pagado ? {backgroundColor: 'gray'} : {}}
         className="ant-btn-primary button-primary tall-button"
         onClick={abrirAvisoEntero}
         disabled={cargando}
     >
-        Ver aviso entero
+        <div>Ver Aviso Entero</div>
+        {avisoEntero?.pagado &&
+            <>
+                <div>(PAGADO)</div>
+            </>
+        }
     </Button>;
 
     if(!requierePago)
@@ -140,7 +146,7 @@ function GenerarCobros({negocio: _negocio, year}) {
             year,
         }}>
             {
-                <div style={{display: "flex", justifyContent: "center"}}>
+                <div className="flex items-center">
                     { !avisoEntero ? solicitarPagoButton : null }
                     { !!avisoEntero && avisoEntero.expirado ? avisoExpiradoFragment : null }
                     { !!avisoEntero && !avisoEntero.expirado ? verAvisoButton : null }

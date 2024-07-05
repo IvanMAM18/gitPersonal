@@ -43,6 +43,11 @@ export const tramitesColumns = [
 ];
 export const girosColumns = [
     {
+        title: "Clave SCIAN",
+        dataIndex: "clave_scian",
+        key: "clave_scian",
+    },
+    {
         title: "Nombre",
         dataIndex: "nombre",
         key: "nombre",
@@ -52,58 +57,38 @@ export const girosColumns = [
     //     dataIndex: "descripcion",
     //     key: "descripcion",
     // },
-    {
-        title: "Giro Recolección de Basura",
-        dataIndex: "servicios_publicos",
-        key: "servicios_publicos",
-        render: (text, record) => (
-            // console.log("giros record:", record)
-            <span>{record.servicios_publicos.nombre.split(/[a-zA-Z]\) /)}</span>
-        ),
-    },
-    {
-        title: "Clave SCIAN",
-        dataIndex: "clave_scian",
-        key: "clave_scian",
-    },
+    // {
+    //     title: "Giro Recolección de Basura",
+    //     dataIndex: "servicios_publicos",
+    //     key: "servicios_publicos",
+    //     render: (text, record) => (
+    //         // console.log("giros record:", record)
+    //         <span>{record.servicios_publicos.nombre.split(/[a-zA-Z]\) /)}</span>
+    //     ),
+    // },
     {
         title: "Tipo",
         dataIndex: "tipo",
         key: "tipo",
-        render: (text, record) => (
-            <Tag>{record?.tipo?.replace(/\_/g, " ").toUpperCase()}</Tag>
-        ),
     },
     {
         title: "Sector",
         dataIndex: "tipo_sector",
         key: "tipo_sector",
-        render: (text, record) => (
-            <Tag>{record.tipo_sector}</Tag>
-        ),
     },
     {
         title: "Cobro de Programa interno",
         dataIndex: "cobro_programa_interno",
         key: "cobro_programa_interno",
-        render: (text, record) => (
-            <Tag>{record.cobro_programa_interno}</Tag>
-        ),
     },
     {
         title: "Certificado de medio ambiente",
         dataIndex: "certificado_medio_ambiente",
         key: "certificado_medio_ambiente",
-        render: (text, record) => (
-            <Tag>{record.certificado_medio_ambiente}</Tag>
-        ),
     },
     {
         title: "Licencia de alcohol",
         dataIndex: "licencia_alcohol_giro_comercial",
         key: "licencia_alcohol_giro_comercial",
-        render: (text, record) => (
-            <Tag>{record.licencia_alcohol_giro_comercial}</Tag>
-        ),
     },
 ];

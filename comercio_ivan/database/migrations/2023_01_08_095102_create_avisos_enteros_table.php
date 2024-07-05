@@ -35,6 +35,6 @@ class CreateAvisosEnterosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('avisos_enteros');
+        Schema::dropIfExists('avisos_entero');
     }
 }

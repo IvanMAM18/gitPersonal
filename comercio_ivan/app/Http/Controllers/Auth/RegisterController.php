@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\CurpRule;
@@ -57,8 +58,12 @@ class RegisterController extends Controller
     /**
      * Una vez que ya se completo el registro.
      */
-    protected function registered($request, $user)
+    protected function registered($request, User $user)
     {
+        $contribuyente = Role::where('label', Role::$PERSONA)->first();
+
+        $user->assignRole($contribuyente);
+
         return response(['redirect' => 'correo-de-verificacion-enviado']);
     }
 

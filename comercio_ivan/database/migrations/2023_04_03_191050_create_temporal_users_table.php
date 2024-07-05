@@ -38,6 +38,6 @@ class CreateTemporalUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('temporal_users');
     }
 }

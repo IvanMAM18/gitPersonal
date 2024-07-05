@@ -95,6 +95,8 @@ export default function DetallesNegociosEntidad(props) {
     const [permissions, setPermissions] = useState(permissionsStates);
 
     const [disableMainButtons, setDisableMainButtons] = useState(false);
+    const [disableVistoBueno, setDisableVistoBueno] = useState(false);
+    const [disableObservaciones, setDisableObservaciones] = useState(false);
     const [revisionAprobadoRechazado, setRevisionAprobadoRechazado] =
         useState(false);
 
@@ -151,7 +153,7 @@ export default function DetallesNegociosEntidad(props) {
         handleYearChange(selectedYear)
         getDocumentos()
         updateNegocio(negocioId, window.user.entidad_revision, selectedYear);
-        
+
     };
 
     useEffect(() => {
@@ -379,6 +381,17 @@ export default function DetallesNegociosEntidad(props) {
                 });
             });
         });
+
+        if (window.user.entidad_revision == 3 || window.user.entidad_revision == 2) {
+            const disableVistoBueno = requisitosArray.length === 0 || requisitosArray.some(requisito => requisito.status !== "APROBADO");
+            setDisableVistoBueno(false);
+        } else {
+            const disableVistoBueno = requisitosArray.some(requisito => requisito.status !== "APROBADO");
+            setDisableVistoBueno(false);
+        }
+
+        
+        
         return requisitosArray;
     };
 
@@ -729,7 +742,9 @@ export default function DetallesNegociosEntidad(props) {
                 }
             })
             .catch(function (error) {
-                setDisableMainButtons(false);
+                //setDisableMainButtons(false);
+                setDisableVistoBueno(false);
+                setDisableObservaciones(false);
                 openRejecFailedRevision("error");
             });
     };
@@ -765,7 +780,9 @@ export default function DetallesNegociosEntidad(props) {
                 }
             })
             .catch(function (error) {
-                setDisableMainButtons(false);
+                //setDisableMainButtons(false);
+                setDisableVistoBueno(false);
+                setDisableObservaciones(false);
                 setIniciaAprobarRevision(false);
                 openApprovedFailedRevision("error");
             });
@@ -816,7 +833,9 @@ export default function DetallesNegociosEntidad(props) {
                 .catch(function (error) {
                     setIsLoading(false);
                     console.log(error)
-                    setDisableMainButtons(false);
+                    //setDisableMainButtons(false);
+                    setDisableVistoBueno(false);
+                    setDisableObservaciones(false);
                     openSendNotesError("error");
                 });
         } catch (error) {
@@ -844,8 +863,6 @@ export default function DetallesNegociosEntidad(props) {
             prevCondicionantes.filter(condicionante => condicionante.id !== condicionanteToRemove.id)
         );
     };
-
-
 
     const removeDocuments = (e) => {
         var array = [...documentosRechazados]; // make a separate copy of the array
@@ -905,7 +922,7 @@ export default function DetallesNegociosEntidad(props) {
         setObservacionesHistorial([]);
         setNegociosDocumentosGrid([]);
         setDocumentosAprobados([]);
-        
+
 
         //menu fusionado de alcohol
         if (window.user.role_id == 6 && window.user.entidad_revision == 5) {
@@ -964,45 +981,6 @@ export default function DetallesNegociosEntidad(props) {
         }
     };
 
-    // const handleYearChange = (value) => {
-    //
-    //     if (!value || !negocio || !negocio.id) return;
-    //     setSelectedYear(value)
-
-    //     const entityId = (window.user.role_id === 6 && window.user.entidad_revision === 5) ? 6 : window.user.entidad_revision;
-    //     const url = `/app/detalles-by-year?negocio_id=${negocio.id}&year=${value}&entidad_revision_id=${entityId}`;
-
-    //     // Función para manejar la respuesta de la API
-    //     const handleResponse = (response) => {
-    //         if (response.data.length > 0) {
-    //             const negociosData = response.data[0];
-    //             setUploadedNegocio(negociosData);
-    //             setObservacionesHistorial(observacionesFromNegocioMod(response.data, window.user));
-    //             setNegociosDocumentosGrid(negociosData);
-
-    //             if (negociosData.revisiones && negociosData.revisiones.length > 0) {
-    //                 RevisionAprobados(negociosData.revisiones);
-    //             } else {
-    //                 setShowVistoBueno(false);
-    //             }
-    //         } else {
-    //             // Limpieza si no hay datos
-    //             setNegociosDocumentosGrid([]);
-    //             setObservacionesHistorial([]);
-    //             setShowVistoBueno(false);
-    //         }
-    //     };
-
-    //     // Función para manejar errores de la API
-    //     const handleError = (error) => {
-    //         console.log(error);
-    //     };
-
-    //     // Realizar la llamada a la API
-    //     axios.get(url).then(handleResponse).catch(handleError);
-    // };
-
-
     const onChangeAcceptedOrReject = (e) => {
         e.target.value.accepted = !e.target.value.accepted;
         if (e.target.checked == true) {
@@ -1021,12 +999,14 @@ export default function DetallesNegociosEntidad(props) {
 
     return (
         <div className="sare--container" style={{ backgroundColor: '#E0E0E0' }}>
+
             <RolesRouter />
             <GeneralHeader negocio={negocio} />
             <PropietarioInfo negocio={negocio} />
             <PersonaMoralInfo negocio={negocio} />
             <DireccionInfo negocio={negocio} pos={pos} />
             <MasDetallesInfo negocio={negocio} />
+
             <Collapse collapsible="header" className="detalles-entidad-card-container relative" defaultActiveKey={['10']}>
                 <div className="sm:absolute right-0 top-0 flex items-center justify-center sm:justify-end p-2 z-50">
                     <span className="mr-1 hidden md:block">Año Fiscal: </span>
@@ -1198,6 +1178,7 @@ export default function DetallesNegociosEntidad(props) {
                 ) : null}
                 {/* )} */}
             </Collapse>
+
             {
                 showVistoBueno ? (
                     <Card className="detalles-entidad-card-container">
@@ -1209,17 +1190,19 @@ export default function DetallesNegociosEntidad(props) {
                                         !revisionAprobadoRechazado && (
                                             <>
                                                 <Button
-                                                    disabled={disableMainButtons}
+                                                    disabled={disableVistoBueno}
                                                     type="primary"
                                                     className="ant-btn-primary button-primary aprobar-button"
                                                     onClick={() => {
-                                                        setDisableMainButtons(true);
+                                                        //setDisableMainButtons(true);
+                                                        setDisableVistoBueno(false);
+                                                        setDisableObservaciones(false);
                                                         setModalAprobarRevision(
                                                             true
                                                         );
                                                     }}
                                                 >
-                                                    Visto bueno
+                                                    Visto Bueno
                                                 </Button>
                                             </>
                                         )
@@ -1227,7 +1210,7 @@ export default function DetallesNegociosEntidad(props) {
                                     {
                                         !revisionAprobado && (
                                             <Button
-                                                disabled={disableMainButtons}
+                                                disabled={disableObservaciones}
                                                 type="primary"
                                                 className="ant-btn-primary button-primary aprobar-button"
                                                 onClick={mostrarObservaciones}
@@ -1254,7 +1237,9 @@ export default function DetallesNegociosEntidad(props) {
                                     }
                                 }
                                 onCancel={() => {
-                                    setDisableMainButtons(false);
+                                    //setDisableMainButtons(false);
+                                    setDisableVistoBueno(false);
+                                    setDisableObservaciones(false);
                                     setModalAprobarRevision(false);
                                 }}
                             >
@@ -1269,7 +1254,9 @@ export default function DetallesNegociosEntidad(props) {
                                 visible={modalRechazarRevision}
                                 onOk={() => rechazarRevision()}
                                 onCancel={() => {
-                                    setDisableMainButtons(false);
+                                    //setDisableMainButtons(false);
+                                    setDisableVistoBueno(false);
+                                    setDisableObservaciones(false);
                                     setModalRechazarRevision(false);
                                 }}
                             >

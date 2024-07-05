@@ -201,51 +201,39 @@ export const girosFormFields = [
     {
         name: "cobro_programa_interno",
         label: "Cobro Programa Interno",
-        value: "",
-        type: "select",
+        value: false,
+        type: "checkbox",
         disabled: false,
-        options: [
-            { id: "TRUE", name: "TRUE" },
-            { id: "FALSE", name: "FALSE" },
-        ],
         rules: [
             {
                 required: true,
-                message: "Este campo es requerido!",
+                message: "Campo requerido!",
             },
         ],
     },
     {
         name: "certificado_medio_ambiente",
         label: "Certificado Medio Ambiente",
-        value: "",
-        type: "select",
+        value: false,
+        type: "checkbox",
         disabled: false,
-        options: [
-            { id: "TRUE", name: "TRUE" },
-            { id: "FALSE", name: "FALSE" },
-        ],
         rules: [
             {
                 required: true,
-                message: "Este campo es requerido!",
+                message: "Campo requerido!",
             },
         ],
     },
     {
         name: "licencia_alcohol_giro_comercial",
         label: "Licencia de Alcohol",
-        value: "",
-        type: "select",
+        value: false,
+        type: "checkbox",
         disabled: false,
-        options: [
-            { id: "TRUE", name: "TRUE" },
-            { id: "FALSE", name: "FALSE" },
-        ],
         rules: [
             {
                 required: true,
-                message: "Este campo es requerido!",
+                message: "Campo requerido!",
             },
         ],
     },

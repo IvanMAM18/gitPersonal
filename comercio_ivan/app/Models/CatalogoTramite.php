@@ -24,6 +24,18 @@ class CatalogoTramite extends Model
         'tipo_tramite',
     ];
 
+    public function condicionantes()
+    {
+        return $this->belongsToMany(Condicionantes::class, 'catalogo_tramite_condicionantes', 'catalogo_tramite_id', 'condicionante_id')
+            ->withTimestamps();
+    }
+
+    public function requisitos()
+    {
+        return $this->belongsToMany(Requisito::class, 'catalogo_tramites_requisitos', 'catalogo_tramites_id', 'requisito_id')
+            ->withTimestamps();
+    }
+
     public function entidad_revisora()
     {
         return $this->hasMany(EntidadRevision::class, 'id', 'entidad_revisora_id');

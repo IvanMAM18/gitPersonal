@@ -53,7 +53,7 @@ export default  function ComercioAdminHomeNegocio() {
                 </a>
 
                 <a href={urlReportePadron}
-                   style={(window.user.role_id==6 || window.user.role_id==7) ? {marginLeft:'7%', marginBottom:'1%'} : { visibility: 'hidden'}}
+                   style={(window.user.role_id==6 || window.user.role_id==7 || window.user.id==79) ? {marginLeft:'7%', marginBottom:'1%'} : { visibility: 'hidden'}}
                    className="text-button ant-btn ant-btn-primary">
                     Descargar Padrón Comercio
                 </a>

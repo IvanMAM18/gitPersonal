@@ -22,14 +22,22 @@ class Revision extends Model
         'fecha',
     ];
 
+    /**
+     * Regresa el negocio relacionado con la revision.
+     */
+    public function negocio()
+    {
+        return $this->belongsTo(Negocio::class);
+    }
+
     public function estados_revision()
     {
-        return $this->hasMany('App\Models\EstadoRevision', 'revision_id');
+        return $this->hasMany(EstadoRevision::class, 'revision_id');
     }
 
     public function condicionantesRevision()
     {
-        return $this->hasMany('App\Models\CondicionantesRevision');
+        return $this->hasMany(CondicionantesRevision::class);
     }
 
     // la puse en ingles porque la de abajo esta mal escrita. atte: Frank.
@@ -42,33 +50,31 @@ class Revision extends Model
 
     public function requisitos()
     {
-        return $this->hasMany('App\Models\RequisitoRevision', 'revision_id');
+        return $this->hasMany(RequisitoRevision::class, 'revision_id');
+    }
+    public function requisito_revision()
+    {
+        return $this->hasMany(RequisitoRevision::class, 'revision_id', 'id');
     }
 
     public function negocio_requisitos_revision()
     {
-        return $this->hasMany('App\Models\NegocioRequisitoRevision', 'revision_id');
+        return $this->hasMany(NegocioRequisitoRevision::class, 'revision_id');
     }
 
     public function entidad()
     {
-        return $this->belongsTo('App\Models\EntidadRevision', 'entidad_revision_id', 'id');
+        return $this->belongsTo(EntidadRevision::class, 'entidad_revision_id', 'id');
     }
 
     // ESTA RELACION ESTA MAL
     public function tramites()
     {
-        return $this->hasMany('App\Models\Tramite', 'id', 'tramite_id');
+        return $this->hasMany(Tramite::class, 'id', 'tramite_id');
     }
-
-    public function requisito_revision()
-    {
-        return $this->hasMany('App\Models\RequisitoRevision', 'revision_id', 'id');
-    }
-
     public function tramite()
     {
-        return $this->hasOne('App\Models\Tramite', 'id', 'tramite_id');
+        return $this->hasOne(Tramite::class, 'id', 'tramite_id');
     }
 
     public function scopeEnRevision($query)

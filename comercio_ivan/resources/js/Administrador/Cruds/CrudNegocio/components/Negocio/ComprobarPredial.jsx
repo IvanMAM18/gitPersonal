@@ -77,7 +77,7 @@ export default function ComprobarPredial({
                                 <span>
                                     Lo invitamos a realizar su pago
                                     <a
-                                        href={`https://servicios.lapaz.gob.mx/predial.php?folio=${claveFolio.replace(
+                                        href={`https://predial-web.lapaz.gob.mx/?folio=${claveFolio.replace(
                                             "-",
                                             ""
                                         )}&tipo=${tipoPredial}`}

@@ -145,6 +145,6 @@ class RegistrationTest extends TestCase
         ])->assertStatus(200)
             ->assertJson(['redirect' => 'correo-de-verificacion-enviado']);
 
-        $this->assertAuthenticated();
+        $this->assertAuthenticated()->withoutExceptionHandling();
     }
 }

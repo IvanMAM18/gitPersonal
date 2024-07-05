@@ -163,13 +163,21 @@ export const fillFormWithResolutivoDataEcologia = (form, resolutivo) => {
     });
     form.setFieldsValue(formData);
 };
-export const checkGirosEnProgramaInterno = (giros, numEmpleadosTotales) => {
+export const checkGirosEnProgramaInterno = async (giros, numEmpleadosTotales, negocio_data,currentYearFilter) => {
     let tienePI = false;
     giros.forEach((giro) => {
         if (girosComercialesPI.includes(giro?.clave_scian?.toString()) || numEmpleadosTotales >= 50) {
             tienePI = true;
         }
     });
+    try {
+        const response = await axios.get(`/app/negocio-valida-programa-interno/${negocio_data.id}/${currentYearFilter}`);
+        if (response.data!=='') {
+            tienePI = response.data;
+        }
+    } catch (error) {
+        console.error('Error haciendo el request:', error);
+    }
     return tienePI;
 };
 const fillFormWithNegocioDataMedidasSeguridad = (form, negocio) => {

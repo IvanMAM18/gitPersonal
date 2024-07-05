@@ -2,9 +2,18 @@ import { Divider, Popover, Tag } from "antd";
 import status from "../../../utils/statuses";
 import moment from "moment";
 
+import {
+    CheckCircleOutlined,
+    ClockCircleOutlined,
+    CloseCircleOutlined,
+    ExclamationCircleOutlined,
+    MinusCircleOutlined,
+    SyncOutlined,
+  } from '@ant-design/icons';
+
 export default function DetalleNegocio({ negocio, useDivider = true }) {
 
-    console.log("NEGOCIOS DETALLE NEGOCIOS: ", negocio)
+    console.log("NEGOCIOS DETALLE NEGOCIOS: ", negocio.giro_comercial)
     return (
         <>
             {negocio?.created_at && (
@@ -19,6 +28,15 @@ export default function DetalleNegocio({ negocio, useDivider = true }) {
                     <p>
                         <b>Venta de alcohol: </b>{" "}
                         {negocio?.venta_alcohol ? "Sí" : "No"}
+                    </p>
+
+                    <p>
+                        <b>Giros comerciales: </b>{" "}
+                        {negocio?.giro_comercial ? (
+                            negocio?.giro_comercial?.map((giro_comercial) => (
+                                <Tag>{giro_comercial.nombre}</Tag>
+                            ))
+                        ) : null}
                     </p>
                     {negocio.foto_frontal_fachada ? (
                         <p>

@@ -102,9 +102,7 @@ export default function ListaNegociosRefrendo({ negocios, negociosNoValidos, mod
             </>}
 
             <Space direction={"horizontal"} size={"middle"} style={{ marginTop: 45, width: "100%", justifyContent: "space-between" }}>
-                <Button key="back" onClick={() => { navigate(localStorage.tramite_link); }}>
-                    Nuevo Negocio a Refrendar
-                </Button>
+                 
                 <Space direction={"horizontal"} size={"middle"} style={{ marginTop: 45, width: "100%", justifyContent: "flex-end" }}>
                     <Button key="back" onClick={() => { setModalPros({ ...modalProps, open: false }) }}>
                         Cancelar

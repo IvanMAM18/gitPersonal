@@ -1,20 +1,21 @@
 // Bootstrap
-import './bootstrap';
+import '@/bootstrap';
 
-// import React from "react";
-import '../css/tailwind.css';
-import '../css/bootstrap.css';
-import '../css/theme.css';
-import '../css/app.css';
+// Importar Estilos CSS
+import '@/../css/tailwind.css';
+import '@/../css/bootstrap.css';
+import '@/../css/theme.css';
+import '@/../css/app.css';
 
 import * as ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./views/App.jsx";
+import App from "@/v2/Layouts/App";
 import store from "./store";
-import LoginView from "./views/Auth/Login.jsx";
-import RegistrationView from "./views/Auth/Registration.jsx";
+import LoginView from "@/v2/views/Auth/Login";
+import RegistrationView from "@/v2/views/Auth/Registration";
+import ListaDeGirosComerciales from "@/v2/views/ListaDeGirosComerciales/Index";
 
 
 const appRoot = document.getElementById("root");
@@ -50,5 +51,10 @@ if (registerRoot) {
 }
 
 
+const girosRoot = document.getElementById("lista-degiros-comerciales");
+if (girosRoot) {
+    const root = ReactDOM.createRoot(girosRoot);
+    root.render(<ListaDeGirosComerciales />);
+}
 
-import './components/Empezar.jsx'
+// import './components/Empezar.jsx'

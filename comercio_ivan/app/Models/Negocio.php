@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Models;
-
 use App\Contracts\Tramitable;
 use App\Helpers\ServiciosPublicosPI;
+use App\Helpers\EntidadRevisora;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -75,6 +75,8 @@ class Negocio extends Model implements Tramitable
         'venta_alcohol' => 'bool',
     ];
 
+    public $anio_padre_tramite = null;
+
     public function resolutivos()
     {
         return $this->hasMany(Resolutivo::class, 'negocio_id', 'id');
@@ -126,11 +128,30 @@ class Negocio extends Model implements Tramitable
         );
     }
 
+    // public function giros_comerciales()
+    // {
+    //     return $this->belongsToMany(
+    //         GiroComercial::class, // The related model
+    //         'giro_comercial_negocio', // The pivot table
+    //         'negocio_id', // The foreign key in the pivot table for the current model
+    //         'giro_comercial_id' // The foreign key in the pivot table for the related model
+    //     );
+    // }
+
     public function revisiones()
     {
         return $this->hasMany(Revision::class);
     }
-
+    public function validarProgramaInterno()
+    {
+        return $this->hasMany(ValidarProgramaInterno::class);
+    }
+    public function validarProgramaInternoPorAnio($year = null)
+    {
+        return $this->validarProgramaInterno()
+            ->when($year, fn ($q) => $q->where('anio', $year))
+            ->first();
+    }
     /**
      * Relacion polimorfica con los tramites.
      */
@@ -139,7 +160,6 @@ class Negocio extends Model implements Tramitable
         return $this->morphMany(Tramite::class, 'tramitable')
             ->whereNotNull('tramite_padre_id');
     }
-
     /**
      * Regresa el tramite padre por año.
      */
@@ -198,6 +218,37 @@ class Negocio extends Model implements Tramitable
         $query->where('negocios.validado_por', '!=', 0);
     }
 
+    public function scopeNoValidado($query)
+    {
+        $query->where('negocios.validado_por', 0);
+    }
+    public function scopeRechazado($query) {
+        return $query->whereHas('revisiones', function ($query) {
+            $query->where("entidad_revision_id", EntidadRevisora::$COMERCIO)
+                  ->where('status', 'RECHAZADO');
+        });
+    }
+    public function scopeConTramitesObsoletos(Builder $query, $tramiteEspecificos = null)
+    {
+        return $query->where(function ($query) use ($tramiteEspecificos) {
+            $query->whereHas('tramitesPadres', function ($query) use ($tramiteEspecificos) {
+                $query->whereYear('created_at', (date('Y') - 1))
+                    ->when($tramiteEspecificos, fn($q) => $q->whereIn('catalogo_tramites_id', $tramiteEspecificos));
+            })
+                ->whereDoesntHave('tramitesPadres', function ($query) {
+                    $query->whereYear('created_at', date('Y'));
+                });
+        });
+    }
+    // public function scopeEstadoResolutivo(Builder $query)
+    // {
+    //     $fechaActual = Carbon::now()->format('Y-m-d H:i:s');
+    //     $year = Carbon::now()->year;
+
+    //     return $query == null || $query->resolutivos == null ? null
+    //         : ($query->resolutivos->whereBetween('fecha_expedicion', ["{$year}-01-01 00:00:00", $fechaActual])->first() ? 'VIGENTE'
+    //             : ($query->tramite_comercio_padre ? 'EN REVISION' : 'PENDIENTE'));
+    // }
     public function scopePorRFC(Builder $query, $rfc)
     {
         return $query->where(function ($query) use ($rfc) {
@@ -249,6 +300,16 @@ class Negocio extends Model implements Tramitable
             ->first();
     }
 
+    public function getTramitesPorAño($year = null)
+    {
+        $year = $year != null ? $year : now()->year;
+
+        return $this->tramites()
+            ->whereYear('created_at', $year)
+            ->with("aviso_entero")
+            ->with("catalogo_tramite")
+            ->get();
+    }
     public function getSubtramites($tramite_id)
     {
         $subtramites = Subtramite::select('*')
@@ -449,6 +510,11 @@ class Negocio extends Model implements Tramitable
 
         $esDistribuidorDeGas = $this->esDistribuidoraDeGas;
 
+        $validarProgramaInterno = $this->validarProgramaInternoPorAnio($this->anio_padre_tramite);
+
+        if($validarProgramaInterno != null)
+            return  $validarProgramaInterno->validar_programa_interno;
+
         return $giroProgramaInterno || $esMediano || $esGrande || $esDistribuidorDeGas;
     }
 
@@ -477,5 +543,23 @@ class Negocio extends Model implements Tramitable
     public function getEsGrandeAttribute()
     {
         return $this->tamano_empresa == 'grande';
+    }
+    public function getServicioBasuraAttribute()
+    {
+        switch ($this->nivel_recoleccion_basura) {
+            case 'servicio_privado':
+                return 'Servicio Privado';
+            case 'cuenta_propia':
+                return 'Uso de relleno sanitario';
+            default:
+                return 'Servicios Públicos';
+        }
+    }
+    public function scopeWithoutRechazadoRevisions(Builder $query)
+    {
+        return $query->whereDoesntHave('revisiones', function ($query) {
+            $query->where("entidad_revision_id", EntidadRevisora::$COMERCIO)
+            ->where('status', 'RECHAZADO');
+        });
     }
 }

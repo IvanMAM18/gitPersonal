@@ -55,6 +55,7 @@ export default function Login() {
 
     return (
         <div className="flex flex-col items-center mt-32 md:mt-0 md:justify-center h-full">
+            <span>Ahora si</span>
 
            <div className="max-w-md mx-auto text-center">
 
@@ -83,6 +84,7 @@ export default function Login() {
                        </button>
                    </form>
                </div>
+               
 
                <LoginRegisterViewPicker mode="login"/>
 

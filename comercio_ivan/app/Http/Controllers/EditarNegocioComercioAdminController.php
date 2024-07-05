@@ -26,7 +26,20 @@ class EditarNegocioComercioAdminController extends Controller
         $tramitesPermitidos = [9, 7, 8]; // Prot Civ, y Rec. Basura
         $ventaAlcoholesBeforeUpdate = $data['venta_alcohol'];
 
-        //        $negocio = Negocio::find($request->id);
+        $negocio = Negocio::find($request->id);
+        if ($data['tamano_empresa'] !==   $negocio->tamano_empresa ) {
+            //desvincular avisos
+            $negocio->tramites->each(function ($tramite) use ($tramitesPermitidos) {
+                if (in_array($tramite->catalogo_tramites_id, $tramitesPermitidos)) {
+                    $avisoEntero = $tramite ? $tramite->aviso_entero : null;
+                    if ($avisoEntero && $avisoEntero->vigente) {
+                        $avisoEntero->trabajador_baja_id = \Auth::user()->id;
+                        $avisoEntero->save();
+                        $avisoEntero->delete();
+                    }
+                }
+            });
+        }
         $negocio->update($data);
 
         $persona = $negocio->user;
@@ -131,24 +144,31 @@ class EditarNegocioComercioAdminController extends Controller
             }
         }
         //END venta alcoholes
-        if ($data['tiene_pagos'] === false) {
-            //desvincular avisos
-            $negocio->tramites->each(function ($tramite) use ($tramitesPermitidos) {
-                if (in_array($tramite->catalogo_tramites_id, $tramitesPermitidos)) {
-                    $avisoEntero = $tramite ? $tramite->aviso_entero : null;
-                    if ($avisoEntero && $avisoEntero->vigente) {
-                        $avisoEntero->trabajador_baja_id = \Auth::user()->id;
-                        $avisoEntero->save();
-                        $avisoEntero->delete();
-                    }
-                }
-            });
-        }
-
-
         //
         return response()->json([
             'ok' => true,
         ]);
+    }
+    public function updateField(Negocio $negocio, Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'field' => 'required|string',
+            'value' => 'nullable',
+        ]);
+
+        // Update the specified field
+        $field = $validated['field'];
+        $value = $validated['value'];
+        $negocio->$field = $value;
+
+        // Save the model
+        $negocio->save();
+
+        // Return a response
+        return response()->json([
+            'message' => 'Campo actualizado correctamente',
+            'model' => $negocio
+        ], 200);
     }
 }

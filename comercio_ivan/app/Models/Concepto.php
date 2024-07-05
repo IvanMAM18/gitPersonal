@@ -26,6 +26,11 @@ class Concepto extends Model
         return $this->hasMany(ConceptoDetalle::class, 'concepto_id', 'id');
     }
 
+    public function entidadRevision()
+    {
+        return $this->belongsTo(EntidadRevision::class, 'entidad_revisora_id', 'id');
+    }
+
     public function obtenerMesesTxt()
     {
         $meses = [

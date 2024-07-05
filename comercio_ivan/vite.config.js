@@ -13,7 +13,7 @@ export default defineConfig({
                 '/resources/css/theme.css',
                 // JS Files
                 '/resources/js/app.jsx',
-                '/resources/js/Administrador/Admin.jsx',
+                '/resources/js/administrador.jsx',
                 '/resources/js/views/revision/negocios.jsx',
                 '/resources/js/views/revision/detallesNegociosEntidad.jsx',
                 '/resources/js/views/resolutivos/ResolutivoDetailsView.jsx',

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { filterNegociosByYear, validateClaveCatastralDeNegocios } from '../MisNegocios/Utils';
 import RefrendarNegocios from './RefrendarNegocios';
 import { Spin } from 'antd';
-import { Link, useNavigate } from "react-router-dom";
 
 export default function RefrendoModalContainer({ setRefrendoDesdeTramites, refrendoDesdeTramites, negocios = null, añoParaBuscar = new Date().getFullYear(), refreshNegocios }) {
     const [modalProps, setModalPros] = useState({
@@ -67,7 +66,7 @@ export default function RefrendoModalContainer({ setRefrendoDesdeTramites, refre
                         {negociosLista?.negociosValidos?.length === 0
                             ? <div >
                                 <div style={{ fontSize: 10, whiteSpace: "nowrap" }}>NO HAY NEGOCIOS PARA REFRENDAR,</div>
-                                <div style={{ fontSize: 10, whiteSpace: "nowrap" }}>DESEA REFRENDAR UNO NUEVO? CLICK <Link to={localStorage?.tramite_link}>AQUI</Link></div>
+                        
                             </div> :
                             <RefrendarNegocios
                                 negocios={negociosLista?.negociosValidos ?? null}
@@ -85,7 +84,6 @@ export default function RefrendoModalContainer({ setRefrendoDesdeTramites, refre
                 :
                 <div >
                     <div style={{ fontSize: 10, whiteSpace: "nowrap" }}>NO HAY NEGOCIOS PARA REFRENDAR,</div>
-                    <div style={{ fontSize: 10, whiteSpace: "nowrap" }}>DESEA REFRENDAR UNO NUEVO? CLICK <Link to={localStorage?.tramite_link}>AQUI</Link></div>
                 </div>
             }
         </>

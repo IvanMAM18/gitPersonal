@@ -35,23 +35,23 @@ class MustHaveRole
             return $next($request);
         }
 
-        // 'rol:admin-comercio'
-        if (in_array('admin-comercio', $roles) && $user->esAdministradorDeComercio()) {
+        // 'rol:comercio-admin'
+        if (in_array('comercio-admin', $roles) && $user->esAdministradorDeComercio()) {
             return $next($request);
         }
 
-        // rol:director-entidad-revisora
-        if (in_array('director-entidad-revisora', $roles) && $user->esEntidadRevisoraDirector()) {
+        // rol:entidad-revisora-director
+        if (in_array('entidad-revisora-director', $roles) && $user->esEntidadRevisoraDirector()) {
             return $next($request);
         }
 
-        // rol:director-comercio
-        if (in_array('director-comercio', $roles) && $user->esDirectorDeComercio()) {
+        // rol:comercio-director
+        if (in_array('comercio-director', $roles) && $user->esDirectorDeComercio()) {
             return $next($request);
         }
 
-        // rol:admin-comercio-visor
-        if (in_array('admin-comercio-visor', $roles) && $user->esAdministradorDeComercioVisor()) {
+        // rol:comercio-admin-visor
+        if (in_array('comercio-admin-visor', $roles) && $user->esAdministradorDeComercioVisor()) {
             return $next($request);
         }
 

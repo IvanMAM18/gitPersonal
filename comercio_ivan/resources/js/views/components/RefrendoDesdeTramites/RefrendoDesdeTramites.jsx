@@ -17,9 +17,12 @@ export default function RefrendoDesdeTramites({ setRefrendoDesdeTramites, refren
 
     return (
         <>
-            {negocios === null
-                ? (<Spin style={{ marginLeft: 15 }} />)
-                : (<RefrendoModalContainer setRefrendoDesdeTramites={setRefrendoDesdeTramites} refrendoDesdeTramites={refrendoDesdeTramites} negocios={negocios} />)
+            {negocios === null && (<Spin style={{ marginLeft: 15 }} />)}
+            {
+                negocios?.length > 0 && (<RefrendoModalContainer setRefrendoDesdeTramites={setRefrendoDesdeTramites} refrendoDesdeTramites={refrendoDesdeTramites} negocios={negocios} />)
+            }
+            {
+                negocios?.length === 0 && <span>No hay negocio para refrendar</span>
             }
         </>
     );

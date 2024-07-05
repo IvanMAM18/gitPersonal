@@ -7,6 +7,8 @@ export default function RolesRouter() {
 
     useEffect(() => {
         const role = window.user.role
+        // console.log(role)
+        // console.log(routes.allowedByRole)
         if (routes.allowedByRole[role]?.includes(location.pathname.replace(/[0-9]+/g, '__rid__'))) {
 
         } else {

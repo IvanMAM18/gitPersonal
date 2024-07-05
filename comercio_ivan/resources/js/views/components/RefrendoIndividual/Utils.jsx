@@ -2,7 +2,16 @@ import axios from "axios";
 
 export function filterNegociosByYear(negocios, year) {
     return negocios.filter(negocio => {
-        if (negocio?.tramite_comercio_refrendo_current_year?.length > 1) {
+        if(negocio.id ===409)
+            console.log({negocio},new Date(negocio?.tramite_padre?.[0]?.created_at).getFullYear())
+        if (new Date(negocio?.tramite_padre?.[0]?.created_at).getFullYear() === new Date().getFullYear() - 1) {
+            const tramiteComercio = negocio?.tramites_comercio?.find(tc => tc?.tramite?.catalogo_tramite?.nombre.toLowerCase().includes("uso de suelo"))
+            if (tramiteComercio === null) return false;
+            if (tramiteComercio?.tramite?.aviso_entero?.pagado === false) return false;
+            if (tramiteComercio?.tramite?.ultima_revision?.status !== "APROBADO") return false;
+
+        }
+        if (negocio?.tramite_comercio_refrendo_current_year?.length >= 1) {
             return false;
         }
         if (negocio?.tramite_comercio_refrendo_current_year?.length === 0) {
@@ -68,7 +77,7 @@ async function performPostRequest(negocio, token) {
                     value: negocio?.id?.toString(),
                     statusClaveCatastralMessage: <span>
                         Lo invitamos a realizar su pago <a
-                            href={`https://servicios.lapaz.gob.mx/predial.php?folio=${negocio?.clave_catastral}&tipo=${negocio?.tipo_predio}`}
+                            href={`https://predial-web.lapaz.gob.mx/?folio=${negocio?.clave_catastral}&tipo=${negocio?.tipo_predio}`}
                             target="_blank"
                         >click aquí</a>
                     </span>,

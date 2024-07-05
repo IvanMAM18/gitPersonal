@@ -28,6 +28,7 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
     const currentYearFilter = parseInt(localStorage?.currentYearFilter);
     const [listaInspectores, setListaInspectores] = useState([]);
     const [inspectorExPI, setInspectoreExPI] = useState([]);
+    const [tienePI, setTienePI] = useState(false);
     const { negocioId } = useParams();
     const [showModal, setShowModal] = useState(false);
     const [resolutivoGuardadoYFirmado, saveAndSignResolutivo] =
@@ -42,6 +43,7 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
     const getInspectoreExPI = () => {
         setInspectoreExPI(inspectorePIEx)
     }
+     
 
     useEffect(() => {
         getEntidadRevisoraDirectorRolId();
@@ -51,6 +53,12 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
             currentYearFilter
         );
         fillFormWithNegocioDataMedidasSeguridad(form, negocio_data);
+      
+        (async () => {
+            const resultado = await checkGirosEnProgramaInterno(negocio_data?.giro_comercial, negocio_data?.no_empleados_h + negocio_data?.no_empleados_m, negocio_data,currentYearFilter);
+            setTienePI(resultado)
+    
+        })();
         if (currentYearFilter === 2023) {
             setListaInspectores(ListaInspectores);
             setInspectoreExPI(inspectorePI);
@@ -59,7 +67,7 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
             getInspectoreExPI();
         }
     }, []);
-
+   
     useEffect(() => {
         if (resolutivoGuardado) {
             console.log({ resolutivoGuardado });
@@ -128,7 +136,7 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
             ? JSON.parse(_resolutivo?.detalles)
             : null;
         if (detalles !== null) {
-            switch (checkGirosEnProgramaInterno(negocio_data?.giro_comercial, negocio_data?.no_empleados_h + negocio_data?.no_empleados_m)) {
+            switch (tienePI) {
                 case true:
                     createCertificacionPdf_AI({
                         ...formValues,
@@ -159,8 +167,8 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
         const values = form.getFieldsValue(
             certificacionMedidasSeguridadFormFields
         );
-        console.log({ values });
-        switch (checkGirosEnProgramaInterno(negocio_data?.giro_comercial, negocio_data?.no_empleados_h + negocio_data?.no_empleados_m)) {
+       
+        switch (tienePI) {
             case true:
                 createCertificacionPdf_AI(
                     {
@@ -352,9 +360,7 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
                     name="inspector_pi"
                     rules={[
                         {
-                            required: checkGirosEnProgramaInterno(
-                                negocio_data?.giro_comercial, negocio_data?.no_empleados_h + negocio_data?.no_empleados_m
-                            ),
+                            required: tienePI,
                             message:
                                 "Seleccione el nombre del consultor externo!",
                         },
@@ -362,9 +368,7 @@ export default function CertificacionMedidasSeguridad({ negocio_data }) {
                 >
                     <Select
                         disabled={
-                            !checkGirosEnProgramaInterno(
-                                negocio_data?.giro_comercial, negocio_data?.no_empleados_h + negocio_data?.no_empleados_m
-                            )
+                            !tienePI
                         }
                         showSearch
                         placeholder="Consultor externo"

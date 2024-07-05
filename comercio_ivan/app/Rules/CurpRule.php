@@ -49,7 +49,7 @@ class CurpRule implements Rule
      */
     public function message()
     {
-        return __('El campo CURP es incorrecto.');
+        return __('El valor del campo CURP no es valido.');
     }
 
     /**

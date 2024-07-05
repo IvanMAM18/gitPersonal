@@ -4,6 +4,10 @@ use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+//Ruta publica para ver el catalogo de giros comerciales
+Route::get('/lista-de-giros-comerciales', [Controllers\ListaDeGirosComercialesController::class, 'index'])
+    ->name('giros-comerciales');
+
 Route::get('/resolutivo/{resolutivo:folio}', [Controllers\ResolutivoController::class, 'getResolutivoViewByFolio']);
 Route::get('/negocio/{negocio}/qr', [Controllers\CodigoQrNegocioController::class, 'show']);
 Route::get('/informacion_negocio_detalles/{negocio}', [Controllers\NegocioController::class, 'getNegocioDetallesView']);
@@ -87,11 +91,12 @@ Route::prefix('app')->group(function () {
         Route::get('/admin-cruds', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/catalogo-tramites', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/catalogo-giros-comerciales', [Controllers\AdminCrudController::class, 'index']);
-        Route::get('/admin-cruds/subtramites', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/condicionantes', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/requisitos', [Controllers\AdminCrudController::class, 'index']);
+        Route::get('/admin-cruds/subtramites', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/trabajadores', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/usuarios', [Controllers\AdminCrudController::class, 'index']);
+        Route::get('/admin-cruds/autorizaciones', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/conceptos', [Controllers\AdminCrudController::class, 'index']);
         Route::get('/admin-cruds/umas', [Controllers\AdminCrudController::class, 'index']);
     });
@@ -234,12 +239,16 @@ Route::prefix('app')->group(function () {
         ->middleware('auth');
     Route::get('/generar-firma-reporte-tiempos/{year}', [Controllers\ReporteController::class, 'get_url_reporte_firmado']);
     Route::get('/generar-firma-reporte-padron/{year}', [Controllers\ReporteController::class, 'get_url_reporte_padron_firmado']);
+    Route::get('/generar-firma-reporte-padron-servicios-publicos/{year}', [Controllers\ReporteController::class, 'get_url_reporte_padron_servicios_publicos_firmado']);
     Route::get('/get-reporte-tiempos/{year}', [Controllers\ReporteController::class, 'getReporteTiempos'])
         ->middleware('signed')
         ->name('get-reporte-tiempos');
     Route::get('/get-reporte-padron/{year}', [Controllers\ReporteController::class, 'getReportePadron'])
         ->middleware('signed')
         ->name('get-reporte-padron');
+    Route::get('/get-reporte-padron-servicios-publicos/{year}', [Controllers\ReporteController::class, 'getReportePadronServiciosPublicos'])
+        ->middleware('signed')
+        ->name('get-reporte-padron-servicios-publicos');
 
     Route::get('/requisitos-list', [Controllers\NegocioController::class, 'getRequisitos']);
     Route::get('/get-details-no-documents/{negocio_id}', [Controllers\NegocioController::class, 'getDetailsNoDocuments']);
@@ -269,7 +278,7 @@ Route::prefix('app')->group(function () {
 
     Route::get('/negocios-not-approved/{entidad_revision}', [Controllers\NegocioController::class, 'allNotApproved']);
     Route::get('/entidad-revision/revision-de-negocios', [Controllers\EntidadRevisionNegociosController::class, 'index'])
-        ->middleware(['auth', 'rol:entidad-revisora,director-comercio']);
+        ->middleware(['auth', 'rol:entidad-revisora,comercio-director']);
 
     //sare
     Route::get('/negocios-not-approved-sare/{entidad_revision}/{selected_year}', [Controllers\NegocioController::class, 'allNotApprovedSare']);
@@ -282,6 +291,7 @@ Route::prefix('app')->group(function () {
         ->middleware(['auth']);
     Route::post('/negocio', [Controllers\NegocioController::class, 'store']);
     Route::post('/guardar-negocio/{negocio}', [Controllers\EditarNegocioComercioAdminController::class, 'update']);
+    Route::patch('/actualizar-campo-negocio/{negocio}', [Controllers\EditarNegocioComercioAdminController::class, 'updateField']);
 
     // Negocios
     Route::get('/negocio/{negocio}', [Controllers\NegocioController::class, 'show'])
@@ -293,7 +303,7 @@ Route::prefix('app')->group(function () {
     Route::get('/get-tramite-padre/{entidad_revision}', [Controllers\NegocioController::class, 'getTramitePadre']);
 
     Route::get('/negocioCargaMasiva', [Controllers\NegocioCargaMasivaController::class, 'store']);
-    Route::post('/borrar-negocio/{negocio_id}', [Controllers\NegocioController::class, 'borrarNegocio']);
+    Route::post('/borrar-negocio/{negocio}', [Controllers\NegocioController::class, 'borrarNegocio']);
 
     Route::get('/requisitos', [Controllers\RequisitoController::class, 'all'])
         ->middleware('auth');
@@ -309,13 +319,16 @@ Route::prefix('app')->group(function () {
     Route::get('/datos-faltantes-de-negocios', [Controllers\DatosFaltantesController::class, 'datosFaltantesNegocio'])
         ->middleware('auth');
     Route::post('/datos-faltantes-de-negocios', [Controllers\DatosFaltantesController::class, 'completar']);
+    Route::get('/negocio-valida-programa-interno/{negocio}/{anio}', [Controllers\ValidarProgramaInternoController::class, 'index'])
+    ->middleware('auth');
 
     // negocios activos
     Route::get('/comercio-admin/negocios/{negocio}', [Controllers\ComercioAdminController::class, 'obtenerNegocio']);
-    Route::get('/comercio-admin/negocios-en-revision', [Controllers\ComercioAdminController::class, 'negociosEnRevision']);
-    Route::get('/comercio-admin/negocios_en_revision_sare_pro', [Controllers\ComercioAdminController::class, 'negociosEnRevisionSarePro']);
-    Route::get('/comercio-admin/detalles-revision/{revision_id}', [Controllers\ComercioAdminController::class, 'detallesRevision']);
-    Route::post('/comercio-admin/validar-negocio/{negocio_id}', [Controllers\ComercioAdminController::class, 'validarNegocio']);
+    Route::get('/comercio-admin/negocios-en-revision', [Controllers\RevisionDeNegociosComercioAdminController::class, 'index'])
+        ->middleware(['auth']);
+    Route::get('/comercio-admin/detalles-revision/{revision}', [Controllers\RevisionesController::class, 'show'])
+        ->middleware(['auth']);
+    Route::post('/comercio-admin/tramite/{tramite}/validar', [Controllers\ValidarTramiteController::class, 'store']);
     Route::post('/observaciones-comercio-admin', [Controllers\ComercioAdminController::class, 'observaciones']);
     Route::get('/comercio-admin/busqueda-negocios-en-revision', [Controllers\ComercioAdminBusquedaNegocioController::class, 'negociosEnRevision']);
 
@@ -432,10 +445,11 @@ Route::post('/entidad-revision/concepto-detalles/{conceptoDetalle}/incisos/calcu
 Route::post('/entidad-revision/pagos', [Controllers\PagosController::class, 'store'])
     ->middleware(['auth']);
 
-Route::get('/entidad-revision/avisos-enteros/{avisoEntero}/pdf', [Controllers\PagosController::class, 'obtenerPDFAvisoEntero']);
+Route::get('/entidad-revision/avisos-enteros/{avisoEntero}/pdf', [Controllers\PagosController::class, 'obtenerPDFAvisoEntero'])
+    ->middleware(['auth']);
 
 Route::get('/entidad-revision/tramites/en-revision', [Controllers\EntidadRevisionController::class, 'tramitesEnRevision'])
-    ->middleware(['auth', 'rol:entidad-revisora,director-comercio']);
+    ->middleware(['auth', 'rol:entidad-revisora,comercio-director']);
 Route::get('/entidad-revision/tramites/{tramiteId}/detalles', [Controllers\EntidadRevisionController::class, 'detallesTramitePadre']);
 Route::get('/entidad-revision/tramites/{tramiteId}/aprobar', [Controllers\TramiteController::class, 'aprobar']);
 Route::get('/entidad-revision/tramites/{tramiteId}/rechazar', [Controllers\TramiteController::class, 'rechazar']);

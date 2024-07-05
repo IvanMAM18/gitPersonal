@@ -24,7 +24,7 @@ class ComercioAdminBusquedaNegocioController extends Controller
                 'giro_comercial:giro_comercial.id,giro_comercial.tipo,giro_comercial.nombre,giro_comercial.descripcion',
                 'catalogo_tramite:catalogo_tramites.id,catalogo_tramites.nombre',
                 'tramitesPadres' => function ($query) {
-                    $query
+                    $query->orderByDesc('id')
                         ->with([
                             'catalogo_tramite:catalogo_tramites.id,catalogo_tramites.nombre',
                         ]);

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import { PushpinOutlined } from "@ant-design/icons";
 import GoogleMapReact from "google-map-react";
-import { Card, Row, Col, } from "antd";
+import { Card, Row, Col, Space, } from "antd";
 import status from "../../../utils/statuses";
+import BotonUpdateField from './BotonUpdateField';
 
 export default function NegocioInfo({ negocio }) {
 
@@ -184,6 +185,38 @@ export default function NegocioInfo({ negocio }) {
                                 </p>
                             </div>
                         )}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Space size={"middle"} direction={"vertical"}>
+                            <h3>Campos a re-establecer</h3>
+                            <div>
+                                <strong>FOTO DE FACHADA</strong>{" "}
+                                <BotonUpdateField 
+                                    negocioId={negocio?.id}
+                                    campoParaActualizar={"foto_frontal_fachada"}
+                                    nuevoValor={null}
+                                    nombreParaMostrar={"Foto de fachada"}/>
+                            </div>
+                            <div>
+                                <strong>COMPROBANTE DE DOMICILIO</strong>{" "}
+                                <BotonUpdateField
+                                    negocioId={negocio?.id}
+                                    campoParaActualizar={"comprobante_domicilio"}
+                                    nuevoValor={null}
+                                    nombreParaMostrar={"Comprobante de domicilio"}/>
+                                </div>
+                            <div>
+                                <strong>DOCUMENTO DE PROPIEDAD</strong>{" "} 
+                                <BotonUpdateField
+                                negocioId={negocio?.id}
+                                campoParaActualizar={"documento_predio_propiedad"}
+                                nuevoValor={null}
+                                nombreParaMostrar={"Documento de propiedad"}/>
+                            </div>
+                        </Space>
+                        <hr/>
                     </Col>
                 </Row>
             </Col>

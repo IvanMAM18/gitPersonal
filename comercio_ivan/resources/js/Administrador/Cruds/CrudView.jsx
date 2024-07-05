@@ -3,6 +3,9 @@ import { Button, Table, message, Space, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import ModalForm from "../../components/ModalForm";
 import axios from "axios";
+import StyleTrueFalse from '../../Administrador/CrudsNegocio/components/StyleTrueFalse';
+import TipoSectorStyle from '../../Administrador/CrudsNegocio/components/TipoSectorStyle';
+import { Tag } from "antd";
 import {
     deleteConfirm,
     nuevoRegistro,
@@ -33,6 +36,11 @@ export default function CrudView({
     const [searchedColumn, setSearchedColumn] = useState("");
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
+        if(selectedKeys[0].toLowerCase() === 'si'){
+            selectedKeys[0] = 'true';
+        }else if(selectedKeys[0].toLowerCase() === 'no'){
+            selectedKeys[0] = 'false';
+        }
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
     };
@@ -51,8 +59,8 @@ export default function CrudView({
             <div style={{ padding: 8 }}>
                 <Input
                     ref={searchInput}
-                    placeholder="NOMBRE DEL TRÁMITE"
-                    value={selectedKeys[0]}
+                    placeholder= {placeholderTitlte(columns,dataIndex)}
+                    value={trueOrFalse(selectedKeys[0])}
                     onChange={(e) =>
                         setSelectedKeys(e.target.value ? [e.target.value] : [])
                     }
@@ -120,21 +128,36 @@ export default function CrudView({
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
-        render: (text) => text,
+        render: (text, record) => {
+            return stylesDataTable(dataIndex, record, text);
+        },
     });
 
-    const nombreColumnIndex = updatedColumns.findIndex(
-        (column) => column.dataIndex === 'nombre'
-    );
+    // const nombreColumnIndex = updatedColumns.findIndex(
+    //     (column) => column.dataIndex === 'nombre'
+    // );
 
-    updatedColumns[nombreColumnIndex] = {
-        ...updatedColumns[nombreColumnIndex],
-        ...getColumnSearchProps('nombre'),
-    };
+    // updatedColumns[nombreColumnIndex] = {
+    //     ...updatedColumns[nombreColumnIndex],
+    //     ...getColumnSearchProps('nombre'),
+    // };
+
+    const columnIndex = [];
+    columns.map((objeto, index)=>{
+        columnIndex[index] = ['columnIndex'+index];
+            columnIndex[index] = updatedColumns.findIndex(
+                (column) => column.dataIndex === (''+objeto.dataIndex)
+            );
+    
+            updatedColumns[columnIndex[index]] = {
+                ...updatedColumns[columnIndex[index]],
+                ...getColumnSearchProps(''+objeto.dataIndex),
+            };
+    });
 
     const _columns = [
         ...updatedColumns,
-        
+
         {
             title: "Acciones",
             key: "action",
@@ -183,6 +206,7 @@ export default function CrudView({
         setFormItems(formFieldsPassword);
         showModal("Actualzación", false);
     };
+
     const cleanForm = () => {
         if (formFieldsPassword) {
             var enabledFormFields = [...formFieldsPassword]?.map(
@@ -222,7 +246,7 @@ export default function CrudView({
     //     if (tableData?.length > 0 && tramites?.length > 0) {
     //         setTramitesAgrupados(agruparTramites(tableData, tramites))
     //     }
-        
+
     // }, [tableData]);
 
     const loadItems = () => {
@@ -232,7 +256,7 @@ export default function CrudView({
                 const formData = response.data;
                 formData.map((item) => {
                     item.key = item.id;
-                }); 
+                });
                 // console.log("get todos los: ", formData)
                 setTableData(formData);
             })
@@ -331,7 +355,7 @@ export default function CrudView({
                 // onChange={(pagination) => {
                 //     setPagination(pagination);
                 // }}
-                
+
                 // pagination={pagination}
                 pagination={{
                     defaultPageSize: 50,
@@ -357,4 +381,38 @@ export default function CrudView({
             )}
         </>
     );
+}
+
+function stylesDataTable(nameColumn, dataColumn,textData){
+    if(nameColumn === 'tipo'){
+        return <Tag >{dataColumn[nameColumn].replace(/\_/g, " ").toUpperCase()}</Tag>;
+    }
+    if(nameColumn === 'tipo_sector'){
+        return <TipoSectorStyle sector={ dataColumn[nameColumn] }/>;
+    }
+    if(nameColumn === 'cobro_programa_interno' || nameColumn === 'certificado_medio_ambiente' || nameColumn === 'licencia_alcohol_giro_comercial'){
+        return <StyleTrueFalse condicion={ dataColumn[nameColumn] } />;
+    }else{
+        return textData;
+    }
+}
+
+function placeholderTitlte(columns, columnSelect){
+    const titlePlaceholder = [];
+    columns.map((objeto, index)=>{
+        if(objeto.dataIndex === columnSelect){
+            titlePlaceholder [index]= (objeto.title);
+        }
+    })
+    return (titlePlaceholder+" (trámite)").replace(/,/g, "");
+}
+
+function trueOrFalse(text){
+
+    if(text === 'true'){
+        text = 'SI';
+    }else if(text === 'false'){
+        text='NO';
+    }
+    return text;
 }

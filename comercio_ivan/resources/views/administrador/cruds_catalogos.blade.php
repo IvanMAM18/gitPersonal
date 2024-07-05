@@ -7,9 +7,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <title>{{ config('app.name') }}</title>
+    <script type="text/javascript">
+        window.user = @json(\App\Helpers\Website::user())
+    </script>
     @viteReactRefresh
-    @vite(['resources/js/Administrador/Admin.jsx'])
-  <title>{{ config('app.name') }}</title>
+    @vite(['resources/js/administrador.jsx'])
 </head>
 <body>
   <div id="admin_cruds"></div>

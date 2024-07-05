@@ -14,3 +14,17 @@
 input, select {
     --tw-ring-shadow: 0 0 #000 !important;
 }
+
+/**
+ Esconde el scroll
+ */
+@layer utilities {
+    .scrollbar-none::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-none {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}

@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Events\TramiteCargado;
-use App\Helpers\ServiciosPublicosPI;
 use App\Models\CatalogoTramite;
 use App\Models\Concepto;
 use App\Models\ConceptoDetalle;
 use App\Models\Negocio;
 use App\Models\PersonaMoral;
 use App\Models\Requisito;
-use App\Models\TarifaProteccionCivil2024;
 use App\Models\Tramite;
 use App\Models\User;
+
+use App\Services\AvisoEnteroService;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,121 +53,18 @@ class EntidadRevisionController extends Controller
 
     public function obtenerConceptos(Request $request, CatalogoTramite $catalogoTramite)
     {
-        $entidadRevisionId = Auth::user()->entidad_revision_id;
-        $catalogoTramiteId = $catalogoTramite->id;
+        $year = $request->query('year', 2024);
+        $negocioId = $request->query('negocio_id');
 
-        if ($entidadRevisionId == 2) {
-            $negocioId = $request->query('negocio_id');
-            $year = $request->query('year', 2024);
-
-            return $this->obtenerConceptosServiciosPublicos($entidadRevisionId, $negocioId, $year);
-        }
-
-        if (Auth::user()->entidad_revision_id == 5) {
-            $entidadRevisionId = 6;
-        }
-
-        return Concepto::where('entidad_revisora_id', $entidadRevisionId)
-            ->where(function ($query) use ($catalogoTramiteId) {
-                $query->where('catalogo_tramites_id', $catalogoTramiteId)
-                    ->orWhere('catalogo_tramites_id', null);
-            })
-            ->get();
-    }
-
-    public function obtenerConceptosServiciosPublicos($entidadRevisionId, $negocioId, $year = 2024)
-    {
-        $negocio = Negocio::find($negocioId);
-        
-        $conceptos = Concepto::where('entidad_revisora_id', $entidadRevisionId)
-            ->where('anualidad', $year)
-            ->get();
-
-        $tieneProgramaInterno = $negocio->tieneProgramaInterno;
-
-        if ($tieneProgramaInterno) {
-            $conceptos = $conceptos->filter(function ($concepto) {
-                $concepto->opciones = json_decode($concepto->opciones);
-
-                return $concepto->opciones && in_array('PROGRAMA_INTERNO', $concepto->opciones);
-            })->values();
-        } else {
-            $conceptos = $conceptos->filter(function ($concepto) {
-                $concepto->opciones = json_decode($concepto->opciones);
-
-                return $concepto->opciones == null || (
-                    $concepto->opciones
-                    && in_array('PROGRAMA_INTERNO', $concepto->opciones)
-                ) == false;
-            })->values();
-        }
-
-        return $conceptos;
+        return AvisoEnteroService::conceptos($catalogoTramite, $negocioId, $year);
     }
 
     public function obtenerConceptoDetalles(Request $request, Concepto $concepto)
     {
         $entidadRevisionId = Auth::user()->entidad_revision_id;
+        $negocioId = $request->query('negocio_id');
 
-        if ($concepto->anualidad == 2024 && $entidadRevisionId == 2) {
-            $negocioId = $request->query('negocio_id');
-            $negocio = Negocio::where('id', $negocioId)->
-                first();
-
-            return $this->conceptosDetallesProteccionCivil($concepto, $negocio);
-        }
-
-        return $concepto->detalles;
-    }
-
-    public function conceptosDetallesProteccionCivil(Concepto $concepto, Negocio $negocio)
-    {
-        if (! $concepto || ! $negocio) {
-            return [];
-        }
-
-        if ($negocio->esDistribuidoraDeGas) {
-            return ConceptoDetalle::whereIn('id', [90])->get();
-        }
-
-        $conceptoDetallesIds = $concepto->detalles->map(function ($conceptoDetalle) {
-            return $conceptoDetalle->id;
-        });
-
-        $girosComerciales = $negocio->giro_comercial;
-        $sectores = collect([]);
-        $girosComerciales->each(function ($giroComercial) use ($sectores) {
-            $sector = strtoupper($giroComercial->tipo_sector);
-            if (! $sector) {
-                return;
-            }
-            $sectores->push($sector);
-        });
-
-        $tipoTarifa = $negocio->tipoTarifa;
-
-        $tarifas = TarifaProteccionCivil2024::whereIn('sector', $sectores)->
-            whereIn('concepto_detalle_id', $conceptoDetallesIds)->
-            where('tipo_tarifa', $tipoTarifa)->
-            get();
-
-        if ($tarifas->count() == 0) {
-            $opciones = is_array($concepto->opciones)
-                ? $concepto->opciones
-                : json_decode($concepto->opciones);
-            $programaIntero = $opciones
-                && in_array('PROGRAMA_INTERNO', $opciones);
-            $tarifa = TarifaProteccionCivil2024::whereNull('sector')->
-                whereNull('tipo_tarifa')->
-                where('programa_interno', $programaIntero)->
-                first();
-
-            return collect([$tarifa->conceptoDetalle]);
-        }
-
-        $tarifas = $tarifas->sortByDesc('valor');
-
-        return collect([$tarifas->first()->conceptoDetalle]);
+        return AvisoEnteroService::detallesPorConcepto($concepto, $negocioId);
     }
 
     public function calcularDetallesIncisos(Request $request, ConceptoDetalle $conceptoDetalle)
@@ -182,13 +80,15 @@ class EntidadRevisionController extends Controller
             $negocio = new Negocio();
         }
 
-        return $conceptoDetalle->calcularIncisos($negocio, [
+        $valores = [
             'descuento2023' => $descuento2023,
             'descuento' => $descuento,
             'adeudo' => $adeudo,
             'incisosValorManual' => $incisosValorManual,
             'anio' => $request->anio,
-        ]);
+        ];
+
+        return AvisoEnteroService::calcularIncisos($conceptoDetalle, $negocio, $valores);
     }
 
     public function temporal_calcular_tramites_atendidos_por_entidad($entidad_revision_id)

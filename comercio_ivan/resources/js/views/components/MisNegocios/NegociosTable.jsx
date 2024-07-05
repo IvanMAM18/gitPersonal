@@ -40,8 +40,9 @@ function NegociosTable({ negocios }) {
                         );
                         return;
                     }
-                    message.success("Trámite borrado");
-                    location.reload();
+                    message.success(`${response?.data?.message}`);
+                    setTimeout(()=>{location.reload();},1000);
+                    
                 }
             })
             .catch((error) => {
@@ -160,6 +161,15 @@ function NegociosTable({ negocios }) {
                         {record?.tramite_comercio_refrendo_current_year?.length === 0
                             && checkValidoUsoSueloAnnioPasado(record?.tramites ?? [])
                             && <RefrendoIndividualLink negocio={record} giros={giros} />}
+
+                            <Button type="link" danger onClick={() =>
+                                abrirBorrarTramiteModal(
+                                    id,
+                                    record.nombre_del_negocio
+                                )
+                            }>
+                                <DeleteOutlined style={{ fontSize: 16 }} />
+                            </Button>
                     </Space>
                 );
             },

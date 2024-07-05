@@ -9,6 +9,7 @@ npm install && npm run build
 if [ -f artisan ]; then
     php artisan migrate --force
     php artisan optimize
+    php artisan cache:clear
 fi
 
 #php artisan horizon:terminate

@@ -3,6 +3,8 @@
         <th {!!$estiloEncabezado!!}>Trámite ID</th>
         <th {!!$estiloEncabezado!!}>Nombre del Comercio</th>
         <th {!!$estiloEncabezado!!}>Nombre del Propietario</th>
+        <th {!!$estiloEncabezado!!}>Fecha Inicio Trámite</th>
+        <th {!!$estiloEncabezado!!}>Teléfono</th>
         <th {!!$estiloEncabezado!!}>Giros</th>
         <th {!!$estiloEncabezado!!}>Impacto Giro</th>
         <th {!!$estiloEncabezado!!}>Venta Alcohol</th>
@@ -37,6 +39,8 @@
         <td>{{$negocio->tramitesPadres->first()->id}}</td>
         <td>{{$negocio->nombre_del_negocio}}</td>
         <td>{{$negocio->propietario}}</td>
+        <td>{{$negocio->tramitesPadres->first()->fecha}}</td>
+        <td>{{$negocio->telefono}} </td>
         <td>
             @foreach ($negocio->giro_comercial as $giro)
             {{$giro->nombre}}|

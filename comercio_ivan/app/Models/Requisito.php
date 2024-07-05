@@ -32,6 +32,27 @@ class Requisito extends Model
         'deleted_at',
     ];
 
+
+    public function archivo()
+    {
+        return $this->belongsTo('App\Models\UsuarioRequisito', 'id', 'requisito_id');
+    }
+
+    public function negocio_archivo()
+    {
+        return $this->belongsTo('App\Models\RequisitoNegocio', 'id', 'requisito_id');
+    }
+
+    public function catalogo_requisito()
+    {
+        return $this->belongsTo('App\Models\CatalogoRequisito');
+    }
+
+    public function persona_requisito()
+    {
+        return $this->belongsTo('App\Models\PersonaRequisito', 'id', 'requisito_id');
+    }
+
     public static function storeRequisito(Request $request)
     {
         try {
@@ -119,25 +140,6 @@ class Requisito extends Model
         );
     }
 
-    public function archivo()
-    {
-        return $this->belongsTo('App\Models\UsuarioRequisito', 'id', 'requisito_id');
-    }
-
-    public function negocio_archivo()
-    {
-        return $this->belongsTo('App\Models\RequisitoNegocio', 'id', 'requisito_id');
-    }
-
-    public function catalogo_requisito()
-    {
-        return $this->belongsTo('App\Models\CatalogoRequisito');
-    }
-
-    public function persona_requisito()
-    {
-        return $this->belongsTo('App\Models\PersonaRequisito', 'id', 'requisito_id');
-    }
 
     public function scopeAprobado($query)
     {

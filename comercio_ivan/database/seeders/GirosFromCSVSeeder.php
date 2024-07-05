@@ -15,7 +15,7 @@ class GirosFromCSVSeeder extends Seeder
      */
     public function run()
     {
-        GiroComercial::query()->truncate();
+//        GiroComercial::query()->truncate();
 
         $giros = [];
 
@@ -32,11 +32,10 @@ class GirosFromCSVSeeder extends Seeder
             $servicio_publico_string = str_replace(["\r", "\n"], '', $servicio_publico_string);
             $servicio_publico_string = str_replace(['  '], ' ', $servicio_publico_string);
             $servicio_publico = CatalogoGirosComercialesRecoleccionBasura::where('nombre', $servicio_publico_string)->first();
-            if($i <= 1001){
-                $si=  $giros[$i][8];
 
-            }
-            GiroComercial::create([
+            GiroComercial::updateOrCreate([
+                'clave_scian' => $giros[$i][0],
+            ],[
                 'clave_scian' => $giros[$i][0],
                 'nombre' => $giros[$i][1],
                 'descripcion' => $giros[$i][2],
@@ -44,13 +43,13 @@ class GirosFromCSVSeeder extends Seeder
                 'tipo' => $this::getGiroTipo($giros[$i][4]),
                 'catalogo_giro_comercial_id' => 1,
                 'tipo_sector' => $giros[$i][5],
-                'cobro_programa_interno' => $giros[$i][6],
-                'certificado_medio_ambiente' => $giros[$i][7],
-                'licencia_alcohol_giro_comercial' => $si,
+                'cobro_programa_interno' => filter_var($giros[$i][6], FILTER_VALIDATE_BOOLEAN),
+                'certificado_medio_ambiente' => filter_var($giros[$i][7], FILTER_VALIDATE_BOOLEAN),
+                'licencia_alcohol_giro_comercial' => filter_var($giros[$i][8], FILTER_VALIDATE_BOOLEAN),
             ]);
         }
 
-        return GiroComercial::all();
+//        return GiroComercial::all();
     }
 
     public static function getGiroTipo($tipo_from_csv)
@@ -64,14 +63,5 @@ class GirosFromCSVSeeder extends Seeder
                 return 'bajo_impacto';
         }
     }
-
-    public static function getGirosTrueFalse($true_false)
-    {
-        switch ($true_false) {
-            case 'TRUE':
-                return 'TRUE';
-            case 'FALSE':
-                return 'FALSE';
-        }
-    }
 }
+

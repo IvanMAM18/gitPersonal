@@ -11,7 +11,8 @@ export const getCreatedAtFormattedUtcToLaPazTimezone = (created_at) => {
         second: "2-digit",
     };
     // Format date and time
-    const formattedDateTime = dateObj.toLocaleString("en-US", options);
+    const formattedDateTime = dateObj.toLocaleString("en-CA", options);
+
     return <span>{`${formattedDateTime}`}</span>;
 }
 

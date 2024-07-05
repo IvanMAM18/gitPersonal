@@ -17,6 +17,11 @@ class Condicionantes extends Model
         'descripcion',
     ];
 
+    public function catalogoDeTramites()
+    {
+        return $this->belongsToMany(CatalogoTramite::class);
+    }
+
     public static function storeCondicionante(Request $request)
     {
         try {

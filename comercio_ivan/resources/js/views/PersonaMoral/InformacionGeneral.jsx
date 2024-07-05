@@ -375,6 +375,7 @@ export default function InformacionGeneral({
                         }}
                         title="Dirección"
                         getDireccionData={getDireccionData}
+                        showDelegacion={false}
                     />
 
                     <h3 style={{ margin: 15, marginBottom: 8 }}>

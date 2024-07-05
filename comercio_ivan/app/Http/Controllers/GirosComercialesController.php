@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class GirosComercialesController extends Controller
 {
+    public function getGirosComercialesAPI()
+    {
+        return GiroComercial::orderBy('nombre', 'asc')->get();
+    }
     public function getGirosComerciales()
     {
         return GiroComercial::orderBy('nombre', 'asc')->get();

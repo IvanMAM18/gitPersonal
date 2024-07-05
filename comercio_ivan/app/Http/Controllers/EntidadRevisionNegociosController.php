@@ -11,8 +11,8 @@ class EntidadRevisionNegociosController extends Controller
 {
     public function index(Request $request)
     {
-        $year = $request['year'] ?? now('Y');
-        $esProSare = $request['es_pro_sare'] ?? false;
+        $year = $request->input('year') ?? now('Y');
+        $esProSare = $request->input('es_pro_sare') ?? false;
 
         // Filtro por estatus
         $estatus = [];
@@ -46,6 +46,11 @@ class EntidadRevisionNegociosController extends Controller
             $tramiteId = $request->input('tramite_id');
         }
 
+        $ordenarPorRequisitosEnviados = false;
+        if ($request->has('requisitos_enviados_primero') && $request->input('requisitos_enviados_primero') == 'true') {
+            $ordenarPorRequisitosEnviados = true;
+        }
+
         $nivelRecoleccionDeBasura = [];
         if($request->has('nivel_recoleccion_basura')) {
             $nivelRecoleccionDeBasura = $request->input('nivel_recoleccion_basura');
@@ -76,6 +81,25 @@ class EntidadRevisionNegociosController extends Controller
                         ]);
                 },
             ])
+            ->when($ordenarPorRequisitosEnviados, function ($q) use ($entidadRevisionId) {
+                $q
+                    ->withCount([
+                        'revisiones as revisiones_status_count' => function ($q) use ($entidadRevisionId) {
+                            $q
+                                ->where('entidad_revision_id', $entidadRevisionId)
+                                ->where(function ($q) {
+                                    $q
+                                        ->whereDoesntHave('negocio_requisitos_revision')
+                                        ->orWhereHas('negocio_requisitos_revision', function ($q) {
+                                            $q
+                                                ->whereIn('status', ['PENDIENTE', 'EN REVISION', 'APROBADO', 'RECHAZADO'])
+                                                ->whereNotIn('status', ['ENVIADO']);
+                                        });
+                                });
+                        },
+                    ])
+                    ->orderBy('revisiones_status_count', 'asc');
+            })
             ->whereHasMorph('tramitable', [Negocio::class], function ($query) use ($nombreDelNegocio, $esProSare, $tamanoEmpresa, $nivelRecoleccionDeBasura) {
                 $query->validado()
                     ->when($tamanoEmpresa != -1, fn($query) => $query->where('tamano_empresa', $tamanoEmpresa))
@@ -117,10 +141,10 @@ class EntidadRevisionNegociosController extends Controller
                     $query->whereIn('status', $estatus);
                 });
             })
-            ->whereYear('created_at', $year)
+            ->whereYear('tramites.created_at', $year)
             ->orderBy('id')
-            ->paginate( perPage: $request->input('per_page'))
-            ->through(function($tramite){
+            ->paginate(perPage: $request->input('per_page'))
+            ->through(function ($tramite) {
                 // Quitar appends del negocio.
                 $tramite->tramitable->setAppends([]);
                 return $tramite;

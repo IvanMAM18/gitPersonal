@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AvisoEnteroService;
+
 use App\Helpers\ClavesScian;
 use App\Helpers\EntidadRevisora;
 use App\Helpers\Refrendos;
+use App\Models\Actividad;
 use App\Models\RequisitoEntidad;
-
 ini_set('max_execution_time', 1800);
-
 use App\Events\TramiteCargado;
 use App\Helpers\TurismoAPI;
 use App\Models\AvisoEntero;
@@ -34,6 +35,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+
+use App\Services\{
+    TramiteCondicionanteService,
+    TramiteRequisitoService,
+};
 
 class NegocioController extends Controller
 {
@@ -95,10 +101,16 @@ class NegocioController extends Controller
             ])
             ->first();
 
+        if(!$negocio){
+            abort(404);
+        }
+
         $subtramites_del_tramite_padre_id = $negocio->tramitePadre()->catalogo_tramites_id;
         $subtramites = Subtramite::where('catalogo_tramite_padre_id', $subtramites_del_tramite_padre_id)
             ->with('catalogo_tramite_hijo')
             ->get();
+
+
         $negocio['subtramites'] = $subtramites;
 
         $negocio->tramites->map(function ($tramite) use ($idsTramites, $negocio_id) {
@@ -123,6 +135,11 @@ class NegocioController extends Controller
         $user_id = Auth::user()->id;
 
         $currentTramitePadre = $negocio->tramitesPadres()->first();
+
+        if(!$currentTramitePadre){
+            abort(404);
+        }
+
         $negocio = Negocio::where('id', $negocio->id)
             ->where('persona_id', $user_id)
             ->with([
@@ -1565,6 +1582,7 @@ class NegocioController extends Controller
             'revision_id' => $revision->id,
             'status' => $estado_revision,
         ]);
+        return $revision;
     }
 
     public function sendMailNegocios($negocio, $revision, $documento_aprobados)
@@ -1623,6 +1641,8 @@ class NegocioController extends Controller
 
             $revision = Revision::find($request['revision_id']);
             $createTramiteEcologia = false;
+
+            registrarActividad(Actividad::$REVISION_APROVADA);
 
             if ($revision->status != 'APROBADO' && $revision->status != 'RECHAZADO') {
                 \DB::beginTransaction();
@@ -1763,7 +1783,7 @@ class NegocioController extends Controller
 
                                     $esDeAnnioAnterior = $tramitePadre->created_at->year < now()->year;
 
-                                    if($esDeAnnioAnterior) {
+                                    if ($esDeAnnioAnterior) {
                                         $newTramite->created_at = $tramitePadre->created_at;
                                         $newTramite->save();
                                     }
@@ -1776,7 +1796,13 @@ class NegocioController extends Controller
 
                                     $fecha = $esDeAnnioAnterior ? $tramitePadre->created_at : null;
 
-                                    $this->createRevision($nombre_entidad, $revision, $entidadRevision, $newTramite, $fecha);
+                                    if(in_array($newTramite->catalogo_tramite->entidad_revisora_id, [EntidadRevisora::$PROTECCION_CIVIL, EntidadRevisora::$ECOLOGIA])) {
+                                        AvisoEnteroService::generarAutomatico($newTramite);
+                                    }
+                                    $revision = $this->createRevision($nombre_entidad, $revision, $entidadRevision, $newTramite, $fecha);
+
+                                    TramiteRequisitoService::crearRequisitosPorTramite($newTramite, $revision);
+                                    TramiteCondicionanteService::crearCondicionantesPorTramite($newTramite, $revision);
                                 }
                             }
                         }
@@ -1914,7 +1940,6 @@ class NegocioController extends Controller
                 'usuario_id' => Auth::user()->id,
                 'observaciones' => $request['observacion'],
             ]);
-
             if ($request['documentos_faltantes'] != null && count($request['documentos_faltantes']) > 0) {
                 $this->documentosFaltantes($request['documentos_faltantes'], $entidad_id, $nuevo_estado_revision->id, $request['revision_id']);
             }
@@ -2157,9 +2182,10 @@ class NegocioController extends Controller
             ->with("tramites", function($tramite){
                 $tramite->with("catalogo")->with("avisos_entero");
             })
-            ->first(); 
+            ->first();
         return response()->json($negocio);
     }
+
 
     public function detallesResolutivos($negocio_id, $year)
     {
@@ -2234,13 +2260,15 @@ class NegocioController extends Controller
         }
     }
 
-    public function borrarNegocio(Negocio $negocio)
+    public function borrarNegocio(Negocio $negocio, Request $request)
     {
-        $el_negocio_tiene_pagos = false;
-        $tramites_comercio = $negocio->tramites()->get();
 
-        foreach ($tramites_comercio as $tramite_comercio) {
-            foreach ($tramite_comercio->tramites as $tramite) {
+        $el_negocio_tiene_pagos = false;
+        $year = now()->year;
+        $tramites_comercio = $negocio->getTramitesPorAño($year);
+        //se checa no haya tramites con pagos en el año en curso
+        foreach ($tramites_comercio as $tramite) {
+            if($tramite->catalogo_tramite->pago === true){
                 if ($tramite->aviso_entero && $tramite->aviso_entero->pagado) {
                     $el_negocio_tiene_pagos = true;
                     break;
@@ -2248,6 +2276,11 @@ class NegocioController extends Controller
             }
         }
 
+        // return [
+        //     "tc"=>$tramites_comercio ,
+        //     "tcap"=>$tramites_comercio_año_pasado,
+        //     "el_negocio_tiene_pagos"=>$el_negocio_tiene_pagos
+        // ];
         if ($el_negocio_tiene_pagos) {
             return response()->json([
                 'ok' => false,
@@ -2258,25 +2291,42 @@ class NegocioController extends Controller
         try {
             DB::beginTransaction();
 
-            $negocio = Negocio::where('id', $negocio_id)->first();
+            Revision::where('negocio_id', $negocio->id)
+            ->whereYear("created_at",$year)
+            ->delete();
 
-            Revision::where('negocio_id', $negocio_id)->delete();
-
-            foreach ($tramites_comercio as $tramite_comercio) {
-                Tramite::where('id', $tramite_comercio->tramite_id)->delete();
-                $tramite_comercio->delete();
+            $tramites_comercio_año_pasado = $negocio->getTramitesPorAño($year-1);
+            if(count($tramites_comercio_año_pasado) === 0){
+                $negocio->delete();
             }
+            //return $tramites_comercio;
 
-            $negocio->delete();
 
+            $tramitePadre = $negocio->getTramitePadrePorAño($year);
+            if($tramitePadre == null && count($tramites_comercio) === 0){
+                return response()->json([
+                    'ok' => true,
+                    "message"=>"No hay tramites para eliminar"
+                ]);
+            }
+            foreach ($tramites_comercio as $tramite) {
+                $tramite->delete();
+            }
+            if($tramitePadre !== null)
+                $tramitePadre->delete();
             DB::commit();
 
             return response()->json([
                 'ok' => true,
+                    "message"=>"Tramites eliminados"
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $th) {
             //throw $th;
             DB::rollback();
+            return response()->json([
+                'ok' => false,
+                "error"=>$th->getMessage()
+            ]);
         }
     }
 
@@ -2352,6 +2402,19 @@ class NegocioController extends Controller
                     app('App\Http\Controllers\BotTelegramController')->enviarMensaje($mensaje);
                     $aviso = AvisoEntero::where('no_aviso', $aviso->no_aviso)->where('estado', '!=', 'PAGADO')->delete();
                 }
+                $requisito=Requisito::where('id', $request['privado_o_propia'] == 'servicio_privado'?49:50)->get()->toArray();
+                $data = [
+                        "user_id" => Auth::user()->id,
+                        "documentos_faltantes" =>  $requisito,
+                        "observacion" => "Se solicita documento por cambio de servicio de recolección de basura",
+                        "condicionantes" => [],
+                        "negocio_id" => $negocio->id,
+                        "entidad_id" => EntidadRevisora::$SERVICIOS_PUBLICOS,
+                        "status" => "EN REVISION",
+                        "revision_id" => $revision->id,
+                ];
+                $request = new Request($data);
+                $this->newRevision($request);
 
                 return response()->json([
                     'ok' => true,
@@ -2388,7 +2451,19 @@ class NegocioController extends Controller
                 $revision->status = 'ENVIADO';
                 $revision->save();
                 $aviso = $tramite->avisos_entero->first();
-
+                $data = [
+                    "user_id" => Auth::user()->id,
+                    "documentos_faltantes" =>  [],
+                    "observacion" => "Se cambia a Recolección por medio de servicios públicos",
+                    "condicionantes" => [],
+                    "negocio_id" => $negocio->id,
+                    "entidad_id" => EntidadRevisora::$SERVICIOS_PUBLICOS,
+                    "status" => "EN REVISION",
+                    "revision_id" => $revision->id,
+                ];
+                $request = new Request($data);
+                $this->newRevision($request);
+                NegocioRequisitoRevision::whereIn('requisito_id', [50,49])->where('revision_id',  $revision->id)->delete();
                 if (isset($aviso)) {
                     $mensaje = "<strong>Numero de Aviso: </strong>{ $aviso->no_aviso}\n" .
                         "<strong>Total: </strong>{ $aviso->total}\n" .

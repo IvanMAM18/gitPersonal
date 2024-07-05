@@ -60,7 +60,7 @@ class PersonasMoralesController extends Controller
                 'numero_externo' => $direccion['numero_externo'],
                 'numero_interno' => $direccion['numero_interno'],
                 'tipo' => '-',
-                'delegacion' => $direccion['delegacion'],
+                'delegacion' => $direccion['delegacion'] ?? null,
             ]);
         }
 
@@ -77,7 +77,7 @@ class PersonasMoralesController extends Controller
                 'numero_externo' => $direccionNoti['numero_externo'],
                 'numero_interno' => $direccionNoti['numero_interno'],
                 'tipo' => '-',
-                'delegacion' => $direccion['delegacion'],
+                'delegacion' => optional($direccionNoti)['delegacion'],
             ]);
         }
 

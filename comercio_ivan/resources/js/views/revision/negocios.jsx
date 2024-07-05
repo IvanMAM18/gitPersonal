@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import moment from "moment";
-import { Table, Space, Tag, Input, Button, Select } from "antd";
+import { Table, Space, Tag, Input, Button, Select, Switch, Popover } from "antd";
 import { Link } from "react-router-dom";
 import status from "../../utils/statuses";
 import RolesRouter from "../RolesRouter";
@@ -12,12 +12,24 @@ import recolecionStatus from "../../utils/servicios-recoleccion-tags";
 
 function calcRevisionAtendida(revisiones) {
     let revision = revisiones.length ? revisiones[0] : null
-    if(revision) {
-        return revision.negocio_requisitos_revision?.filter(
+    if (revision) {
+        const requisitosSolicitados = revision.negocio_requisitos_revision.filter(
+            (nr) => nr.status !== status.APROBADO && nr.status !== status.RECHAZADO
+        ).length;
+
+        const requisitosAtendidos = revision.negocio_requisitos_revision?.filter(
             (nr) => nr.status === status.ENVIADO
         ).length;
+
+        if (requisitosAtendidos === 0) {
+            return 'vacio'
+        }
+
+        if (requisitosAtendidos === requisitosSolicitados && requisitosSolicitados > 0) {
+            return 'nuevos'
+        }
     }
-    return 0
+    return 'pendientes'
 }
 
 // Para mostrar filtro por años, automaticamente agrega el año actual.
@@ -29,7 +41,8 @@ const INITIAL_STATE_FILTERS = {
     nombre_del_negocio: '',
     aviso_entero_status: '',
     nivel_recoleccion_basura: [],
-    tamano_empresa: '',
+    tamano_empresa: null,
+    requisitos_enviados_primero: false,
     estatus: [
         status.ENVIADO,
         status.EN_REVISION,
@@ -39,8 +52,8 @@ const INITIAL_STATE_FILTERS = {
     tramite_id: null,
     year: currentYear,
     page: 1,
-    per_page: 50,
-    es_pro_sare: false
+    per_page: 10,
+    es_pro_sare: 0
 }
 
 // Estado inicial del paginador
@@ -50,7 +63,7 @@ const INITIAL_PAGINATOR = {
     perPage: 50,
 }
 
-export default function Negocios({esProSare = false}) {
+export default function Negocios({esProSare = 0}) {
 
     // States
     const [isLoading, setIsLoading] = useState(false)
@@ -61,7 +74,7 @@ export default function Negocios({esProSare = false}) {
     });
 
     // llamamos fetchTramites solo cuando ciertos filtros cambian, otros filtros los llamamos al pulsar el boton buscar.
-    useEffect(() => fetchTramites(), [filters.year, filters.page, filters.per_page, filters.estatus, filters.es_pro_sare, filters.nivel_recoleccion_basura])
+    useEffect(() => fetchTramites(), [filters.year, filters.page, filters.per_page, filters.es_pro_sare, filters.nivel_recoleccion_basura, filters.requisitos_enviados_primero])
 
     // Llama la API del backend para traer todos los tramites.
     // Mapeamos los datos para usarlos en la tabla de antd.
@@ -99,18 +112,19 @@ export default function Negocios({esProSare = false}) {
         })
     }
 
-    // Cuando buscamos por tramite ID se deben quitar cualquier otro filtro que este antes.
-    const buscarPorTramiteId = () => {
-        const tramiteId = filters.tramite_id
-        setFilters(INITIAL_STATE_FILTERS)
-        setData('estatus', [])
-        setData('year', currentYear)
-        setData('es_pro_sare', esProSare)
-        setData('tramite_id', tramiteId)
+    const filtrarIgnorandoEstatus = (property, value) => {
+        setFilters(prevFilters => {
+            return {
+                ...prevFilters,
+                estatus: [],
+                [property]: value
+            };
+        })
     }
 
+
     // Filtro tipo texto para la tabla antd.
-    const filtroDeTexto = (property, placeholder, searchFunction, type='text') => ({
+    const filtroDeTexto = (property, placeholder, onChange = null, type='text') => ({
         filterDropdown: () => (
             <div className="p-2">
 
@@ -121,14 +135,14 @@ export default function Negocios({esProSare = false}) {
                     className="mb-2"
                     placeholder={placeholder.toUpperCase()}
                     value={filters[property]}
-                    onChange={event => setData(property, event.target.value)}
-                    onPressEnter={() => searchFunction()}/>
+                    onChange={event => onChange ? onChange(property, event.target.value) : setData(property, event.target.value)}
+                    onPressEnter={() => fetchTramites()}/>
                 <div className="inline-flex gap-2">
 
                     {/*Boton para lanzar la busqueda*/}
                     <Button
                         type="primary"
-                        onClick={() => searchFunction()}
+                        onClick={() => fetchTramites()}
                         icon={<SearchOutlined/>}
                         size="small">
                         Buscar
@@ -185,7 +199,6 @@ export default function Negocios({esProSare = false}) {
                         Reiniciar
                     </Button>
                 </div>
-
             </div>
         ),
         filterIcon: () => (
@@ -199,27 +212,26 @@ export default function Negocios({esProSare = false}) {
     // y al final filtramos solos los visibles = true
     const columns = [
         {
-            ...filtroDeTexto('tramite_id', 'Id del Tramite', buscarPorTramiteId, 'number'),
+            ...filtroDeTexto('tramite_id', 'Id del Tramite', filtrarIgnorandoEstatus, 'number'),
             title: "ID del Trámite",
             key: "tramite_id",
             visible: true,
-            // sorter: (a, b) => {
-            // },
-            // sortDirections: ["descend", "ascend"],
             render: (_, tramite) => {
 
-                const pendiente = calcRevisionAtendida(tramite.revisiones);
+                const status = calcRevisionAtendida(tramite.revisiones);
 
                 return (
                     <Space size="middle">
                         <Space size="middle">
-                            {!!pendiente ? (
-                                <div className="size-3 rounded-full bg-green-500"></div>
-                            ) : (
-                                <div
-                                    className="size-3 rounded-full bg-gray-300"
-                                ></div>
-                            )}
+                            {
+                                status === 'nuevos' ? (
+                                    <div className="size-3 rounded-full bg-green-500"></div>
+                                ) : status === 'vacio' ? (
+                                    <div className="size-3 rounded-full bg-gray-300"></div>
+                                ) : (
+                                    <div className="size-3 rounded-full bg-red-500"></div>
+                                )
+                            }
                         </Space>
                         <Space size="middle">{tramite.tramite_padre_id}</Space>
                     </Space>
@@ -227,7 +239,7 @@ export default function Negocios({esProSare = false}) {
             },
         },
         {
-            ...filtroDeTexto('nombre_del_negocio', 'Nombre del Negocio', fetchTramites),
+            ...filtroDeTexto('nombre_del_negocio', 'Nombre del Negocio', filtrarIgnorandoEstatus),
             title: "Negocio",
             key: "nombre_del_negocio",
             visible: true,
@@ -319,10 +331,6 @@ export default function Negocios({esProSare = false}) {
                 { text: "Pendiente", value: status.PENDIENTE },
                 { text: "Visor", value: status.VISOR },
             ],
-            // sorter: (a, b) =>
-            //     (a.revisiones.length ? a.revisiones[0].created_at : 0) -
-            //     (b.revisiones.length ? b.revisiones[0].created_at : 0),
-            // sortDirections: ["descend"],
             render: (_, tramite) => {
 
                 let _status = tramite.revisiones.length ? tramite.revisiones[0].status : status.ENVIADO;
@@ -416,7 +424,7 @@ export default function Negocios({esProSare = false}) {
             },
         },
         {
-            ...filtroDeTexto("licencia_alcohol", "# Licencia de Alcohol", fetchTramites),
+            ...filtroDeTexto("licencia_alcohol", "# Licencia de Alcohol"),
             title: "N. Licencia",
             key: "licencia_alcohol",
             visible : (window.user.entidad_revision == 6 || window.user.entidad_revision == 5),
@@ -448,15 +456,24 @@ export default function Negocios({esProSare = false}) {
             <RolesRouter />
 
             {/*Filtro por Año Fiscal*/}
-            <div className="w-full flex justify-end items-center px-4 pt-3">
-                <label htmlFor="" className="mb-0 gap-1 flex items-center">
-                    Año Fiscal
-                    <select defaultValue={filters.year} onChange={event => setData('year', event.target.value)} className="border border-gray-200 rounded-sm py-1 pl-3 w-28">
-                        {aniosFiscalesDisponibles.map(year =>
-                            <option key={year} value={year}>{year}</option>
-                        )}
-                    </select>
-                </label>
+            <div className="flex">
+                <div className="w-full flex justify-start items-center px-4 pt-3 w-64">
+                    <Popover title="esta opción hace que la tabla carge más lento">
+                        <label htmlFor="" className="mb-0 gap-1 flex items-center">
+                            <Switch disabled={isLoading} onChange={val => setData('requisitos_enviados_primero', val)} /> &nbsp;Requisitos atendidos primero
+                        </label>
+                    </Popover>
+                </div>
+                <div className="w-full flex justify-end items-center px-4 pt-3 w-64">
+                    <label htmlFor="" className="mb-0 gap-1 flex items-center">
+                        Año Fiscal
+                        <select defaultValue={filters.year} onChange={event => setData('year', event.target.value)} className="border border-gray-200 rounded-sm py-1 pl-3 w-28">
+                            {aniosFiscalesDisponibles.map(year =>
+                                <option key={year} value={year}>{year}</option>
+                            )}
+                        </select>
+                    </label>
+                </div>
             </div>
 
             {/*Tabla*/}

@@ -14,7 +14,7 @@ class AddCobroProgramaInternoToGiroComercial extends Migration
     public function up()
     {
         Schema::table('giro_comercial', function (Blueprint $table) {
-            $table->enum('cobro_programa_interno', ['TRUE','FALSE'])->default('FALSE');
+            $table->boolean('cobro_programa_interno')->nullable();
         });
     }
 

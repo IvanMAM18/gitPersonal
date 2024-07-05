@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\EntidadRevisora;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -111,7 +112,7 @@ class Tramite extends Model
      */
     public function scopePadres($query)
     {
-        $query->whereNotNull('tramite_padre_id');
+        $query->whereNull('tramite_padre_id');
     }
 
     /**
@@ -127,7 +128,7 @@ class Tramite extends Model
      */
     public function scopeDeAlcoholes($query)
     {
-        $query->whereHas('catalogo', fn ($q) => $q->deAlcoholes());
+        $query->whereHas('catalogo', fn($q) => $q->deAlcoholes());
     }
 
     public function scopeTieneNegocio($query, $negocioId)
@@ -138,7 +139,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->where('negocios.id', $negocioId)
+            fn($query) => $query->where('negocios.id', $negocioId)
         );
     }
 
@@ -159,7 +160,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->where('impacto_giro_comercial', $impacto)
+            fn($query) => $query->where('impacto_giro_comercial', $impacto)
         );
     }
 
@@ -168,7 +169,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->validado()->whereNull('deleted_at')
+            fn($query) => $query->validado()->whereNull('deleted_at')
         )
             ->whereNull('deleted_at');
     }
@@ -193,7 +194,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->where('nivel_recoleccion_basura', $nivelRecoleccion)
+            fn($query) => $query->where('nivel_recoleccion_basura', $nivelRecoleccion)
         );
     }
 
@@ -202,7 +203,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->whereNotIn('nivel_recoleccion_basura', $nivelesRecoleccion)
+            fn($query) => $query->whereNotIn('nivel_recoleccion_basura', $nivelesRecoleccion)
         );
     }
 
@@ -211,7 +212,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->whereIn('nivel_recoleccion_basura', $nivelesRecoleccion)->whereNotIn('nivel_recoleccion_basura', $nivelesRecoleccion)
+            fn($query) => $query->whereIn('nivel_recoleccion_basura', $nivelesRecoleccion)->whereNotIn('nivel_recoleccion_basura', $nivelesRecoleccion)
         );
     }
 
@@ -253,13 +254,13 @@ class Tramite extends Model
                     });
                 })
                 // Si se elige N/A y todas las demás, me debe traer las que estén en false y true, es decir todos y los que cumplan con la condición
-                ->when(in_array('N/A', $filters) && (count($filters) > 1) && (! in_array('PENDIENTE', $filters)), function ($query) use ($filters) {
+                ->when(in_array('N/A', $filters) && (count($filters) > 1) && (!in_array('PENDIENTE', $filters)), function ($query) use ($filters) {
                     $query->with('catalogo_tramite');
                     $query->orWhereHas('avisos_entero', function ($avisoEnteroQuery) use ($filters) {
                         $avisoEnteroQuery->whereIn('estado', $filters);
                     });
                 })
-                ->when(! in_array('N/A', $filters) && (count($filters) > 0), function ($query) use ($filters) {
+                ->when(!in_array('N/A', $filters) && (count($filters) > 0), function ($query) use ($filters) {
                     $query->with('catalogo_tramite', function ($query) {
                         $query->where('pago', true);
                     });
@@ -287,7 +288,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->where('venta_alcohol', true)
+            fn($query) => $query->where('venta_alcohol', true)
         );
     }
 
@@ -296,7 +297,7 @@ class Tramite extends Model
         return $query->whereHasMorph(
             'tramitable',
             [Negocio::class],
-            fn ($query) => $query->where('nivel_recoleccion_basura', '!=', null)
+            fn($query) => $query->where('nivel_recoleccion_basura', '!=', null)
         );
     }
 
@@ -314,18 +315,18 @@ class Tramite extends Model
 
     public function scopeDelUsuario($query, User $user)
     {
-        $query->whereHasMorph('tramitable', [User::class], fn ($q) => $q->where('id', $user->id))
-            ->orWhereHasMorph('tramitable', [PersonaMoral::class], fn ($q) => $q->where('persona_id', $user->id));
+        $query->whereHasMorph('tramitable', [User::class], fn($q) => $q->where('id', $user->id))
+            ->orWhereHasMorph('tramitable', [PersonaMoral::class], fn($q) => $q->where('persona_id', $user->id));
     }
 
     public function scopeConTramitePadre($query, $year = null)
     {
         return $year != null
             ? $query->whereHas(
-                'tramite_padre', 
+                'tramite_padre',
                 fn($query) => $query->whereYear('created_at', $year)
             ) : $query->has('tramite_padre');
-    } 
+    }
 
     public function getHoraAttribute()
     {
@@ -335,5 +336,37 @@ class Tramite extends Model
     public function getFechaAttribute()
     {
         return $this->created_at->timezone('America/Mazatlan')->format('d-m-Y');
+    }
+
+
+    public function scopeFiltrarPorProgreso($query, $progreso)
+    {
+        $porVistoBueno = in_array($progreso, [1, 2, 3, 4]);
+        $porProgresoPendiente = in_array($progreso, ['PENDIENTE_PROTECCION_CIVIL', 'PENDIENTE_MEDIO_AMBIENTE', 'PENDIENTE_SERVICIOS_PUBLICOS']);
+
+        $query
+            // Filtrar por visto buenos.
+            ->when($porVistoBueno, function ($query) use ($progreso) {
+                $query->whereRaw('(SELECT COUNT(*) FROM tramites AS tramites_hijos
+                INNER JOIN revision ON revision.tramite_id = tramites_hijos.id
+                WHERE tramites_hijos.tramite_padre_id = tramites.id
+                AND revision.status IN (\'APROBADO\', \'VISTO BUENO\', \'VISOR\')) = ?', [$progreso]);
+            })
+            // Filtra por entidad Revisora pendiente.
+            ->when($porProgresoPendiente, function ($query) use ($progreso) {
+
+                $entidadRevisoraId = [
+                    'PENDIENTE_PROTECCION_CIVIL' => EntidadRevisora::$PROTECCION_CIVIL,
+                    'PENDIENTE_MEDIO_AMBIENTE' => EntidadRevisora::$ECOLOGIA,
+                    'PENDIENTE_SERVICIOS_PUBLICOS' => EntidadRevisora::$SERVICIOS_PUBLICOS
+                ][$progreso];
+
+                $query->whereRaw('(SELECT COUNT(*) FROM tramites AS tramites_hijos
+                INNER JOIN revision ON revision.tramite_id = tramites_hijos.id
+                INNER JOIN catalogo_tramites ON tramites_hijos.catalogo_tramites_id = catalogo_tramites.id
+                WHERE tramites_hijos.tramite_padre_id = tramites.id
+                AND catalogo_tramites.entidad_revisora_id = ?
+                AND revision.status IN (\'EN REVISION\', \'ENVIADO\')) > 0', [$entidadRevisoraId]);
+            });
     }
 }

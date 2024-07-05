@@ -20,6 +20,7 @@ export default  function HomeNegocio() {
     const [resolutivosSinImprimir, setResolutivosSinImprimir] = useState(null)
     const [totalValidados, setTotalValidados] = useState(null)
     const [urlReportePadron, setUrlReportePadron] = useState("")
+    const [urlReportePadronServiciosPublicos, setUrlReportePadronServiciosPublicos] = useState("")
     const [resolutivosPagados, setResolutivosPagados] = useState("")
 
     const getTotalValidados = () => {
@@ -114,6 +115,15 @@ export default  function HomeNegocio() {
         });
     }
 
+    const getReportePadronUrl = () => {
+        return axios.get("/app/generar-firma-reporte-padron-servicios-publicos/"+selectedYear).then((result) => {
+            setUrlReportePadronServiciosPublicos(result?.data ?? urlReportePadron);
+        }).catch(error => {
+            console.error(error);
+            message.error('Error al cargar reporte firma padron');
+        });
+    }
+
     const resetValores = () => {
         setVistoBuenoTotal(null);
         setRechazadosTotal(null);
@@ -129,7 +139,8 @@ export default  function HomeNegocio() {
     const cargarEstadisticas = async() => {
 
         if (window.user.role_id == 5) {
-            await getReporteUrl();
+            await getReporteUrl(); 
+            await getReportePadronUrl();
         }
 
         resetValores();
@@ -204,6 +215,9 @@ export default  function HomeNegocio() {
                         />
                         <a href={urlReportePadron}
                         className="text-button ant-btn ant-btn-primary ml-2">Descargar Padrón Comercio</a>
+                        {window.user.entidad_revision==4 && <a href={urlReportePadronServiciosPublicos}
+                        className="text-button ant-btn ant-btn-primary ml-2">Descargar Padrón Servicios Públicos</a>
+                         }
                     </Card>
                 }
                     <div className="grid grid-cols-3 gap-3 justify-center ">

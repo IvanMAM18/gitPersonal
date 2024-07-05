@@ -14,7 +14,7 @@ class AddCertificadoMedioAmbienteToGiroComercial extends Migration
     public function up()
     {
         Schema::table('giro_comercial', function (Blueprint $table) {
-            $table->enum('certificado_medio_ambiente', ['TRUE','FALSE'])->default('FALSE');
+            $table->boolean('certificado_medio_ambiente')->nullable();
         });
     }
 

@@ -5,6 +5,18 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Determina si la applicación esta corriendo en Produccion.
  */
+if (! function_exists('registrarActividad')) {
+    function registrarActividad(string $descripcion)
+    {
+        return currentUser()?->actividades()->create([
+            'descripcion' => $descripcion
+        ]);
+    }
+}
+
+/**
+ * Determina si la applicación esta corriendo en Produccion.
+ */
 if (! function_exists('isProduction')) {
     function isProduction()
     {

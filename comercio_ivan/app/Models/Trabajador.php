@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Trabajador extends Model
 {
@@ -19,17 +20,20 @@ class Trabajador extends Model
         'departamento_id',
         'entidad_revisora_id',
         'rol_id',
+        'foto',
         'numero_trabajador',
         'nombre_usuario',
         'contrasena',
         'firma_path',
     ];
 
+    protected $hidden = ['contrasena'];
+
+    protected $appends = ['foto_url'];
+
     public static function storeTrabajador(Request $request)
     {
-        $trabajador = Trabajador::create($request->all());
-
-        return $trabajador;
+        return Trabajador::create($request->all());
     }
 
     public static function updateTrabajador(Request $request)
@@ -48,5 +52,10 @@ class Trabajador extends Model
         }
 
         return $trabajador;
+    }
+
+    protected function getFotoUrlAttribute()
+    {
+        return Storage::url($this->foto);
     }
 }

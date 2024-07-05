@@ -3,7 +3,6 @@ import {
     Button,
     Divider,
     Input,
-    Modal,
     Popover,
     Space,
     Table,
@@ -12,12 +11,10 @@ import {
 } from "antd";
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
 import status from "../../utils/statuses";
 import NegocioDetallesModal from "../components/NegocioDetallesModal";
 import RolesRouter from "../RolesRouter";
 import EditorGirosModal from "./EditorGirosNegocioModal";
-import EntidadRevision from "./EntidadRevision";
 
 function statusDeUsoDeSueloDeNegocio(negocio) {
     const ultimoStatusDeRevision = negocio.revisiones.find(
@@ -30,12 +27,10 @@ function statusDeUsoDeSueloDeNegocio(negocio) {
 }
 
 function ComercioAdminBusquedaNegocio(props) {
-    const [cargando,setCargando] = useState(false);
+    const [cargando, setCargando] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(50);
     const [revisionesActivas, setRevisionesActivas] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedRevision, setSelectedRevision] = useState(null);
     const [pagination, setPagination] = useState({
         current: 0,
         pageSize: 50,
@@ -58,45 +53,41 @@ function ComercioAdminBusquedaNegocio(props) {
         clave_catastral: '',
     });
 
-    // search menu
-
-
-    const navigate = useNavigate()
-
     const searchInput = useRef(null);
 
-    useEffect(()=>{
-        if(pagination.pageSize != pageSize) {
+    useEffect(() => {
+        if (pagination.pageSize != pageSize) {
             getRevisionesActivas(1, pageSize);
         }
-        if(pagination.current != currentPage) {
+        if (pagination.current != currentPage) {
             getRevisionesActivas(currentPage, pageSize);
         }
 
-    }, [currentPage,pageSize]);
+    }, [currentPage, pageSize]);
 
     useEffect(() => {
-        if(dataTableFilters && pagination) {
+        if (dataTableFilters && pagination) {
             getRevisionesActivas()
         }
     }, [dataTableFilters])
 
-    function getRevisionesActivas(currentPage = null, pageSize = null)
-    {
+    function getRevisionesActivas(currentPage = null, pageSize = null) {
         currentPage = currentPage || pagination.current;
         pageSize = pageSize || pagination.pageSize;
         setCargando(true);
         axios
-            .get("/app/comercio-admin/busqueda-negocios-en-revision", { params: {
-                page: currentPage,
-                validado_por: 0,
-                per_page: pageSize,
-                ...dataTableFilters,
-            }})
+            .get("/app/comercio-admin/busqueda-negocios-en-revision", {
+                params: {
+                    page: currentPage,
+                    validado_por: 0,
+                    per_page: pageSize,
+                    ...dataTableFilters,
+                }
+            })
             .then(response => {
                 console.log('paginatedData', response)
                 const paginatedData = response.data
-                const { data, total, current_page } = paginatedData;
+                const {data, total, current_page} = paginatedData;
                 setPagination({...pagination, total, pageSize, current: current_page});
                 setCurrentPage(current_page);
                 setRevisionesActivas(data);
@@ -111,12 +102,12 @@ function ComercioAdminBusquedaNegocio(props) {
 
     const getColumnSearchRfcProps = (dataIndex) => ({
         filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-        }) => (
-            <div style={{ padding: 8 }}>
+                             setSelectedKeys,
+                             selectedKeys,
+                             confirm,
+                             clearFilters,
+                         }) => (
+            <div style={{padding: 8}}>
                 <Input
                     ref={searchInput}
                     placeholder="RFC"
@@ -152,7 +143,7 @@ function ComercioAdminBusquedaNegocio(props) {
                                 confirm();
                             }
                         }
-                        icon={<SearchOutlined />}
+                        icon={<SearchOutlined/>}
                         size="small"
                         style={{
                             width: 90,
@@ -214,12 +205,12 @@ function ComercioAdminBusquedaNegocio(props) {
 
     const getColumnSearchClaveCatastralProps = (dataIndex) => ({
         filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-        }) => (
-            <div style={{ padding: 8 }}>
+                             setSelectedKeys,
+                             selectedKeys,
+                             confirm,
+                             clearFilters,
+                         }) => (
+            <div style={{padding: 8}}>
                 <Input
                     ref={searchInput}
                     placeholder="Clave catastral"
@@ -255,7 +246,7 @@ function ComercioAdminBusquedaNegocio(props) {
                                 confirm();
                             }
                         }
-                        icon={<SearchOutlined />}
+                        icon={<SearchOutlined/>}
                         size="small"
                         style={{
                             width: 90,
@@ -315,15 +306,14 @@ function ComercioAdminBusquedaNegocio(props) {
         render: (text) => text,
     });
 
-
     const getColumnSearchIDProps = (dataIndex) => ({
         filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-        }) => (
-            <div style={{ padding: 8 }}>
+                             setSelectedKeys,
+                             selectedKeys,
+                             confirm,
+                             clearFilters,
+                         }) => (
+            <div style={{padding: 8}}>
                 <Input
                     ref={searchInput}
                     placeholder="ID del Tramite"
@@ -359,7 +349,7 @@ function ComercioAdminBusquedaNegocio(props) {
                                 confirm();
                             }
                         }
-                        icon={<SearchOutlined />}
+                        icon={<SearchOutlined/>}
                         size="small"
                         style={{
                             width: 90,
@@ -419,17 +409,15 @@ function ComercioAdminBusquedaNegocio(props) {
         render: (text) => text,
     });
 
-
-
     const getColumnSearchValidadoProps = () => ({
         filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-        }) => (
+                             setSelectedKeys,
+                             selectedKeys,
+                             confirm,
+                             clearFilters,
+                         }) => (
             <div>
-                <div style={{ padding: 8 }}>
+                <div style={{padding: 8}}>
                     <Radio.Group
                         onChange={(e) => {
                             setSelectedKeys(e.target.value)
@@ -441,8 +429,8 @@ function ComercioAdminBusquedaNegocio(props) {
                         </Space>
                     </Radio.Group>
                 </div>
-                <Divider style={{ marginTop: 0, marginBottom: 0 }} />
-                <div style={{ padding: 8 }}>
+                <Divider style={{marginTop: 0, marginBottom: 0}}/>
+                <div style={{padding: 8}}>
                     <Space>
                         <Button
                             type="primary"
@@ -456,7 +444,7 @@ function ComercioAdminBusquedaNegocio(props) {
                                     confirm();
                                 }
                             }
-                            icon={<SearchOutlined />}
+                            icon={<SearchOutlined/>}
                             size="small"
                             style={{
                                 width: 90,
@@ -483,12 +471,12 @@ function ComercioAdminBusquedaNegocio(props) {
 
     const getColumnSearchNameProps = () => ({
         filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-        }) => (
-            <div style={{ padding: 8 }}>
+                             setSelectedKeys,
+                             selectedKeys,
+                             confirm,
+                             clearFilters,
+                         }) => (
+            <div style={{padding: 8}}>
                 <Input
                     ref={searchInput}
                     placeholder="Nombre del negocio"
@@ -524,7 +512,7 @@ function ComercioAdminBusquedaNegocio(props) {
                                 confirm();
                             }
                         }
-                        icon={<SearchOutlined />}
+                        icon={<SearchOutlined/>}
                         size="small"
                         style={{
                             width: 90,
@@ -579,22 +567,6 @@ function ComercioAdminBusquedaNegocio(props) {
         render: (text) => text,
     });
 
-    const openModal = (revision) => {
-        if (!revision) {
-            return setModalVisible(false);
-        }
-        setCargando(true);
-
-        axios
-            .get("/app/comercio-admin/negocios/" + revision.negocio_id)
-            .then(({data: negocio}) => {
-                const _revision = negocio.revisiones.find(r => r.id == revision.id);
-                setSelectedRevision(_revision);
-                setModalVisible(true);
-            })
-            .finally(() => { setCargando(false); })
-    };
-
     const openNegocioDetallesModal = (negocio) => {
         setCargando(true);
         axios
@@ -609,8 +581,8 @@ function ComercioAdminBusquedaNegocio(props) {
     };
 
     return (
-        <div style={{ backgroundColor: "white", padding: "15px" }}>
-            <RolesRouter />
+        <div style={{backgroundColor: "white", padding: "15px"}}>
+            <RolesRouter/>
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -626,7 +598,8 @@ function ComercioAdminBusquedaNegocio(props) {
                     setCurrentPage(current);
                     setPageSize(pageSize);
                 }}
-                onShowSizeChange={(current, size) => {}}
+                onShowSizeChange={(current, size) => {
+                }}
                 pagination={pagination}
                 columns={[
                     {
@@ -634,15 +607,15 @@ function ComercioAdminBusquedaNegocio(props) {
                         dataIndex: "tramite_padre_id",
                         key: "tramite_padre_id",
                         sorter: (a, b) => {
-                            const tramite_a = a.tramite_comercio_padre?.tramite?.id || 0;
-                            const tramite_b = b.tramite_comercio_padre?.tramite?.id || 0;
+                            const tramite_a = a.tramites_padres[0]?.id || 0;
+                            const tramite_b = b.tramites_padres[0]?.id || 0;
                             return tramite_a < tramite_b ? 1 : 0;
                         },
                         sortDirections: ["descend", "ascend"],
                         ...getColumnSearchIDProps("revisiones"),
                         render(_, negocio) {
                             return (
-                                <b>{negocio.tramite_comercio_padre?.tramite?.id || 0}</b>
+                                <b>{negocio.tramites_padres[0]?.id || 0}</b>
                             );
                         },
                         width: 80,
@@ -722,7 +695,7 @@ function ComercioAdminBusquedaNegocio(props) {
                                     <Button
                                         type="primary"
                                         target="_blank"
-                                        href={'/app/comercio-admin/negocio/' + negocio.id+'/2024'}>
+                                        href={'/app/comercio-admin/negocio/' + negocio.id + '/2024'}>
                                         VER DETALLES
                                     </Button>
                                 </>
@@ -735,14 +708,6 @@ function ComercioAdminBusquedaNegocio(props) {
                 // scroll={{x:2800}}
             ></Table>
 
-            <Modal
-                destroyOnClose
-                onCancel={() => openModal()}
-                open={modalVisible}
-                footer={null}
-            >
-                <EntidadRevision revision={selectedRevision} />
-            </Modal>
             {!!negocioSeleccionado && (
                 <NegocioDetallesModal
                     visible={modalNegocioDetallesAbierto}

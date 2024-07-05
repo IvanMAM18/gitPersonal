@@ -39,5 +39,17 @@ export const ListaInspectores = [
         id: 16,
         name: "DAVID GABRIEL CANTÚ HIGUERA",
     },
+    {
+        id: 17,
+        name: "Osiel del Real Marin",
+    },
+    {
+        id: 18,
+        name: "Juan José Mendoza Cervantes",
+    },
+    {
+        id: 19,
+        name: "Cristian Alonso Urbina Romero",
+    },
 
 ];

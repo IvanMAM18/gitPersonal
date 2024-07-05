@@ -38,6 +38,25 @@ const colProps3 = {
 };
 function NegocioDetallesModal(props) {
     const { negocio } = props;
+    const sectoresConPeso = {
+        SERVICIOS: 1,
+        COMERCIO: 2,
+        INDUSTRIA: 3
+    }
+    const getSector =()=>{
+        const sectoresGiros = negocio?.giro_comercial?.map(giro => giro?.tipo_sector ?? null);
+        let maxSector = '';
+        let maxValue = 0;
+        if(sectoresGiros!=null)
+        sectoresGiros.forEach(sector => {
+            if (sectoresConPeso[sector] > maxValue) {
+                maxValue = sectoresConPeso[sector];
+                maxSector = sector;
+            }
+        });
+        return maxSector;
+    }
+    
 
     return (
         <Modal
@@ -50,7 +69,7 @@ function NegocioDetallesModal(props) {
         >
             <Row gutter={[60, { xs: 16, sm: 16, md: 54, lg: 64 }]}>
                 <Col {...colProps}>
-                    <DetalleNegocio negocio={negocio} />
+                    <DetalleNegocio negocio={{...negocio,sector:getSector()}} />
                 </Col>
                 <Col {...colProps2}>
                     <DetallePropietario negocio={negocio} />

@@ -15,7 +15,7 @@ class UpdateLicenciaAlcoholToGiroComercial extends Migration
             $table->dropColumn('licencia_alcohol_giro_comercial');
         });
         Schema::table('giro_comercial', function (Blueprint $table) {
-            $table->enum('licencia_alcohol_giro_comercial', ['TRUE','FALSE'])->default('FALSE');
+            $table->boolean('licencia_alcohol_giro_comercial')->nullable();
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\AvisoEntero;
 use Http;
+use Response;
 use Illuminate\Support\Facades\Cache;
 
 class AvisosEnteroAPI
@@ -25,6 +26,11 @@ class AvisosEnteroAPI
         }
 
         $token = $respuesta->json()['token'];
+
+        if(!$token) {
+            throw new \Exception('Error al obtener token. Token nulo.');
+        }
+
         Cache::put($cacheKey, $token, $seconds = 600);
 
         return $token;
@@ -51,5 +57,35 @@ class AvisosEnteroAPI
         Cache::put($cacheKey, $respuesta->json(), $seconds = 1200);
 
         return $respuesta;
+    }
+
+    public static function generar($datosGenerarAPI)
+    {
+        $token = self::obtenerTokenAPI();
+
+        return Http::withHeaders([
+            'Authorization' => 'Bearer '.$token,
+        ])->post('https://catastro.lapaz.gob.mx/catastro/avisos/generar', $datosGenerarAPI);
+    }
+
+    public static function pdf(AvisoEntero $avisoEntero, $titulo)
+    {
+        $token = self::obtenerTokenAPI();
+
+        $tramite = $avisoEntero->tramite;
+        $catalogoTramite = $tramite ? $tramite->catalogo_tramites : null;
+        $entidadRevision = $catalogoTramite && count($catalogoTramite) > 0
+            ? $catalogoTramite[0]->entidad_revisora
+            : null;
+        $titulo = $entidadRevision && count($entidadRevision) > 0
+            ? $entidadRevision[0]->nombre
+            : 'Aviso de entero';
+
+        return Http::withHeaders([
+            'Authorization' => 'Bearer '.$token,
+        ])->post('https://catastro.lapaz.gob.mx/catastro/avisos/pdf', [
+            'titulo' => $titulo,
+            'no_aviso' => $avisoEntero->no_aviso,
+        ]);
     }
 }

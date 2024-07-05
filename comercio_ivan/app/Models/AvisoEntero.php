@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Tramite;
 
 class AvisoEntero extends Model
 {
@@ -32,6 +33,11 @@ class AvisoEntero extends Model
         'hora',
         'fecha',
     ];
+
+    public function servidorPublico()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function tramite()
     {

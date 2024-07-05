@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Helpers\ClavesScian;
-use App\Models\Model;
 use App\Services\CatastroGateway;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +35,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //        Model::preventLazyLoading(!app()->isProduction());
+        // Model::preventLazyLoading(!app()->isProduction());
         Paginator::useBootstrap();
+
+        // Extender la validacion unique para case-sensitive en postgres.
+        Validator::extend('iunique', function ($attribute, $value, $parameters, $validator) {
+            if (isset($parameters[1])) {
+                [$connection] = $validator->parseTable($parameters[0]);
+                $wrapped = DB::connection($connection)->getQueryGrammar()->wrap($parameters[1]);
+                $parameters[1] = DB::raw("lower({$wrapped})");
+            }
+            return $validator->validateUnique($attribute, Str::lower($value), $parameters);
+        }, trans('validation.iunique'));
     }
 }

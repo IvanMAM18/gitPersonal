@@ -40,10 +40,10 @@ const routes = {
 
     // comercio-admin
     comercioAdmin: APP + "/comercio-admin",
+    comercioSarePro: APP + "/comercio-sare-pro",
     comercioAdminNegocio: APP + "/comercio-admin/negocio/:negocioId/:year",
     comercionAdminHomeNegocios: APP + "/comercio-admin-home",
     comercioAdminBusquedaNegocio: APP + "/busqueda-negocios",
-    comercioSarePro: APP + "/comercio-sare-pro",
     editarNegocioComercioAdmin: APP + "/comercio-admin/negocio/:negocioId/editar",
 
     //nuevo Alcoholes

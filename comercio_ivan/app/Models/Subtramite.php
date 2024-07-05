@@ -26,6 +26,16 @@ class Subtramite extends Model
         'deleted_at',
     ];
 
+    public function catalogo_tramite_hijo()
+    {
+        return $this->hasMany(CatalogoTramite::class, 'id', 'catalogo_tramite_hijo_id');
+    }
+
+    public function catalogo_tramite_hijo_unico()
+    {
+        return $this->hasOne(CatalogoTramite::class, 'id', 'catalogo_tramite_hijo_id');
+    }
+
     public static function storeSubTramite(Request $request)
     {
         $subtramite = Subtramite::create($request->all());
@@ -44,15 +54,5 @@ class Subtramite extends Model
         }
 
         return $subtramite;
-    }
-
-    public function catalogo_tramite_hijo()
-    {
-        return $this->hasMany(CatalogoTramite::class, 'id', 'catalogo_tramite_hijo_id');
-    }
-
-    public function catalogo_tramite_hijo_unico()
-    {
-        return $this->hasOne(CatalogoTramite::class, 'id', 'catalogo_tramite_hijo_id');
     }
 }

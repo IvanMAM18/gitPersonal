@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AvisoEnteroService;
 use App\Helpers\Refrendos;
+use App\Helpers\EntidadRevisora;
 use App\Models\CatalogoTramite;
 use App\Models\EstadoRevision;
 use App\Models\GiroComercial;
@@ -18,6 +20,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use App\Services\{
+    TramiteCondicionanteService,
+    TramiteRequisitoService,
+};
 
 class RefrendosByYearController extends Controller
 {
@@ -209,6 +216,7 @@ class RefrendosByYearController extends Controller
                         ]);
 
                         $catalogo_tramite = CatalogoTramite::find($catalogoTramiteId);
+                        $revision = null;
                         if ($catalogo_tramite->id == 10) {
                             $revision = Revision::create([
                                 'entidad_revision_id' => $catalogo_tramite['entidad_revisora_id'],
@@ -236,6 +244,18 @@ class RefrendosByYearController extends Controller
                                 'observaciones' => 'Revision iniciada',
                             ]);
                         }
+
+                        if (
+                            in_array(
+                                $catalogo_tramite->entidad_revisora_id,
+                                [EntidadRevisora::$PROTECCION_CIVIL, EntidadRevisora::$ECOLOGIA]
+                            )
+                        ) {
+                            AvisoEnteroService::generarAutomatico($tramite_de_subtramite);
+                        }
+
+                        TramiteRequisitoService::crearRequisitosPorTramite($tramite_de_subtramite, $revision);
+                        TramiteCondicionanteService::crearCondicionantesPorTramite($tramite_de_subtramite, $revision);
                     }
                 }
             }
@@ -371,7 +391,20 @@ class RefrendosByYearController extends Controller
                             'observaciones' => 'Revision iniciada',
                         ]);
                     }
+
+                    if(
+                        in_array(
+                            $catalogo_tramite->entidad_revisora_id,
+                            [EntidadRevisora::$PROTECCION_CIVIL, EntidadRevisora::$ECOLOGIA]
+                        )
+                    ) {
+                        AvisoEnteroService::generarAutomatico($tramite_de_subtramite);
+                    }
+
+                    TramiteRequisitoService::crearRequisitosPorTramite($tramite_de_subtramite, $revision);
+                    TramiteCondicionanteService::crearCondicionantesPorTramite($tramite_de_subtramite, $revision);
                 }
+
             }
             DB::commit();
 

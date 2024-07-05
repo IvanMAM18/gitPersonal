@@ -1,40 +1,28 @@
 import React, { useEffect, useState } from "react";
-import impactos from "../../utils/impactoGiroComercial";
 import status from "../../utils/statuses";
 import {
     Row,
     Col,
-    Divider,
     Button,
     Input,
     Tag,
     Card,
-    message,
-    Tabs
+    message,notification,
+    Tabs,
 } from "antd";
 import axios from "axios";
-import GoogleMapReact from "google-map-react";
-import { PushpinOutlined } from "@ant-design/icons";
 import NegocioDetallesModal from "../components/NegocioDetallesModal";
 import DocumentosUsuariosGrid from "../revision/componentes/documentosUsuarios";
 import ObservacionesTimeline from "../revision/componentes/observacionesTimeline";
-import { isArray } from "lodash";
 
 import GeneralHeader from "../revision/detalles-components/GeneralHeader";
 import PropietarioInfo from "../revision/detalles-components/PropietarioInfo";
 import PersonaMoralInfo from "../revision/detalles-components/PersonaMoralInfo";
 import DireccionInfo from "../revision/detalles-components/DireccionInfo";
 import MasDetallesInfo from "../revision/detalles-components/MasDetallesInfo";
+import BotonRechazarNegocio from "./RechazarNegocioComponentes/BotonRechazarNegocio";
+import { placements } from "@popperjs/core";
 
-const Marker = () => (
-    <PushpinOutlined
-        style={{
-            transform: "translate(-7%, -100%)",
-            fontSize: 30,
-            color: "red",
-        }}
-    />
-);
 
 function ComercioAdminNegocio(props) {
     const [pos, setPos] = useState(null);
@@ -52,7 +40,6 @@ function ComercioAdminNegocio(props) {
         return;
     }
 
-    // alert('')
 
     const crearRevisionSiNoExiste = () => {
         axios
@@ -69,15 +56,25 @@ function ComercioAdminNegocio(props) {
             .then((result) => {
                 let data = result.data;
                 setNegocio(data);
-                // debugger
                 setPos({
-                    lat: +data.direccion.latitud,
-                    lng: +data.direccion.longitude,
+                    lat: +data?.direccion?.latitud,
+                    lng: +data?.direccion?.longitude,
                 });
             });
     };
-
-    const enviarRevision = () => {
+    const openNotificationWithIcon = (type,placement="topRight") => {
+        notification[type]({
+          message: 'Rechazar negocio',
+          description:
+            'No se puede rechazar un negocio sin igresar una observación.',
+            placement
+        });
+      };
+    const enviarRevision = (status) => {
+        if(status==="RECHAZADO" && textoRevision.trim() === ""){
+            openNotificationWithIcon('error',"bottomRight");
+            return;
+        }
         const revision = negocio.revisiones.find(
             (r) => r.entidad_revision_id === 5
         );
@@ -87,7 +84,7 @@ function ComercioAdminNegocio(props) {
             observacion: textoRevision,
             negocio_id: negocio.id,
             entidad_id: 5,
-            status: status.EN_REVISION,
+            status,
             revision_id: revision.id,
         };
         axios
@@ -270,26 +267,29 @@ function ComercioAdminNegocio(props) {
 
                             ) : (
 
-                                <>
+                                <div  className="mb-5">
                                     <Input.TextArea
                                         value={textoRevision}
                                         onInput={(e) => setTextoRevision(e.target.value)}
-                                        placeholder="Mensaje revisión"
+                                        placeholder="Mensaje revisión" className="mb-3"
                                     />
-                                    <p>&nbsp;</p>
-                                    <Button
-                                        disabled={!textoRevision}
-                                        onClick={enviarRevision}
-                                        type="primary"
-                                    >
-                                        Enviar revisión
-                                    </Button>
-
-                                    <Button onClick={darVistoBueno} type="success">
-                                        Visto bueno
-                                    </Button>
-
-                                </>
+                                    <div className="flex justify-between">
+                                        <div className="grid gap-4 grid-cols-2">
+                                            <Button
+                                                disabled={!textoRevision}
+                                                onClick={()=>enviarRevision(status.EN_REVISION)}
+                                                type="primary"
+                                            >
+                                                Enviar revisión
+                                            </Button>
+                                            <Button onClick={darVistoBueno} type="success">
+                                                Visto bueno
+                                            </Button>
+                                        </div>
+                                        <BotonRechazarNegocio enviarRevision={enviarRevision}/>
+                                        
+                                    </div>
+                                </div>
                             )}
                             </Card>
                         </>
