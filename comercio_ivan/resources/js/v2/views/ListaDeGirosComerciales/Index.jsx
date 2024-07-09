@@ -1,14 +1,14 @@
-import {Checkbox, Input,Button, Select, Table, Tag} from "antd";
+import {Checkbox, Input,Button,Popover,Table, Tag} from "antd";
 import React, {useEffect, useState} from "react";
 import SioNoTag from "@/v2/components/SioNo";
+import { InfoCircleOutlined } from '@ant-design/icons';
 import {debounce, pickBy} from "lodash";
-import {Option} from "antd/es/mentions";
-import status from "@/utils/statuses";
 
 // Estados inicial de los filtros
 const INITIAL_STATE_FILTERS = {
     nombre: '',
     clave_scian: '',
+    descripcion: '',
     impacto: null,
     sector: null,
     vende_alchol: null,
@@ -46,6 +46,14 @@ export default function ListaDeGirosComerciales(){
 
     useEffect(() => fetchGirosComerciales(), [filters])
 
+    const [showPopover, setShowPopover] = useState(false);
+    const [selectedRecord, setSelectedRecord] = useState(null);
+
+    const handleButtonClick = (nombre) => {
+        setSelectedRecord(nombre);
+        setShowPopover(!showPopover);
+    };
+
     const fetchGirosComerciales = debounce(() => {
         setIsLoading(true)
         axios.get(`/v2/api/giros-comerciales`, {
@@ -72,6 +80,7 @@ export default function ListaDeGirosComerciales(){
             setData('sector', tableFilters['tipo_sector'][0])
         }
         if (tableFilters['cobro_programa_interno']){
+            console.log(tableFilters['cobro_programa_interno'][0]);
             setData('programa_interno', tableFilters['cobro_programa_interno'][0])
         }
         if (tableFilters['certificado_medio_ambiente']){
@@ -99,9 +108,9 @@ export default function ListaDeGirosComerciales(){
             title: "Clave SCIAN",
             dataIndex: "clave_scian",
             key: "clave_scian",
-            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+            filterDropdown: (
                 <div className="p-2">
-                    <Input placeholder="Buscar palabras claves" className="w-full" onChange={event => setData('clave_scian', event.target.value)} />
+                    <Input placeholder="Buscar clave SCIAN" className="w-full" onChange={event => setData('clave_scian', event.target.value)} />
                 </div>
             ),
         },
@@ -109,11 +118,36 @@ export default function ListaDeGirosComerciales(){
             title: "Nombre",
             dataIndex: "nombre",
             key: "nombre",
-            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+            filterDropdown: (
                 <div className="p-2">
-                    <Input placeholder="Buscar palabras claves" className="w-full" onChange={event => setData('nombre', event.target.value)} />
+                    <Input placeholder="Buscar nombre" className="w-full" onChange={event => setData('nombre', event.target.value)} />
                 </div>
             ),
+            render: (text, record) => {
+                return (
+                    <span> 
+                        {text}
+                        <Popover
+                            content={selectedRecord === record.nombre && (
+                                <div className="w-96 text-justify">
+                                    <span className="text-red-800 text-lg">Descripcion:</span>
+                                    <br/>
+                                    {record.descripcion}
+                                </div>
+                            )}
+                            visible={showPopover}
+                            placement="right"
+                        >
+                            <Button
+                            type="text"
+                            title="Descripcion"
+                            icon={<InfoCircleOutlined style={{ color:'red'}}/>}
+                            onClick={() => handleButtonClick(record.nombre)}
+                            />
+                        </Popover>
+                    </span>
+                  );
+              },
         },
         {
             title: "Tipo de impacto",
@@ -124,6 +158,7 @@ export default function ListaDeGirosComerciales(){
                 { text: "Bajo Impacto", value: 'bajo_impacto' },
                 { text: "Mediano alto impacto",value: 'mediano_alto_impacto' },
                 { text: "Alto impacto", value: 'alto_impacto' },
+                { text: "Reiniciar", value: null},
             ],
             filterMultiple: false,
             render: (value, giro) => <Tag color={tipoImpactoClasss[value]}>{giro.nombre_impacto}</Tag>
@@ -133,10 +168,10 @@ export default function ListaDeGirosComerciales(){
             dataIndex: "tipo_sector",
             key: "tipo_sector",
             filters: [
-                { text: "Reset", value: null},
                 { text: "SERVICIOS", value: 'SERVICIOS' },
                 { text: "INDUSTRIA",value: 'INDUSTRIA' },
                 { text: "COMERCIO", value: 'COMERCIO' },
+                { text: "Reiniciar", value: null},
             ],
             filterMultiple: false,
             render: (value) => <Tag color={tipoSectorClasss[value]}>{value}</Tag>
@@ -145,10 +180,11 @@ export default function ListaDeGirosComerciales(){
             title: "Cobro de Programa interno",
             dataIndex: "cobro_programa_interno",
             key: "cobro_programa_interno",
+            width: 80,
             filters: [
-                { text: "SI", value: true },
-                { text: "NO", value: false },
-                { text: "reset", value: null },
+                { text: "SI", value: 'true' },
+                { text: "NO", value: 'false' },
+                { text: "Reiniciar", value: null },
             ],
             filterMultiple: false,
             render: (value) => <SioNoTag valor={value} />
@@ -157,10 +193,11 @@ export default function ListaDeGirosComerciales(){
             title: "Certificado de medio ambiente",
             dataIndex: "certificado_medio_ambiente",
             key: "certificado_medio_ambiente",
+            width: 80,
             filters: [
-                { text: "SI", value: true },
-                { text: "NO", value: false },
-                { text: "reset", value: null },
+                { text: "SI", value: 'true' },
+                { text: "NO", value: 'false' },
+                { text: "Reiniciar", value: null },
             ],
             filterMultiple: false,
             render: (value) => <SioNoTag valor={value} />
@@ -169,10 +206,11 @@ export default function ListaDeGirosComerciales(){
             title: "Licencia de alcohol",
             dataIndex: "licencia_alcohol_giro_comercial",
             key: "licencia_alcohol_giro_comercial",
+            width: 80,
             filters: [
-                { text: "SI", value: true },
-                { text: "NO", value: false },
-                { text: "reset", value: null },
+                { text: "SI", value: 'true' },
+                { text: "NO", value: 'false' },
+                { text: "Reiniciar", value: null },
             ],
             filterMultiple: false,
             render: (value) => <SioNoTag valor={value} />
@@ -187,12 +225,12 @@ export default function ListaDeGirosComerciales(){
             <div className="mb-3 grid grid-cols-1 xl:grid-cols gap-2 bg-gray-100 border px-4 py-2 rounded-sm">
                 <div className="w-full flex flex-col">
                     <h2 className="text-red-800">Buscar palabras claves</h2>
-                    <Input placeholder="Buscar palabras claves" className="w-full" onChange={event => setData('nombre', event.target.value)} />
+                    <Input placeholder="Buscar palabras claves" className="w-full" onChange={event => setData('descripcion', event.target.value)} />
                 </div>
             </div>
 
             <Table
-                className="border border-gray-50 p-1"
+                className="border border-gray-200 p-2"
                 loading={isLoading}
                 columns={columns}
                 dataSource={paginador.data}
