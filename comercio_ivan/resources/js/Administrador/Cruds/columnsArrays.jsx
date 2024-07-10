@@ -1,5 +1,4 @@
-import {Checkbox, Input,Button,Popover,Table, Tag} from "antd";
-import { InfoCircleOutlined } from '@ant-design/icons';
+import {Tag} from "antd";
 import SioNoTag from "@/v2/components/SioNo";
 
 
@@ -44,52 +43,30 @@ export const tramitesColumns = [
         render: (text, record) => <Tag>{record?.en_linea ? "Sí" : "No"}</Tag>,
     },
 ];
+
 const tipoSectorClasss = {
-    'COMERCIO' :'green',
-    'INDUSTRIA': 'blue',
+    'COMERCIO' :'orange',
+    'INDUSTRIA': 'purple',
     'SERVICIOS' : 'pink',
-}
+};
 
 const tipoImpactoClasss = {
     'bajo_impacto' :'green',
     'mediano_alto_impacto': 'blue',
     'alto_impacto' : 'pink',
-}
+};
+
 export const girosColumns = [
     {
         title: "Clave SCIAN",
         dataIndex: "clave_scian",
         key: "clave_scian",
-        filterDropdown: (
-            <div className="p-2">
-                <Input placeholder="Buscar clave SCIAN" className="w-full" onChange={event => setData('clave_scian', event.target.value)} />
-            </div>
-        ),
     },
     {
         title: "Nombre",
         dataIndex: "nombre",
         key: "nombre",
-        filterDropdown: (
-            <div className="p-2">
-                <Input placeholder="Buscar nombre" className="w-full" onChange={event => setData('nombre', event.target.value)} />
-            </div>
-        ),
     },
-    // {
-    //     title: "Descripcion",
-    //     dataIndex: "descripcion",
-    //     key: "descripcion",
-    // },
-    // {
-    //     title: "Giro Recolección de Basura",
-    //     dataIndex: "servicios_publicos",
-    //     key: "servicios_publicos",
-    //     render: (text, record) => (
-    //         // console.log("giros record:", record)
-    //         <span>{record.servicios_publicos.nombre.split(/[a-zA-Z]\) /)}</span>
-    //     ),
-    // },
     {
         title: "Tipo",
         dataIndex: "tipo",
@@ -98,7 +75,6 @@ export const girosColumns = [
             { text: "Bajo Impacto", value: 'bajo_impacto' },
             { text: "Mediano alto impacto",value: 'mediano_alto_impacto' },
             { text: "Alto impacto", value: 'alto_impacto' },
-            { text: "Restablecer", value: null},
         ],
         filterMultiple: false,
         render: (value, giro) => <Tag color={tipoImpactoClasss[value]}>{giro.nombre_impacto}</Tag>
@@ -111,7 +87,6 @@ export const girosColumns = [
             { text: "SERVICIOS", value: 'SERVICIOS' },
             { text: "INDUSTRIA",value: 'INDUSTRIA' },
             { text: "COMERCIO", value: 'COMERCIO' },
-            { text: "Restablecer", value: null},
         ],
         filterMultiple: false,
         render: (value) => <Tag color={tipoSectorClasss[value]}>{value}</Tag>
@@ -123,7 +98,6 @@ export const girosColumns = [
         filters: [
             { text: "SI", value: 'true' },
             { text: "NO", value: 'false' },
-            { text: "Restablecer", value: null },
         ],
         filterMultiple: false,
         render: (value) => <SioNoTag valor={value} />
@@ -135,7 +109,6 @@ export const girosColumns = [
         filters: [
             { text: "SI", value: 'true' },
             { text: "NO", value: 'false' },
-            { text: "Restablecer", value: null },
         ],
         filterMultiple: false,
         render: (value) => <SioNoTag valor={value} />
@@ -147,7 +120,6 @@ export const girosColumns = [
         filters: [
             { text: "SI", value: 'true' },
             { text: "NO", value: 'false' },
-            { text: "Restablecer", value: null },
         ],
         filterMultiple: false,
         render: (value) => <SioNoTag valor={value} />

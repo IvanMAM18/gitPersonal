@@ -1,4 +1,4 @@
-import {Checkbox, Input,Button,Popover,Table, Tag} from "antd";
+import {Input,Button,Popover,Table, Tag} from "antd";
 import React, {useEffect, useState} from "react";
 import SioNoTag from "@/v2/components/SioNo";
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -27,16 +27,16 @@ const INITIAL_PAGINATOR = {
 }
 
 const tipoSectorClasss = {
-    'COMERCIO' :'green',
-    'INDUSTRIA': 'blue',
+    'COMERCIO' :'orange',
+    'INDUSTRIA': 'purple',
     'SERVICIOS' : 'pink',
-}
+};
 
 const tipoImpactoClasss = {
     'bajo_impacto' :'green',
     'mediano_alto_impacto': 'blue',
     'alto_impacto' : 'pink',
-}
+};
 
 export default function ListaDeGirosComerciales(){
 
