@@ -28,7 +28,7 @@ class GiroComercial extends Model
         'tipo_sector',
         'cobro_programa_interno',
         'certificado_medio_ambiente',
-        'licencia_alcohol_giro_comercial',
+        'licencia_alcohol',
     ];
 
     public function servicios_publicos()
@@ -50,7 +50,7 @@ class GiroComercial extends Model
             ->when($filters['sector'] ?? null, fn($query) => $query->where('tipo_sector', $filters['sector']))
             ->when($filters['medio_ambiente'] ?? null, fn($query) => $query->where('certificado_medio_ambiente', $filters['medio_ambiente']))
             ->when($filters['programa_interno'] ?? null, fn($query) => $query->where('cobro_programa_interno', $filters['programa_interno']))
-            ->when($filters['vende_alcohol'] ?? null, fn($query) => $query->where('licencia_alcohol_giro_comercial', $filters['vende_alcohol']))
+            ->when($filters['vende_alcohol'] ?? null, fn($query) => $query->where('licencia_alcohol', $filters['vende_alcohol']))
             ->when($filters['clave_scian'] ?? null, fn($query) => $query->where('clave_scian', 'ILIKE', '%' . $filters['clave_scian'] . '%'))
             ->when($filters['descripcion'] ?? null, fn($query) => $query->where('descripcion', 'ILIKE', '%' . $filters['descripcion'] . '%'))
             ->when($filters['nombre'] ?? null, fn($query) => $query->where('nombre', 'ILIKE', '%' . $filters['nombre'] . '%'));

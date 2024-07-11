@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Table, message, Space, Input, Radio } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import ModalForm from "../../components/ModalForm";
+import ModalForm from "@/components/ModalForm";
 import axios from "axios";
 import {
     deleteConfirm,
     nuevoRegistro,
     actualizarRegistro,
 } from "./HttpActions";
-import { options } from "less";
+//import { options } from "less";
 
 export default function CrudView({
     pageTitle,
@@ -16,16 +16,16 @@ export default function CrudView({
     columns,
     formFields,
     formFieldsPassword,
-    //  isExpandedRow,
-      tramites
+    //isExpandedRow,
+    tramites
 }) {
     const [tableData, setTableData] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalTitle, setModalTitle] = useState("Form");
     const [onCreate, setOnCreate] = useState(() => {});
     const [formItems, setFormItems] = useState([]);
-    //  const [pagination, setPagination] = useState({ current: 1, pageSize: 30 });
-      const [tramitesAgrupados, setTramitesAgrupados] = useState([])
+    //const [pagination, setPagination] = useState({ current: 1, pageSize: 30 });
+    const [tramitesAgrupados, setTramitesAgrupados] = useState([])
 
     const updatedColumns = [...columns];
 
@@ -50,7 +50,7 @@ export default function CrudView({
             clearFilters,
         }) => (
             <div className="p-2">
-                {inputOrRadioStyle(selectedKeys,setSelectedKeys,confirm,dataIndex,columns,searchInput)}
+                {inputOrRadioFilters(selectedKeys,setSelectedKeys,confirm,dataIndex,columns,searchInput)}
                 <Space>
                     <Button
                         onClick={() => {
@@ -61,18 +61,12 @@ export default function CrudView({
                             setSearchedColumn(dataIndex);
                         }}
                         size="small"
-                        style={{
-                            width: 90,
-                        }}
                     >
                         Reiniciar
                     </Button>
                     <Button
                         type="primary"
                         size="small"
-                        style={{
-                            width: 90,
-                        }}
                         onClick={() => {
                             confirm({
                                 closeDropdown: false,
@@ -81,7 +75,7 @@ export default function CrudView({
                             setSearchedColumn(dataIndex);
                          }}
                      >
-                        Filtrar
+                        Filtro
                     </Button>
                 </Space>
             </div>
@@ -204,40 +198,40 @@ export default function CrudView({
         return () => {};
     }, []);
 
-      useEffect(() => {
-          if (tableData?.length > 0 && tramites?.length > 0) {
-              setTramitesAgrupados(agruparTramites(tableData, tramites))
-          }
+    useEffect(() => {
+        if (tableData?.length > 0 && tramites?.length > 0) {
+            setTramitesAgrupados(agruparTramites(tableData, tramites))
+        }
 
-      }, [tableData]);
+    }, [tableData]);
 
-     const loadItems = () => {
-         axios
-             .get(`/app/dashadmin_get_todos_los_${modelo}`)
-             .then((response) => {
-                 const formData = response.data;
-                 formData.map((item) => {
-                     item.key = item.id;
-                 });
-                 // console.log("get todos los: ", formData)
-                 setTableData(formData);
-             })
-             .catch((err) => console.error(err));
-     };
+    const loadItems = () => {
+        axios
+            .get(`/app/dashadmin_get_todos_los_${modelo}`)
+            .then((response) => {
+                const formData = response.data;
+                formData.map((item) => {
+                    item.key = item.id;
+                });
+                // console.log("get todos los: ", formData)
+                setTableData(formData);
+            })
+            .catch((err) => console.error(err));
+    };
 
-      function agruparTramites(catalogo, tramites) {
-          const tramitesAgrupados = {};
-          for (const elemento of catalogo) {
-              const padre = tramitesAgrupados[elemento.catalogo_tramite_padre_id] || {};
-              const hijo = tramites.find(t => t.id === elemento.catalogo_tramite_hijo_id);
-              if (!padre || !hijo) continue;
-              padre[hijo.nombre] = hijo;
-              tramitesAgrupados[elemento.catalogo_tramite_padre_id] = padre;
-          }
-          debugger
-          console.log("tramites agrupados: ", tramitesAgrupados)
-          return tramitesAgrupados;
-      }
+    function agruparTramites(catalogo, tramites) {
+        const tramitesAgrupados = {};
+        for (const elemento of catalogo) {
+            const padre = tramitesAgrupados[elemento.catalogo_tramite_padre_id] || {};
+            const hijo = tramites.find(t => t.id === elemento.catalogo_tramite_hijo_id);
+            if (!padre || !hijo) continue;
+            padre[hijo.nombre] = hijo;
+            tramitesAgrupados[elemento.catalogo_tramite_padre_id] = padre;
+        }
+        debugger
+        console.log("tramites agrupados: ", tramitesAgrupados)
+        return tramitesAgrupados;
+    }
 
     const showModal = (title, op_type) => {
         setIsModalVisible(true);
@@ -347,7 +341,8 @@ export default function CrudView({
         </>
     );
 }
-function inputOrRadioStyle(selectedKeys,setSelectedKeys,confirm,dataIndex,columns,searchInput){
+
+function inputOrRadioFilters(selectedKeys,setSelectedKeys,confirm,dataIndex,columns,searchInput){
     if(dataIndex === 'nombre' || dataIndex === 'clave_scian'){
         return (
             <Input
@@ -363,37 +358,24 @@ function inputOrRadioStyle(selectedKeys,setSelectedKeys,confirm,dataIndex,column
                 className={"mb-1 d-block"}
             />);
     }else{
-        const arrayFilters = {};
-        const array = [];
-        const conteo = columns[3].filters;
+        //Se mandan llamar los filters que se encuentran en clumnsArray 
+        const arrayFiltersRadios = [];
+        for(let i=0; i<columns.length; i++){
+            if(columns[i].dataIndex === dataIndex){
+                  for(let j=0; j<columns[i].tamanio; j++){
+                      arrayFiltersRadios.push(
+                        <Radio className={"mb-1 d-block"} value={columns[i].filters[j].value}>{columns[i].filters[j].text}</Radio>
+                    );
+                  }
+            }
+        }
         return (
                 <Space className={"mb-1 d-block"}>
-                    <Radio.Group 
+                    <Radio.Group
                         onChange={(e) =>
                             setSelectedKeys(e.target.value ? [e.target.value] : [])} 
                         value={selectedKeys[0]}>
-                        {
-                        //console.log(columns[3].filters)
-                        columns.map((objeto, index)=>{
-                            if(objeto.dataIndex === dataIndex){
-                                arrayFilters [0]= (objeto.filters);
-                            }
-                            
-                        })
-                        // columns.map((objeto, index)=>{
-                            //     if(objeto.dataIndex === dataIndex){
-                                //         //conteo=count(objeto.filters);
-                                //         for (let i=0; i<3; i++){
-                                    //             //Se traen los datos proporcionados por el filters para crear un array con todos los raidos
-                                    //             array[i] = <Radio className={"ml-2 mb-1 d-block"} value={objeto.filters[i].value}>{objeto.filters[i].text}</Radio>;
-                                    //         }      
-                                    //         return array;
-                                    //     }
-                                    // })
-                                }
-                                {console.log(arrayFilters[0])}
-                        <Radio value="true">Sí</Radio>
-                        <Radio value="false">No</Radio>
+                        {arrayFiltersRadios}
                     </Radio.Group>
                 </Space>
         );

@@ -77,6 +77,7 @@ export const girosColumns = [
             { text: "Alto impacto", value: 'alto_impacto' },
         ],
         filterMultiple: false,
+        tamanio: 3,
         render: (value, giro) => <Tag color={tipoImpactoClasss[value]}>{giro.nombre_impacto}</Tag>
     },
     {
@@ -89,6 +90,7 @@ export const girosColumns = [
             { text: "COMERCIO", value: 'COMERCIO' },
         ],
         filterMultiple: false,
+        tamanio: 3,
         render: (value) => <Tag color={tipoSectorClasss[value]}>{value}</Tag>
     },
     {
@@ -100,6 +102,7 @@ export const girosColumns = [
             { text: "NO", value: 'false' },
         ],
         filterMultiple: false,
+        tamanio: 2,
         render: (value) => <SioNoTag valor={value} />
     },
     {
@@ -111,17 +114,19 @@ export const girosColumns = [
             { text: "NO", value: 'false' },
         ],
         filterMultiple: false,
+        tamanio: 2,
         render: (value) => <SioNoTag valor={value} />
     },
     {
         title: "Licencia de alcohol",
-        dataIndex: "licencia_alcohol_giro_comercial",
-        key: "licencia_alcohol_giro_comercial",
+        dataIndex: "licencia_alcohol",
+        key: "licencia_alcohol",
         filters: [
             { text: "SI", value: 'true' },
             { text: "NO", value: 'false' },
         ],
         filterMultiple: false,
+        tamanio: 2,
         render: (value) => <SioNoTag valor={value} />
     },
 ];

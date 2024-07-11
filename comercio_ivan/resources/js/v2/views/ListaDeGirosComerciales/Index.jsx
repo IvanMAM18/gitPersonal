@@ -1,8 +1,9 @@
-import {Input,Button,Popover,Table, Tag} from "antd";
+import {Input,Button,Popover,Table,Space,Tag} from "antd";
 import React, {useEffect, useState} from "react";
 import SioNoTag from "@/v2/components/SioNo";
 import { InfoCircleOutlined } from '@ant-design/icons';
 import {debounce, pickBy} from "lodash";
+import { SearchOutlined } from "@ant-design/icons";
 
 // Estados inicial de los filtros
 const INITIAL_STATE_FILTERS = {
@@ -46,13 +47,17 @@ export default function ListaDeGirosComerciales(){
 
     useEffect(() => fetchGirosComerciales(), [filters])
 
-    const [showPopover, setShowPopover] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
-
+    const [showPopover, setShowPopover] = useState(false);
+    
     const handleButtonClick = (nombre) => {
         setSelectedRecord(nombre);
         setShowPopover(!showPopover);
     };
+
+    const handleMouseLeave = () => {
+        setShowPopover(false);
+      };
 
     const fetchGirosComerciales = debounce(() => {
         setIsLoading(true)
@@ -86,8 +91,8 @@ export default function ListaDeGirosComerciales(){
         if (tableFilters['certificado_medio_ambiente']){
             setData('medio_ambiente', tableFilters['certificado_medio_ambiente'][0])
         }
-        if (tableFilters['licencia_alcohol_giro_comercial']){
-            setData('vende_alcohol', tableFilters['licencia_alcohol_giro_comercial'][0])
+        if (tableFilters['licencia_alcohol']){
+            setData('vende_alcohol', tableFilters['licencia_alcohol'][0])
         }
 
         setData('page', event.current)
@@ -120,16 +125,22 @@ export default function ListaDeGirosComerciales(){
             key: "nombre",
             filterDropdown: (
                 <div className="p-2">
-                    <Input placeholder="Buscar nombre" className="w-full" onChange={event => setData('nombre', event.target.value)} />
+                    <Input placeholder="Buscar palabras clave" className="w-full" onChange={event => setData('descripcion', event.target.value)} />
                 </div>
             ),
             render: (text, record) => {
                 return (
-                    <span> 
+                    <span
+                    
+                    > 
                         {text}
                         <Popover
                             content={selectedRecord === record.nombre && (
-                                <div className="w-96 text-justify">
+                                <div 
+                                    className="w-96 text-justify"
+                                    sryle="color:red"
+                                    
+                                >
                                     <span className="text-red-800 text-lg">Descripcion:</span>
                                     <br/>
                                     {record.descripcion}
@@ -137,12 +148,14 @@ export default function ListaDeGirosComerciales(){
                             )}
                             visible={showPopover}
                             placement="right"
+                            
                         >
                             <Button
-                            type="text"
-                            title="Descripcion"
-                            icon={<InfoCircleOutlined style={{ color:'red'}}/>}
-                            onClick={() => handleButtonClick(record.nombre)}
+                                type="text"
+                                icon={<InfoCircleOutlined style={{ color:'teal'}}/>}
+                                onClick={() => handleButtonClick(record.nombre)}
+                                onMouseEnter={() => handleButtonClick(record.nombre)}
+                                onMouseLeave={handleMouseLeave}
                             />
                         </Popover>
                     </span>
@@ -204,8 +217,8 @@ export default function ListaDeGirosComerciales(){
         },
         {
             title: "Licencia de alcohol",
-            dataIndex: "licencia_alcohol_giro_comercial",
-            key: "licencia_alcohol_giro_comercial",
+            dataIndex: "licencia_alcohol",
+            key: "licencia_alcohol",
             width: 80,
             filters: [
                 { text: "SI", value: 'true' },
@@ -224,8 +237,11 @@ export default function ListaDeGirosComerciales(){
 
             <div className="mb-3 grid grid-cols-1 xl:grid-cols gap-2 bg-gray-100 border px-4 py-2 rounded-sm">
                 <div className="w-full flex flex-col">
-                    <h2 className="text-red-800">Buscar palabras claves</h2>
-                    <Input placeholder="Buscar palabras claves" className="w-full" onChange={event => setData('descripcion', event.target.value)} />
+                    <Space >
+                        <h2 className="text-red-800"> Buscar giro </h2>
+                        <h4 className="text-red-800"> <SearchOutlined className="mb-2"/> </h4>
+                    </Space>
+                    <Input placeholder="Buscar nombre del giro" className="w-full" onChange={event => setData('nombre', event.target.value)} />
                 </div>
             </div>
 

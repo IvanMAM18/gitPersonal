@@ -224,7 +224,7 @@ function stylesDataTable(nameColumn, dataColumn,textData){
     if(nameColumn === 'tipo_sector'){
         return <TipoSectorStyle sector={ dataColumn[nameColumn] }/>;
     }
-    if(nameColumn === 'cobro_programa_interno' || nameColumn === 'certificado_medio_ambiente' || nameColumn === 'licencia_alcohol_giro_comercial'){
+    if(nameColumn === 'cobro_programa_interno' || nameColumn === 'certificado_medio_ambiente' || nameColumn === 'licencia_alcohol'){
         return <StyleTrueFalse condicion={ dataColumn[nameColumn] } />;
     }else{
         return textData;

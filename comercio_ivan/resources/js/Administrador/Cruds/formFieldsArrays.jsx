@@ -225,7 +225,7 @@ export const girosFormFields = [
         ],
     },
     {
-        name: "licencia_alcohol_giro_comercial",
+        name: "licencia_alcohol",
         label: "Licencia de Alcohol",
         value: false,
         type: "checkbox",
