@@ -16,6 +16,7 @@ import store from "./store";
 import LoginView from "@/v2/views/Auth/Login";
 import RegistrationView from "@/v2/views/Auth/Registration";
 import ListaDeGirosComerciales from "@/v2/views/ListaDeGirosComerciales/Index";
+import PreguntasFreguntes from "@/preguntasFrecuentes/views/Index";
 
 
 const appRoot = document.getElementById("root");
@@ -55,6 +56,12 @@ const girosRoot = document.getElementById("lista-degiros-comerciales");
 if (girosRoot) {
     const root = ReactDOM.createRoot(girosRoot);
     root.render(<ListaDeGirosComerciales />);
+}
+
+const preguntasRoot = document.getElementById("preguntas-frecuentes");
+if (preguntasRoot) {
+    const root = ReactDOM.createRoot(preguntasRoot);
+    root.render(<PreguntasFreguntes />);
 }
 
 // import './components/Empezar.jsx'

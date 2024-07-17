@@ -27,6 +27,24 @@ function Ayuda() {
                     <a   target="_blank"href="/formatos/terceros_acreditados_pc.pdf">Descargar Archivo</a>
                 }
             />
+            <br/>
+            <Alert
+                showIcon
+                type="success"
+                message="CONSULTA AQUI LA LISTA DE GIROS COMERCIALES"
+                action={
+                    <a   target="_blank"href="/lista-de-giros-comerciales">IR a lista de grios comerciales</a>
+                }
+            />
+            <br/>
+            <Alert
+                showIcon
+                type="success"
+                message="CONSULTA AQUI LAS PREGUNTAS FRECUENTES"
+                action={
+                    <a   target="_blank"href="/preguntas-frecuentes-comercio">Ir a preguntas frecuentes</a>
+                }
+            />
         </div>
     );
 }

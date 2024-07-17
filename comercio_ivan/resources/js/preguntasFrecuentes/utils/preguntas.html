@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Preguntas Frecuentes</title>
+</head>
+<body>
+  
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top shadow-sm mb-5 bg-white rounded">
+    <button class="navbar-toggler" style="margin-left:10px" type="button" onclick="toggleSidenav()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <img src="logo.png" alt="" id="logo" class="me-3">
+    <a class="navbar-brand titulo" href="index.html">Centro de ayuda</a>
+  </nav>
+
+  <!-- Sidenav -->
+  <div id="mySidenav" class="sidenav bg-light shadow mb-5 bg-white rounded">
+    <a href="preguntas.html?category=Cuenta">Acceso a la cuenta</a>
+    <a href="preguntas.html?category=Licencias">Sobre las licencias</a>
+    <a href="preguntas.html?category=Comercio">Comercio</a>
+    <a href="preguntas.html?category=UsoSuelo">Uso de Suelo</a>
+    <a href="preguntas.html?category=MedioAmbiente">Medio Ambiente</a>
+    <a href="preguntas.html?category=ProteccionCivil">Protección Civil</a>
+    <a href="preguntas.html?category=ServPub">Servicios Públicos</a>
+  </div>
+  
+  <!-- Main content -->
+  <div id="main">
+    <h3 id="titulo">Preguntas Frecuentes</h3>
+    <div class="cards row" id="preguntas">
+      <!-- Las tarjetas se generarán aquí -->
+    </div>
+  </div>
+
+  <script src="funciones.js"></script>
+  <script src="pregunta.js"></script>
+  <script>
+    // Obtener la categoría de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+
+    // Determinar preguntas según la categoría
+    let preguntas;
+    let titulo;
+    if (category === 'Cuenta') {
+      preguntas = preguntasCuenta;
+      titulo = "Acceso a la cuenta";
+    } else if (category === 'Licencias') {
+      preguntas = preguntasLicencias;
+      titulo = "Sobre las licencias";
+    } else if (category === 'Comercio') {
+      preguntas = preguntasComercio;
+      titulo = "Comercio";
+    } else if (category === 'UsoSuelo') {
+      preguntas = preguntasUsoSuelo;
+      titulo = "Uso de Suelo"
+    } else if (category === 'MedioAmbiente') {
+      preguntas = preguntasMedioAmbiente;
+      titulo = "Medio Ambiente";
+    } else if (category === 'ProteccionCivil') {
+      preguntas = preguntasProteccionCivil;
+      titulo = "Protección Civil";
+    } else if (category === 'ServPub') {
+      preguntas = preguntasServPub;
+      titulo = "Servicios Públicos"
+    }
+
+    // Generar las tarjetas de preguntas
+    if (preguntas) {
+      document.getElementById('titulo').innerHTML = '<h3>Preguntas Frecuentes - ' + titulo + '</h3>'
+      generateFAQCards('preguntas', preguntas);
+    } else {
+      document.getElementById('preguntas').innerHTML = '<p>No hay preguntas disponibles para esta categoría.</p>';
+    }
+  </script>
+</body>
+</html>

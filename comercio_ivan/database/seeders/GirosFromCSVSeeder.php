@@ -43,9 +43,9 @@ class GirosFromCSVSeeder extends Seeder
                 'tipo' => $this::getGiroTipo($giros[$i][4]),
                 'catalogo_giro_comercial_id' => 1,
                 'tipo_sector' => $giros[$i][5],
-                'cobro_programa_interno' => filter_var($giros[$i][6], FILTER_VALIDATE_BOOLEAN),
-                'certificado_medio_ambiente' => filter_var($giros[$i][7], FILTER_VALIDATE_BOOLEAN),
-                'licencia_alcohol' => filter_var($giros[$i][8], FILTER_VALIDATE_BOOLEAN),
+                // 'cobro_programa_interno' => filter_var($giros[$i][6], FILTER_VALIDATE_BOOLEAN),
+                // 'certificado_medio_ambiente' => filter_var($giros[$i][7], FILTER_VALIDATE_BOOLEAN),
+                // 'licencia_alcohol' => filter_var($giros[$i][8], FILTER_VALIDATE_BOOLEAN),
             ]);
         }
 

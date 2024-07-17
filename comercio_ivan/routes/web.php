@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/lista-de-giros-comerciales', [Controllers\ListaDeGirosComercialesController::class, 'index'])
     ->name('giros-comerciales');
 
+//Ruta publica de preguntas frecuentes
+Route::get('/preguntas-frecuentes-comercio', [Controllers\PreguntasFrecuentesController::class, 'index'])
+    ->name('preguntas-frecuentes');
+
 Route::get('/resolutivo/{resolutivo:folio}', [Controllers\ResolutivoController::class, 'getResolutivoViewByFolio']);
 Route::get('/negocio/{negocio}/qr', [Controllers\CodigoQrNegocioController::class, 'show']);
 Route::get('/informacion_negocio_detalles/{negocio}', [Controllers\NegocioController::class, 'getNegocioDetallesView']);
