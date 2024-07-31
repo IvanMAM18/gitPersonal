@@ -8,13 +8,13 @@ export const preguntasFrecuentes = [
                 title: '¿Cómo crear una cuenta?', 
                 content: `
                     Ingresa a la página de <a href="https://tramites.lapaz.gob.mx/register">registro de usuarios para el Portal de Trámites y Servicios en Línea</a>, selecciona la opción “REGÍSTRATE”, al ingresar va a necesitar:
-                    <ul>
-                        <li>Nombre completo</li>
-                        <li>RFC</li>
-                        <li>Curp</li>
-                        <li>Correo electrónico.</li>
-                        <li>Contraseña para el portal de Trámites y servicios.</li>
-                        <li>Aceptar los términos y condiciones.</li>
+                    <ul style="padding-left:4%">
+                        <li>- Nombre completo</li>
+                        <li>- RFC</li>
+                        <li>- Curp</li>
+                        <li>- Correo electrónico.</li>
+                        <li>- Contraseña para el portal de Trámites y servicios.</li>
+                        <li>- Aceptar los términos y condiciones.</li>
                     </ul>
                     Una vez registrado, le llegará una notificación de confirmación a su correo registrado. (Si se trata de persona moral, capture los datos del representante legal).
                     Una vez creado su registro, podrá iniciar sesión en el Portal de Trámites y Servicios.
@@ -26,14 +26,14 @@ export const preguntasFrecuentes = [
                     En caso de no tener acceso al correo registrado, deberá solicitar el cambio en la <strong>ventanilla de la Dirección de Comercio del 
                     H. Ayuntamiento de La Paz</strong> o mediante una solicitud de cambio 
                     de correo electrónico a la siguiente dirección: <a href="mailto:info.comercio@lapaz.gob.mx">info.comercio@lapaz.gob.mx</a> donde deberá anexar:
-                    <ul>
-                    <li>Identificación del propietario o representante legal.</li>
-                    <li>ID del trámite.</li>
-                    <li>Nombre.</li>
-                    <li>CURP</li>
-                    <li>RFC</li>
-                    <li>Correo electrónico nuevo.</li>
-                    <li>Documento de propiedad o acta que lo acredite.</li>
+                    <ul style="padding-left:4%">
+                    <li>- Identificación del propietario o representante legal.</li>
+                    <li>- ID del trámite.</li>
+                    <li>- Nombre.</li>
+                    <li>- CURP</li>
+                    <li>- RFC</li>
+                    <li>- Correo electrónico nuevo.</li>
+                    <li>- Documento de propiedad o acta que lo acredite.</li>
                     </ul>
                     `
             },
@@ -42,11 +42,11 @@ export const preguntasFrecuentes = [
                 content: `
                 En caso de no tener acceso al portal de Trámites y Servicios en Línea:
                 <ol>
-                  <li>Ingresar al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
-                  <li>Ingresar en la opción de recuperar contraseña.</li>
-                  <li>Ingresar el correo registrado.</li>
-                  <li>Solicita el enlace para restablecer la contraseña.</li>
-                  <li>Al correo registrado, le llegará un enlace para ingresar su nueva contraseña.</li>
+                  <li>- Ingresar al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+                  <li>- Ingresar en la opción de recuperar contraseña.</li>
+                  <li>- Ingresar el correo registrado.</li>
+                  <li>- Solicita el enlace para restablecer la contraseña.</li>
+                  <li>- Al correo registrado, le llegará un enlace para ingresar su nueva contraseña.</li>
                 </ol>
         
                 En caso de poder iniciar sesión dentro del portal de trámites y servicios en línea, podrá observar la opción: “Actualizar Datos” donde podrá actualizar su contraseña.
@@ -57,11 +57,11 @@ export const preguntasFrecuentes = [
                 content: `
                 En caso de no tener acceso al correo registrado, podrá solicitar el cambio de correo en la <strong>ventanilla de la Dirección de Comercio del 
                 H. Ayuntamiento de La Paz</strong> o mediante una solicitud a la siguiente dirección: <a href="mailto:info.comercio@lapaz.gob.mx">info.comercio@lapaz.gob.mx</a> en donde deberá anexar:
-                <ul>
-                  <li>Identificación del propietario</li>
-                  <li>ID del trámite.</li>
-                  <li>Correo nuevo.</li>
-                  <li>Documento de propiedad o acta que lo acredite.</li>
+                <ul style="padding-left:4%">
+                  <li>- Identificación del propietario</li>
+                  <li>- ID del trámite.</li>
+                  <li>- Correo nuevo.</li>
+                  <li>- Documento de propiedad o acta que lo acredite.</li>
                 </ul>
                 ` 
             },
@@ -91,21 +91,21 @@ export const preguntasFrecuentes = [
                 title: 'No he recibido el correo de verificación', 
                 content: `
                 <ol>
-                  <li>Ingresa a <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
-                  <li>Intenta iniciar sesión con el correo electrónico y contraseña asociada al registro.</li>
-                  <li>Si no puede iniciar sesión, solicitará de nueva cuenta un enlace para la verificación de correo.</li>
-                  <li>En la bandeja de entrada de su correo personal o el correo registrado, aparecerá la siguiente ventana con el mensaje "Se detectó que aún no confirmas tu correo electrónico".</li>
-                  <li>Da clic en "Vuelve a mandar la notificación" que se encuentra al final del mensaje.</li>
-                  <li>Revisa tu bandeja de entrada de correo electrónico y/o revisa el apartado de "spam" y da click en el botón "Verifica tu correo electrónico".</li>
+                  <li>- Ingresa a <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+                  <li>- Intenta iniciar sesión con el correo electrónico y contraseña asociada al registro.</li>
+                  <li>- Si no puede iniciar sesión, solicitará de nueva cuenta un enlace para la verificación de correo.</li>
+                  <li>- En la bandeja de entrada de su correo personal o el correo registrado, aparecerá la siguiente ventana con el mensaje "Se detectó que aún no confirmas tu correo electrónico".</li>
+                  <li>- Da clic en "Vuelve a mandar la notificación" que se encuentra al final del mensaje.</li>
+                  <li>- Revisa tu bandeja de entrada de correo electrónico y/o revisa el apartado de "spam" y da click en el botón "Verifica tu correo electrónico".</li>
                 </ol>
                 ` 
             },
             { 
                 title: '¿Tienes problemas de carga o acceso a la página?', 
                 content: `
-                <ul>
-                  <li>Verifica que tu conexión a una red WiFi cuente con señal estable o con un servicio de datos móviles activado.</li>
-                  <li>Borra el historial o caché/cookies de tu dispositivo móvil u ordenador e ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+                <ul style="padding-left:4%">
+                  <li>- Verifica que tu conexión a una red WiFi cuente con señal estable o con un servicio de datos móviles activado.</li>
+                  <li>- Borra el historial o caché/cookies de tu dispositivo móvil u ordenador e ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
                 </ul>
                 ` 
             }
@@ -118,77 +118,74 @@ export const preguntasFrecuentes = [
         preguntas: [
             {
                 title: '¿Qué requisitos/documentos se requieren para realizar el trámite en línea de mi licencia de funcionamiento?',
-                content: `Necesitas entregar los siguientes documentos:
-                    <ul>
-                        <li>Identificación oficial por ambos lados.</li>
-                        <li>Constancia de situación fiscal.</li>
-                        <li>Foto de la fachada del negocio</li>
-                        <li>Comprobante de uso de suelo emitido por el H. Ayuntamiento de La Paz.</li>
-                        <li>Licencia de uso de edificación.</li>
-                        <li>Copia de credencial de elector del solicitante en caso de ser persona física, o acta constitutiva, para personas morales.</li>
-                        <li>Constancia de no retardo en pago del impuesto predial.</li>
-                        <li>Constancia sanitaria.</li>
-                        <li>Título de propiedad, contrato de arrendamiento u otro instrumento jurídico que acredite el derecho real que tiene sobre el inmueble.</li>
-                        <li>Acreditar que el inmueble donde se está solicitando la autorización de licencia no guarde adeudos generados por cualquier contribución municipal.</li>
-                        <li>Acreditar personalidad.</li>
-                        <li>Dictamen de factibilidad de operación emitido por la Dirección Municipal de Protección Civil que conste que el establecimiento cumple con las condiciones necesarias para operar con el giro solicitado.</li>
-                        <li>Ser independiente de casa-habitación (excepto restaurantes, cafés, fondas y cenadurías).</li>
-                        <li>El establecimiento debe encontrarse en condiciones materiales adecuadas para brindar el servicio con el giro solicitado.</li>
-                        <li>Carta de no antecedentes penales.</li>
-                        <li>Constancia que acredite al alta en la Secretaría de Hacienda y Crédito Público.</li>
-                        <li>Contar con la anuencia vecinal para la apertura del negocio.</li>
-                        <li>Contar previamente con la construcción de Rampa para Discapapcitados para el acceso al local.</li>
+                content: `<p style="font-weight: bold;">Necesitas entregar los siguientes documentos:</p>
+                    <ul style="padding-left:4%;">
+                        <li>- Identificación oficial por ambos lados.</li>
+                        <li>- Constancia de situación fiscal.</li>
+                        <li>- Foto de la fachada del negocio</li>
+                        <li>- Comprobante de uso de suelo emitido por el H. Ayuntamiento de La Paz.</li>
+                        <li>- Licencia de uso de edificación.</li>
+                        <li>- Copia de credencial de elector del solicitante en caso de ser persona física, o acta constitutiva, para personas morales.</li>
+                        <li>- Constancia de no retardo en pago del impuesto predial.</li>
+                        <li>- Constancia sanitaria.</li>
+                        <li>- Título de propiedad, contrato de arrendamiento u otro instrumento jurídico que acredite el derecho real que tiene sobre el inmueble.</li>
+                        <li>- Acreditar que el inmueble donde se está solicitando la autorización de licencia no guarde adeudos generados por cualquier contribución municipal.</li>
+                        <li>- Acreditar personalidad.</li>
+                        <li>- Dictamen de factibilidad de operación emitido por la Dirección Municipal de Protección Civil que conste que el establecimiento cumple con las condiciones necesarias para operar con el giro solicitado.</li>
+                        <li>- Ser independiente de casa-habitación (excepto restaurantes, cafés, fondas y cenadurías).</li>
+                        <li>- El establecimiento debe encontrarse en condiciones materiales adecuadas para brindar el servicio con el giro solicitado.</li>
+                        <li>- Carta de no antecedentes penales.</li>
+                        <li>- Constancia que acredite al alta en la Secretaría de Hacienda y Crédito Público.</li>
+                        <li>- Contar con la anuencia vecinal para la apertura del negocio.</li>
+                        <li>- Contar previamente con la construcción de Rampa para Discapapcitados para el acceso al local.</li>
                     </ul>`
             },
             {
                 title: '¿Cuál es el proceso para realizar una apertura de licencia de funcionamiento?',
                 content: `
                 <ol>
-                    <li>Ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
-                    <li>Registrarse como usuario del portal de trámites y servicios:</li>
-                    <li>En el campo de Expediente Digital, añadir la documentación que se solicita.</li>
-                    <ul>
-                        <li>Identificación por ambos lados.</li>
-                        <li>Comprobante de domicilio de SAPA (Propietario).</li>
-                        <li>Constancia de Situación Fiscal (Opcional).</li>
-                        <li>Pasaporte (Opcional).</li>
-                        <li>Acta constitutiva (En caso de persona moral).</li>
+                    <li style="font-weight: bold;">Ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+                    <li style="font-weight: bold;">Registrarse como usuario del portal de trámites y servicios:</li>
+                    <li style="font-weight: bold;">En el campo de Expediente Digital, añadir la documentación que se solicita.</li>
+                    <ul style="padding-left:4%">
+                        <li>- Identificación por ambos lados.</li>
+                        <li>- Comprobante de domicilio de SAPA (Propietario).</li>
+                        <li>- Constancia de Situación Fiscal (Opcional).</li>
+                        <li>- Pasaporte (Opcional).</li>
+                        <li>- Acta constitutiva (En caso de persona moral).</li>
                     </ul>
-                    <br>
-                    <li>Seleccionar la opción de trámites disponibles.</li>
-                    <li>Seleccionar la opción de "Iniciar Trámite" de licencia de funcionamiento.</li>
-                    <li>Completar la información del establecimiento:</li>
-                    <ul>
-                        <li>Nombre comercial del establecimiento.</li>
-                        <li>Teléfono del establecimiento.</li>
-                        <li>Giros comerciales.</li>
-                        <li>Descripción de la actividad.</li>
-                        <li>Fecha de inicio de operaciones.</li>
-                        <li>Cámara de comercio.</li>
-                        <li>Seleccionar si tendrá venta de alcohol.</li>
-                        <li>Comprobante de domicilio del establecimiento de SAPA.</li>
-                        <li>Foto frontal del establecimiento.</li>
-                        <li>Seleccionar horarios de operación.</li>
-                        <li>Dirección del establecimiento.</li>
-                        <li>Seleccionar a quién le pertenece el predio y cargar el documento jurídico que acredite la propiedad.</li>
+                    <li style="font-weight: bold;">Seleccionar la opción de trámites disponibles.</li>
+                    <li style="font-weight: bold;">Seleccionar la opción de "Iniciar Trámite" de licencia de funcionamiento.</li>
+                    <li style="font-weight: bold;">Completar la información del establecimiento:</li>
+                    <ul style="padding-left:4%">
+                        <li>- Nombre comercial del establecimiento.</li>
+                        <li>- Teléfono del establecimiento.</li>
+                        <li>- Giros comerciales.</li>
+                        <li>- Descripción de la actividad.</li>
+                        <li>- Fecha de inicio de operaciones.</li>
+                        <li>- Cámara de comercio.</li>
+                        <li>- Seleccionar si tendrá venta de alcohol.</li>
+                        <li>- Comprobante de domicilio del establecimiento de SAPA.</li>
+                        <li>- Foto frontal del establecimiento.</li>
+                        <li>- Seleccionar horarios de operación.</li>
+                        <li>- Dirección del establecimiento.</li>
+                        <li>- Seleccionar a quién le pertenece el predio y cargar el documento jurídico que acredite la propiedad.</li>
                     </ul>
-                    <br>
-                    <li>Completar la información del predio.</li>
-                    <ul>
-                        <li>Seleccionar tipo de predio.</li>
-                        <li>Escribir la clave catastral o folio y verificar que no tenga adeudos.</li>
-                        <li>Seleccionar el periodo de recolección de desechos y el volumen de generación.</li>
-                        <li>Seleccionar en el mapa la ubicación exacta del establecimiento.</li>
-                        <li>Ingresar la superficie construida del establecimiento.</li>
-                        <li>Seleccionar los cajones del establecimiento.</li>
-                        <li>Seleccionar el tipo de negocio.</li>
-                        <li>Si cuenta con anuncio publicitario, completar las características solicitadas.</li>
-                        <li>Seleccionar el tamaño de la empresa.</li>
-                        <li>Llenar los campos estadísticos y seleccionará  si cuenta con personas con capacidades diferentes.</li>
+                    <li style="font-weight: bold;">Completar la información del predio.</li>
+                    <ul style="padding-left:4%">
+                        <li>- Seleccionar tipo de predio.</li>
+                        <li>- Escribir la clave catastral o folio y verificar que no tenga adeudos.</li>
+                        <li>- Seleccionar el periodo de recolección de desechos y el volumen de generación.</li>
+                        <li>- Seleccionar en el mapa la ubicación exacta del establecimiento.</li>
+                        <li>- Ingresar la superficie construida del establecimiento.</li>
+                        <li>- Seleccionar los cajones del establecimiento.</li>
+                        <li>- Seleccionar el tipo de negocio.</li>
+                        <li>- Si cuenta con anuncio publicitario, completar las características solicitadas.</li>
+                        <li>- Seleccionar el tamaño de la empresa.</li>
+                        <li>- Llenar los campos estadísticos y seleccionará  si cuenta con personas con capacidades diferentes.</li>
                     </ul>
-                    <br>
-                    <li>Si va a facturar, seleccionar el régimen fiscal e ingresar la dirección del establecimiento.</li>
-                    <li>Enviar la  solicitud de registro del establecimiento.</li>
+                    <li style="font-weight: bold;">Si va a facturar, seleccionar el régimen fiscal e ingresar la dirección del establecimiento.</li>
+                    <li style="font-weight: bold;">Enviar la  solicitud de registro del establecimiento.</li>
                 </ol>
                 `
             },
@@ -206,16 +203,16 @@ export const preguntasFrecuentes = [
             },
             {
                 title: '¿Qué requisitos necesito para agregar la persona moral en mi trámite de licencia de funcionamiento?',
-                content: `Necesita entregar la siguiente documentación:
-                <ul>
-                    <li>Razón social.</li>
-                    <li>Régimen fiscal.</li>
-                    <li>Régimen cpaital.</li>
-                    <li>RFC.</li>
-                    <li>Acta Constitutiva o Poder Notarial.</li>
-                    <li>Direeción geográfica: Calles, número exterior, número interior, código postal y colonia.</li>
-                    <li>Seleccionar la ubicación en el mapa.</li>
-                    <li>Ingresar la dirección de notificación.</li>
+                content: `<p style="font-weight: bold;">Necesita entregar la siguiente documentación:</p>
+                <ul style="padding-left:4%">
+                    <li>- Razón social.</li>
+                    <li>- Régimen fiscal.</li>
+                    <li>- Régimen cpaital.</li>
+                    <li>- RFC.</li>
+                    <li>- Acta Constitutiva o Poder Notarial.</li>
+                    <li>- Direeción geográfica: Calles, número exterior, número interior, código postal y colonia.</li>
+                    <li>- Seleccionar la ubicación en el mapa.</li>
+                    <li>- Ingresar la dirección de notificación.</li>
                 </ul>`
             },
             {
@@ -300,12 +297,12 @@ export const preguntasFrecuentes = [
             },
             {
                 title: '¿Cómo sé el tamaño de mi empresa?',
-                content: `El tamaño de una empresa se determina por el número de empleados que tiene:
-                <ul>
-                    <li>Micro: 1-10 empleados.</li>
-                    <li>Pequeña: 11-30 empleados.</li>
-                    <li>Mediana: 31-100 empleados.</li>
-                    <li>Grande: Más de 100 empleados.</li>
+                content: `<p style="font-weight: bold;">El tamaño de una empresa se determina por el número de empleados que tiene:</p>
+                <ul style="padding-left:4%">
+                    <li>- Micro: 1-10 empleados.</li>
+                    <li>- Pequeña: 11-30 empleados.</li>
+                    <li>- Mediana: 31-100 empleados.</li>
+                    <li>- Grande: Más de 100 empleados.</li>
                 </ul>`
             },
             {
@@ -558,9 +555,9 @@ export const preguntasFrecuentes = [
                 ubicado en la Carretera al sur k.m. 5.5 col. el mezquitito (a lado de la federal de 
                 caminos) de lunes a viernes entre  8:00 a.m. y 15:00 p.m. Además de llevar:
                 <ol>
-                    <li>Formato de solicitud de convenio de Relleno Sanitario, el cuál será entregado 
+                    <li>- Formato de solicitud de convenio de Relleno Sanitario, el cuál será entregado 
                     en el módulo de la Dirección General de Servicios Públicos Municipales.</li>
-                    <li>Ubicación exacta del establecimiento.</li>
+                    <li>- Ubicación exacta del establecimiento.</li>
                 </ol>`
             },
             {
@@ -576,14 +573,14 @@ export const preguntasCuenta = {
     1: { 
       title: '¿Cómo crear una cuenta?', 
       content: `
-      Ingresa a la página de <a href="https://tramites.lapaz.gob.mx/register">registro de usuarios para el Portal de Trámites y Servicios en Línea</a>, selecciona la opción “REGÍSTRATE”, al ingresar va a necesitar:
-      <ul>
-        <li>Nombre completo</li>
-        <li>RFC</li>
-        <li>Curp</li>
-        <li>Correo electrónico.</li>
-        <li>Contraseña para el portal de Trámites y servicios.</li>
-        <li>Aceptar los términos y condiciones.</li>
+      <p style="font-weight: bold;">Ingresa a la página de <a href="https://tramites.lapaz.gob.mx/register">registro de usuarios para el Portal de Trámites y Servicios en Línea</a>, selecciona la opción “REGÍSTRATE”, al ingresar va a necesitar:</p>
+      <ul style="padding-left:4%">
+        <li>- Nombre completo</li>
+        <li>- RFC</li>
+        <li>- Curp</li>
+        <li>- Correo electrónico.</li>
+        <li>- Contraseña para el portal de Trámites y servicios.</li>
+        <li>- Aceptar los términos y condiciones.</li>
       </ul>
       Una vez registrado, le llegará una notificación de confirmación a su correo registrado. (Si se trata de persona moral, capture los datos del representante legal).
       Una vez creado su registro, podrá iniciar sesión en el Portal de Trámites y Servicios.
@@ -595,14 +592,14 @@ export const preguntasCuenta = {
         En caso de no tener acceso al correo registrado, deberá solicitar el cambio en la <strong>ventanilla de la Dirección de Comercio del 
         H. Ayuntamiento de La Paz</strong> o mediante una solicitud de cambio 
         de correo electrónico a la siguiente dirección: <a href="mailto:info.comercio@lapaz.gob.mx">info.comercio@lapaz.gob.mx</a> donde deberá anexar:
-        <ul>
-          <li>Identificación del propietario o representante legal.</li>
-          <li>ID del trámite.</li>
-          <li>Nombre.</li>
-          <li>CURP</li>
-          <li>RFC</li>
-          <li>Correo electrónico nuevo.</li>
-          <li>Documento de propiedad o acta que lo acredite.</li>
+        <ul style="padding-left:4%">
+          <li>- Identificación del propietario o representante legal.</li>
+          <li>- ID del trámite.</li>
+          <li>- Nombre.</li>
+          <li>- CURP</li>
+          <li>- RFC</li>
+          <li>- Correo electrónico nuevo.</li>
+          <li>- Documento de propiedad o acta que lo acredite.</li>
         </ul>
         ` 
       },
@@ -611,11 +608,11 @@ export const preguntasCuenta = {
         content: `
         En caso de no tener acceso al portal de Trámites y Servicios en Línea:
         <ol>
-          <li>Ingresar al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
-          <li>Ingresar en la opción de recuperar contraseña.</li>
-          <li>Ingresar el correo registrado.</li>
-          <li>Solicita el enlace para restablecer la contraseña.</li>
-          <li>Al correo registrado, le llegará un enlace para ingresar su nueva contraseña.</li>
+          <li>- Ingresar al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+          <li>- Ingresar en la opción de recuperar contraseña.</li>
+          <li>- Ingresar el correo registrado.</li>
+          <li>- Solicita el enlace para restablecer la contraseña.</li>
+          <li>- Al correo registrado, le llegará un enlace para ingresar su nueva contraseña.</li>
         </ol>
 
         En caso de poder iniciar sesión dentro del portal de trámites y servicios en línea, podrá observar la opción: “Actualizar Datos” donde podrá actualizar su contraseña.
@@ -626,11 +623,11 @@ export const preguntasCuenta = {
         content: `
         En caso de no tener acceso al correo registrado, podrá solicitar el cambio de correo en la <strong>ventanilla de la Dirección de Comercio del 
         H. Ayuntamiento de La Paz</strong> o mediante una solicitud a la siguiente dirección: <a href="mailto:info.comercio@lapaz.gob.mx">info.comercio@lapaz.gob.mx</a> en donde deberá anexar:
-        <ul>
-          <li>Identificación del propietario</li>
-          <li>ID del trámite.</li>
-          <li>Correo nuevo.</li>
-          <li>Documento de propiedad o acta que lo acredite.</li>
+        <ul style="padding-left:4%">
+          <li>- Identificación del propietario</li>
+          <li>- ID del trámite.</li>
+          <li>- Correo nuevo.</li>
+          <li>- Documento de propiedad o acta que lo acredite.</li>
         </ul>
         ` 
       },
@@ -660,21 +657,21 @@ export const preguntasCuenta = {
         title: 'No he recibido el correo de verificación', 
         content: `
         <ol>
-          <li>Ingresa a <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
-          <li>Intenta iniciar sesión con el correo electrónico y contraseña asociada al registro.</li>
-          <li>Si no puede iniciar sesión, solicitará de nueva cuenta un enlace para la verificación de correo.</li>
-          <li>En la bandeja de entrada de su correo personal o el correo registrado, aparecerá la siguiente ventana con el mensaje "Se detectó que aún no confirmas tu correo electrónico".</li>
-          <li>Da clic en "Vuelve a mandar la notificación" que se encuentra al final del mensaje.</li>
-          <li>Revisa tu bandeja de entrada de correo electrónico y/o revisa el apartado de "spam" y da click en el botón "Verifica tu correo electrónico".</li>
+          <li>- Ingresa a <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+          <li>- Intenta iniciar sesión con el correo electrónico y contraseña asociada al registro.</li>
+          <li>- Si no puede iniciar sesión, solicitará de nueva cuenta un enlace para la verificación de correo.</li>
+          <li>- En la bandeja de entrada de su correo personal o el correo registrado, aparecerá la siguiente ventana con el mensaje "Se detectó que aún no confirmas tu correo electrónico".</li>
+          <li>- Da clic en "Vuelve a mandar la notificación" que se encuentra al final del mensaje.</li>
+          <li>- Revisa tu bandeja de entrada de correo electrónico y/o revisa el apartado de "spam" y da click en el botón "Verifica tu correo electrónico".</li>
         </ol>
         ` 
       },
       8: { 
         title: '¿Tienes problemas de carga o acceso a la página?', 
         content: `
-        <ul>
-          <li>Verifica que tu conexión a una red WiFi cuente con señal estable o con un servicio de datos móviles activado.</li>
-          <li>Borra el historial o caché/cookies de tu dispositivo móvil u ordenador e ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+        <ul style="padding-left:4%">
+          <li>- Verifica que tu conexión a una red WiFi cuente con señal estable o con un servicio de datos móviles activado.</li>
+          <li>- Borra el historial o caché/cookies de tu dispositivo móvil u ordenador e ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
         </ul>
         ` 
       }
@@ -684,76 +681,76 @@ const preguntasLicencias = {
     101: {
         title: '¿Qué requisitos/documentos se requieren para realizar el trámite en línea de mi licencia de funcionamiento?',
         content: `Necesitas entregar los siguientes documentos:
-        <ul>
-            <li>Identificación oficial por ambos lados.</li>
-            <li>Constancia de situación fiscal.</li>
-            <li>Foto de la fachada del negocio</li>
-            <li>Comprobante de uso de suelo emitido por el H. Ayuntamiento de La Paz.</li>
-            <li>Licencia de uso de edificación.</li>
-            <li>Copia de credencial de elector del solicitante en caso de ser persona física, o acta constitutiva, para personas morales.</li>
-            <li>Constancia de no retardo en pago del impuesto predial.</li>
-            <li>Constancia sanitaria.</li>
-            <li>Título de propiedad, contrato de arrendamiento u otro instrumento jurídico que acredite el derecho real que tiene sobre el inmueble.</li>
-            <li>Acreditar que el inmueble donde se está solicitando la autorización de licencia no guarde adeudos generados por cualquier contribución municipal.</li>
-            <li>Acreditar personalidad.</li>
-            <li>Dictamen de factibilidad de operación emitido por la Dirección Municipal de Protección Civil que conste que el establecimiento cumple con las condiciones necesarias para operar con el giro solicitado.</li>
-            <li>Ser independiente de casa-habitación (excepto restaurantes, cafés, fondas y cenadurías).</li>
-            <li>El establecimiento debe encontrarse en condiciones materiales adecuadas para brindar el servicio con el giro solicitado.</li>
-            <li>Carta de no antecedentes penales.</li>
-            <li>Constancia que acredite al alta en la Secretaría de Hacienda y Crédito Público.</li>
-            <li>Contar con la anuencia vecinal para la apertura del negocio.</li>
-            <li>Contar previamente con la construcción de Rampa para Discapapcitados para el acceso al local.</li>
+        <ul style="padding-left:4%">
+            <li>- Identificación oficial por ambos lados.</li>
+            <li>- Constancia de situación fiscal.</li>
+            <li>- Foto de la fachada del negocio</li>
+            <li>- Comprobante de uso de suelo emitido por el H. Ayuntamiento de La Paz.</li>
+            <li>- Licencia de uso de edificación.</li>
+            <li>- Copia de credencial de elector del solicitante en caso de ser persona física, o acta constitutiva, para personas morales.</li>
+            <li>- Constancia de no retardo en pago del impuesto predial.</li>
+            <li>- Constancia sanitaria.</li>
+            <li>- Título de propiedad, contrato de arrendamiento u otro instrumento jurídico que acredite el derecho real que tiene sobre el inmueble.</li>
+            <li>- Acreditar que el inmueble donde se está solicitando la autorización de licencia no guarde adeudos generados por cualquier contribución municipal.</li>
+            <li>- Acreditar personalidad.</li>
+            <li>- Dictamen de factibilidad de operación emitido por la Dirección Municipal de Protección Civil que conste que el establecimiento cumple con las condiciones necesarias para operar con el giro solicitado.</li>
+            <li>- Ser independiente de casa-habitación (excepto restaurantes, cafés, fondas y cenadurías).</li>
+            <li>- El establecimiento debe encontrarse en condiciones materiales adecuadas para brindar el servicio con el giro solicitado.</li>
+            <li>- Carta de no antecedentes penales.</li>
+            <li>- Constancia que acredite al alta en la Secretaría de Hacienda y Crédito Público.</li>
+            <li>- Contar con la anuencia vecinal para la apertura del negocio.</li>
+            <li>- Contar previamente con la construcción de Rampa para Discapapcitados para el acceso al local.</li>
         </ul>`
     },
     102: {
         title: '¿Cuál es el proceso para realizar una apertura de licencia de funcionamiento?',
         content: `
         <ol>
-            <li>Ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
-            <li>Registrarse como usuario del portal de trámites y servicios:</li>
-            <li>En el campo de Expediente Digital, añadir la documentación que se solicita.</li>
-            <ul>
-                <li>Identificación por ambos lados.</li>
-                <li>Comprobante de domicilio de SAPA (Propietario).</li>
-                <li>Constancia de Situación Fiscal (Opcional).</li>
-                <li>Pasaporte (Opcional).</li>
-                <li>Acta constitutiva (En caso de persona moral).</li>
+            <li>- Ingresa al <a href="https://tramites.lapaz.gob.mx/login">Portal de Trámites y Servicios en Línea</a></li>
+            <li>- Registrarse como usuario del portal de trámites y servicios:</li>
+            <li>- En el campo de Expediente Digital, añadir la documentación que se solicita.</li>
+            <ul style="padding-left:4%">
+                <li>- Identificación por ambos lados.</li>
+                <li>- Comprobante de domicilio de SAPA (Propietario).</li>
+                <li>- Constancia de Situación Fiscal (Opcional).</li>
+                <li>- Pasaporte (Opcional).</li>
+                <li>- Acta constitutiva (En caso de persona moral).</li>
             </ul>
             <br>
-            <li>Seleccionar la opción de trámites disponibles.</li>
-            <li>Seleccionar la opción de "Iniciar Trámite" de licencia de funcionamiento.</li>
-            <li>Completar la información del establecimiento:</li>
-            <ul>
-                <li>Nombre comercial del establecimiento.</li>
-                <li>Teléfono del establecimiento.</li>
-                <li>Giros comerciales.</li>
-                <li>Descripción de la actividad.</li>
-                <li>Fecha de inicio de operaciones.</li>
-                <li>Cámara de comercio.</li>
-                <li>Seleccionar si tendrá venta de alcohol.</li>
-                <li>Comprobante de domicilio del establecimiento de SAPA.</li>
-                <li>Foto frontal del establecimiento.</li>
-                <li>Seleccionar horarios de operación.</li>
-                <li>Dirección del establecimiento.</li>
-                <li>Seleccionar a quién le pertenece el predio y cargar el documento jurídico que acredite la propiedad.</li>
+            <li>- Seleccionar la opción de trámites disponibles.</li>
+            <li>- Seleccionar la opción de "Iniciar Trámite" de licencia de funcionamiento.</li>
+            <li>- Completar la información del establecimiento:</li>
+            <ul style="padding-left:4%">
+                <li>- Nombre comercial del establecimiento.</li>
+                <li>- Teléfono del establecimiento.</li>
+                <li>- Giros comerciales.</li>
+                <li>- Descripción de la actividad.</li>
+                <li>- Fecha de inicio de operaciones.</li>
+                <li>- Cámara de comercio.</li>
+                <li>- Seleccionar si tendrá venta de alcohol.</li>
+                <li>- Comprobante de domicilio del establecimiento de SAPA.</li>
+                <li>- Foto frontal del establecimiento.</li>
+                <li>- Seleccionar horarios de operación.</li>
+                <li>- Dirección del establecimiento.</li>
+                <li>- Seleccionar a quién le pertenece el predio y cargar el documento jurídico que acredite la propiedad.</li>
             </ul>
             <br>
-            <li>Completar la información del predio.</li>
-            <ul>
-                <li>Seleccionar tipo de predio.</li>
-                <li>Escribir la clave catastral o folio y verificar que no tenga adeudos.</li>
-                <li>Seleccionar el periodo de recolección de desechos y el volumen de generación.</li>
-                <li>Seleccionar en el mapa la ubicación exacta del establecimiento.</li>
-                <li>Ingresar la superficie construida del establecimiento.</li>
-                <li>Seleccionar los cajones del establecimiento.</li>
-                <li>Seleccionar el tipo de negocio.</li>
-                <li>Si cuenta con anuncio publicitario, completar las características solicitadas.</li>
-                <li>Seleccionar el tamaño de la empresa.</li>
-                <li>Llenar los campos estadísticos y seleccionará  si cuenta con personas con capacidades diferentes.</li>
+            <li>- Completar la información del predio.</li>
+            <ul style="padding-left:4%">
+                <li>- Seleccionar tipo de predio.</li>
+                <li>- Escribir la clave catastral o folio y verificar que no tenga adeudos.</li>
+                <li>- Seleccionar el periodo de recolección de desechos y el volumen de generación.</li>
+                <li>- Seleccionar en el mapa la ubicación exacta del establecimiento.</li>
+                <li>- Ingresar la superficie construida del establecimiento.</li>
+                <li>- Seleccionar los cajones del establecimiento.</li>
+                <li>- Seleccionar el tipo de negocio.</li>
+                <li>- Si cuenta con anuncio publicitario, completar las características solicitadas.</li>
+                <li>- Seleccionar el tamaño de la empresa.</li>
+                <li>- Llenar los campos estadísticos y seleccionará  si cuenta con personas con capacidades diferentes.</li>
             </ul>
             <br>
-            <li>Si va a facturar, seleccionar el régimen fiscal e ingresar la dirección del establecimiento.</li>
-            <li>Enviar la  solicitud de registro del establecimiento.</li>
+            <li>- Si va a facturar, seleccionar el régimen fiscal e ingresar la dirección del establecimiento.</li>
+            <li>- Enviar la  solicitud de registro del establecimiento.</li>
         </ol>
         `
     },
@@ -772,15 +769,15 @@ const preguntasLicencias = {
     106: {
         title: '¿Qué requisitos necesito para agregar la persona moral en mi trámite de licencia de funcionamiento?',
         content: `Necesita entregar la siguiente documentación:
-        <ul>
-            <li>Razón social.</li>
-            <li>Régimen fiscal.</li>
-            <li>Régimen cpaital.</li>
-            <li>RFC.</li>
-            <li>Acta Constitutiva o Poder Notarial.</li>
-            <li>Direeción geográfica: Calles, número exterior, número interior, código postal y colonia.</li>
-            <li>Seleccionar la ubicación en el mapa.</li>
-            <li>Ingresar la dirección de notificación.</li>
+        <ul style="padding-left:4%">
+            <li>- Razón social.</li>
+            <li>- Régimen fiscal.</li>
+            <li>- Régimen cpaital.</li>
+            <li>- RFC.</li>
+            <li>- Acta Constitutiva o Poder Notarial.</li>
+            <li>- Direeción geográfica: Calles, número exterior, número interior, código postal y colonia.</li>
+            <li>- Seleccionar la ubicación en el mapa.</li>
+            <li>- Ingresar la dirección de notificación.</li>
         </ul>`
     },
     107: {
@@ -862,11 +859,11 @@ const preguntasComercio = {
     205: {
         title: '¿Cómo sé el tamaño de mi empresa?',
         content: `El tamaño de una empresa se determina por el número de empleados que tiene:
-        <ul>
-            <li>Micro: 1-10 empleados.</li>
-            <li>Pequeña: 11-30 empleados.</li>
-            <li>Mediana: 31-100 empleados.</li>
-            <li>Grande: Más de 100 empleados.</li>
+        <ul style="padding-left:4%">
+            <li>- Micro: 1-10 empleados.</li>
+            <li>- Pequeña: 11-30 empleados.</li>
+            <li>- Mediana: 31-100 empleados.</li>
+            <li>- Grande: Más de 100 empleados.</li>
         </ul>`
     },
     206: {
@@ -1016,9 +1013,9 @@ const preguntasServPub = {
         ubicado en la Carretera al sur k.m. 5.5 col. el mezquitito (a lado de la federal de 
         caminos) de lunes a viernes entre  8:00 a.m. y 15:00 p.m. Además de llevar:
         <ol>
-            <li>Formato de solicitud de convenio de Relleno Sanitario, el cuál será entregado 
+            <li>- Formato de solicitud de convenio de Relleno Sanitario, el cuál será entregado 
             en el módulo de la Dirección General de Servicios Públicos Municipales.</li>
-            <li>Ubicación exacta del establecimiento.</li>
+            <li>- Ubicación exacta del establecimiento.</li>
         </ol>`
     },
     305: {
