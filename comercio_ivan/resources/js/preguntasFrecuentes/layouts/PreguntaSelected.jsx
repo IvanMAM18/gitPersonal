@@ -17,11 +17,13 @@ export default function PreguntaSelected({ preguntaSelect, indexSelect}) {
     //   });
 
     console.log(indexSelect);
-    console.log(preguntaSelect);
-    console.log(selectedTitle);
+    console.log(preguntaSelect.preguntas[indexSelect]);
     return (
         <>
-            {
+            <div>
+                <span>{selectedTitle}</span>
+            </div>
+            {/* {
 
                     <div className="w-full h-full">
                         <div className="flex">
@@ -69,7 +71,7 @@ export default function PreguntaSelected({ preguntaSelect, indexSelect}) {
                             </div>
                         </div>
                     </div>
-            }
+            } */}
                 
                 
                 

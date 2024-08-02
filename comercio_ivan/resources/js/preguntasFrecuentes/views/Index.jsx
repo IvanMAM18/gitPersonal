@@ -3,7 +3,6 @@ import { Layout,Space } from "antd";
 import { preguntasFrecuentes } from "../utils/preguntas";
 import SideMenu from "../layouts/SideMenu.jsx";
 import Main from "../layouts/Main.jsx";
-import PreguntasSelect from "../layouts/PreguntasSelect.jsx";
 import PreguntaSelected from "../layouts/PreguntaSelected.jsx";
 import useWindowWidth from "../../utils/hooks/useWindowWith.jsx";
 
@@ -16,7 +15,7 @@ export default function PreguntasFrecuentes() {
 
   const handleSelect = (item) => {
     setSelectedOption(item);
-    if(item.length >= 1){
+    if(item.length >= 0){
     }else{
       setIdSelectPregunta('');
     }
@@ -26,11 +25,28 @@ export default function PreguntasFrecuentes() {
     setIdSelectPregunta(item);
   };
 
-  console.log(selectedOption.length);
+  console.log(selectedOption);
   return (
     <div className="w-full h-full">
         <SideMenu preguntasSelect={handleSelect}/>
-        <div className="w-full pt-6">
+        {
+          selectedOption.length >=1 ?
+            <Main preguntasSelect={selectedOption} idPreguntaSelectMain={handleSelect}/>
+          :
+          selectedOption === '' ?
+            <Main preguntasSelect={preguntasFrecuentes} idPreguntaSelectMain={handleSelect}/>
+          : 
+            <PreguntaSelected preguntaSelect={preguntasFrecuentes[selectedOption]} indexSelect={selectedOption}/>
+        }
+        {/* {
+          selectedOption === '' ? 
+            <Main preguntasSelect={preguntasFrecuentes} idPreguntaSelectMain={handleSelect}/>
+          : selectedOption >= 1 ?
+            <span>1 {selectedOption}</span>
+          :
+          <span> 2 {selectedOption}</span>
+        } */}
+        {/* <div className="w-full">
         {
           selectedOption.length >= 1 ? 
           (
@@ -45,7 +61,7 @@ export default function PreguntasFrecuentes() {
             )
           )
         }
-        </div>
+        </div> */}
     </div>
   );
 }
