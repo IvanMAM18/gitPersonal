@@ -1,80 +1,77 @@
 import React, { useEffect, useState } from "react";
-import { Button,Space, Menu, Divider, Row, Col,Layout } from "antd";
+import { Button, Space, Menu, Divider, Row, Col, Layout } from "antd";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import useWindowWidth from "../../utils/hooks/useWindowWith";
 
 
 export default function PreguntaSelected({ preguntaSelect, indexSelect}) {
-    const [selectedTitle, setSelectedTitle] = useState('');
+
+    const windowWidth = useWindowWidth();
+    const [selectedTitlePregunta, setSelectedTitlePregunta] = useState(indexSelect);
     const [cambio, setCambio] = useState(true);
 
     
     const handleButtonClick = (title) => {
         setCambio(false);
-        setSelectedTitle(title);
+        setSelectedTitlePregunta(title);
     };
     // useEffect(() => {
     //     setCambio(true);
     //   });
 
     console.log(indexSelect);
-    console.log(preguntaSelect.preguntas[indexSelect]);
+    console.log(selectedTitlePregunta);
+    console.log(preguntaSelect);
+    console.log(windowWidth);
     return (
         <>
-            <div>
-                <span>{selectedTitle}</span>
-            </div>
-            {/* {
-
-                    <div className="w-full h-full">
-                        <div className="flex">
-                            {
-                                selectedTitle === '' ? (
-                                    <div className="w-7/12 rounded-lg p-4 mx-8 border-2 border-red-900 mb-4">
-                                        <h3 className="text-red-900 font-bold">{indexSelect.title}</h3>
-                                        <div className="subpixel-antialiased pt-4" dangerouslySetInnerHTML={{ __html: indexSelect.content }} />
-                                    </div>
-                                ) : (
-                                    <div className="w-7/12 rounded-lg p-4 mx-8 border-2 border-red-900 mb-4">
-                                        <h3 className="text-red-900 font-bold">{preguntaSelect.preguntas[selectedTitle].title}</h3>
-                                        <div className="subpixel-antialiased pt-4" dangerouslySetInnerHTML={{ __html: preguntaSelect.preguntas[selectedTitle].content }} />
-                                    </div>
-                                )
-                            }
-                            <div className="w-4/12 p-4 mb-4">
-                                <h5 className="pb-4">Ayuda-{preguntaSelect.subtitle}</h5>
-                                    {
-                                        preguntaSelect.preguntas.map((preguntas,index)=>{
-                                            if (selectedTitle === index) { // Condición para verificar si hay un título
-                                                return (
-                                                    <React.Fragment key={index}>
-                                                        <Space className="pl-2 cursor-default font-bold text-red-900 mb-2">
-                                                            <QuestionCircleOutlined className="mb-1"/>
-                                                            <span className="subpixel-antialiased"> {preguntas.title} </span> 
-                                                        </Space>
-                                                    </React.Fragment>
-                                                )
-                                            }else{
-                                                return (
-                                                    <React.Fragment key={index}>
-                                                        <Space 
-                                                            className="pl-2 cursor-pointer hover:font-bold mb-2"
-                                                            onClick={() => handleButtonClick(index)}
-                                                        >
-                                                            <QuestionCircleOutlined className="mb-1"/>
-                                                            <span className="subpixel-antialiased"> {preguntas.title} </span> 
-                                                        </Space>
-                                                    </React.Fragment>
-                                                )
-                                            }
-                                        })
-                                    }
+            {
+                <div className="w-full py-14">  
+                    <div className={`${windowWidth <= 600 ? '' : 'flex'}`}>
+                        <div className={`w-11/12  ${windowWidth <= 600 ? 'px-2 mx-auto' : 'px-4 ml-8'} py-4 shadow-xl shadow-red-200 rounded-lg border-2 border-red-900`}>
+                            <div className="text-center">
+                                <span className="text-xl text-red-900 font-bold subpixel-antialiased">{preguntaSelect.preguntas[selectedTitlePregunta].title}</span>
                             </div>
+                            <div className="subpixel-antialiased pt-4" dangerouslySetInnerHTML={{ __html: preguntaSelect.preguntas[selectedTitlePregunta].content }} />
+                        </div>
+                        <div className={`${ windowWidth <= 600 ? 'w-11/12 px-2 mx-auto' : 'w-7/12 px-4' } my-4 `}>
+                            <p className="text-lg font-medium">Ayuda - {preguntaSelect.subtitle}</p>
+                            {
+                                preguntaSelect.preguntas.map((pregunta, index)=>(
+                                    <React.Fragment key={index}>
+                                        {
+                                            (index === selectedTitlePregunta) ? 
+                                                (
+                                                    <div 
+                                                        className="cursor-default text-red-900 font-bold"
+                                                    >
+                                                        <Space>
+                                                            <QuestionCircleOutlined className="my-1"/>
+                                                            {pregunta.title}
+                                                        </Space>
+                                                    </div> 
+                                                ) 
+                                            : 
+                                                (
+                                                    <div 
+                                                        className="py-1.5 cursor-pointer hover:text-red-900 hover:font-medium"
+                                                        onClick={ () => handleButtonClick(index) }
+                                                    >
+                                                        <Space>
+                                                            <QuestionCircleOutlined className="my-1"/>
+                                                            {pregunta.title}
+                                                        </Space>
+                                                    </div>
+                                                )
+                                        }
+                                        
+                                    </React.Fragment>
+                                ))
+                            }
                         </div>
                     </div>
-            } */}
-                
-                
-                
+                </div>
+            }             
         </>
     );
 }

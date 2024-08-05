@@ -11,32 +11,30 @@ import useWindowWidth from "../../utils/hooks/useWindowWith.jsx";
 export default function PreguntasFrecuentes() {
 
   const [selectedOption, setSelectedOption] = useState('');
+  const [titlePreguntaSelect, setTitlePreguntaSelect] = useState('');
   const [idSelectPregunta, setIdSelectPregunta] = useState('');
 
   const handleSelect = (item) => {
     setSelectedOption(item);
-    if(item.length >= 0){
-    }else{
-      setIdSelectPregunta('');
-    }
   };
 
-  const handleIddPreguntaSelect = (item) => {
+  const handleTitlePreguntaSelect = (item) =>{
+    setTitlePreguntaSelect(item);
+  }
+  
+  const handlePreguntaSelect = (item) =>{
     setIdSelectPregunta(item);
-  };
+    setSelectedOption('pregunta');
+  }
 
-  console.log(selectedOption);
   return (
     <div className="w-full h-full">
         <SideMenu preguntasSelect={handleSelect}/>
         {
-          selectedOption.length >=1 ?
-            <Main preguntasSelect={selectedOption} idPreguntaSelectMain={handleSelect}/>
-          :
           selectedOption === '' ?
-            <Main preguntasSelect={preguntasFrecuentes} idPreguntaSelectMain={handleSelect}/>
+            <Main preguntasSelect={preguntasFrecuentes} optionSelect={handleTitlePreguntaSelect} idPreguntaSelectMain={handlePreguntaSelect}/>
           : 
-            <PreguntaSelected preguntaSelect={preguntasFrecuentes[selectedOption]} indexSelect={selectedOption}/>
+            <PreguntaSelected preguntaSelect={preguntasFrecuentes[titlePreguntaSelect]} indexSelect={idSelectPregunta}/>
         }
         {/* {
           selectedOption === '' ? 

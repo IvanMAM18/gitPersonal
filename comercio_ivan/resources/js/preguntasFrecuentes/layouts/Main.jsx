@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { preguntasFrecuentes } from "../utils/preguntas";
 
-export default function Main({ preguntasSelect, idPreguntaSelectMain }) {
+export default function Main({ preguntasSelect, optionSelect ,idPreguntaSelectMain }) {
 
     const [selectedTitle, setSelectedTitle] = useState('');
 
@@ -16,6 +16,7 @@ export default function Main({ preguntasSelect, idPreguntaSelectMain }) {
     };
 
     const handleButtonSelectClick = (itemSelect) => {
+        optionSelect(itemSelect);
         selectedTitle === itemSelect ? setSelectedTitle('')
         : setSelectedTitle(itemSelect);
     };
